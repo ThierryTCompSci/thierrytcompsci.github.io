@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CPU Matching Game</title>
+
+<style>
+body {
+    font-family: "Segoe UI", Roboto, sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #f1f5f9;
+}
+
+.container {
+    width: 85%;
+    margin: auto;
+}
+
+/* ROW CARDS */
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+    padding: 12px 15px;
+    border-radius: 10px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    transition: 0.2s ease;
+}
+
+/* HOVER EFFECT */
+.row:hover {
+    transform: scale(1.01);
+    border-color: #64748b;
+}
+
+/* TERM LABEL */
+.row div:first-child {
+    font-weight: 500;
+    color: #cbd5f5;
+}
+
+/* DROPDOWN */
+select {
+    width: 60%;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #475569;
+    background: #0f172a;
+    color: #e2e8f0;
+    outline: none;
+    transition: 0.2s;
+}
+
+select:hover {
+    border-color: #94a3b8;
+}
+
+select:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 5px rgba(99,102,241,0.5);
+}
+
+/* BUTTON */
+button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(99,102,241,0.4);
+}
+
+/* FEEDBACK STATES */
+.correct {
+    background: rgba(34,197,94,0.15);
+    border-color: #22c55e;
+}
+
+.incorrect {
+    background: rgba(239,68,68,0.15);
+    border-color: #ef4444;
+}
+
+/* SCORE TEXT */
+#score {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Match CPU Components with Definitions</h1>
+
+<div class="container" id="game"></div>
+
+<button onclick="checkAnswers()">Submit</button>
+
+<p id="score"></p>
+
+<script>
+
+// TERMS
+const terms = [
+"ALU",
+"Control Unit",
+"Instruction Register",
+"Program Counter",
+"Memory Address Register",
+"Memory Data Register",
+"Accumulator",
+"Address Bus",
+"Data Bus",
+"Control Bus",
+"Single-core Processor",
+"Multi-core Processor",
+"Co-processor"
+];
+
+// DEFINITIONS
+const definitions = [
+"Performs arithmetic and logical operations",
+"Directs and coordinates CPU operations",
+"Holds the current instruction being executed",
+"Stores the address of the next instruction",
+"Holds the address of memory location to access",
+"Holds the data being transferred to/from memory",
+"Stores intermediate results of calculations",
+"Carries memory addresses",
+"Carries actual data",
+"Carries control signals",
+"Processor with one core",
+"Processor with multiple cores",
+"Specialized processor assisting main CPU"
+];
+
+// CORRECT MATCHING
+const answers = {
+"ALU":0,
+"Control Unit":1,
+"Instruction Register":2,
+"Program Counter":3,
+"Memory Address Register":4,
+"Memory Data Register":5,
+"Accumulator":6,
+"Address Bus":7,
+"Data Bus":8,
+"Control Bus":9,
+"Single-core Processor":10,
+"Multi-core Processor":11,
+"Co-processor":12
+};
+
+// Shuffle definitions
+function shuffle(array) {
+    return array.map(a => [Math.random(), a])
+                .sort((a,b) => a[0]-b[0])
+                .map(a => a[1]);
+}
+
+const shuffledDefs = shuffle(definitions);
+
+// BUILD UI
+const gameDiv = document.getElementById("game");
+
+terms.forEach(term => {
+    let row = document.createElement("div");
+    row.className = "row";
+
+    let label = document.createElement("div");
+    label.innerText = term;
+    label.style.width = "35%";
+
+    let select = document.createElement("select");
+
+    shuffledDefs.forEach(def => {
+        let option = document.createElement("option");
+        option.value = def;
+        option.text = def;
+        select.appendChild(option);
+    });
+
+    row.appendChild(label);
+    row.appendChild(select);
+    gameDiv.appendChild(row);
+});
+
+// CHECK
+function checkAnswers() {
+    let rows = document.querySelectorAll(".row");
+    let correctCount = 0;
+
+    rows.forEach(row => {
+        let term = row.children[0].innerText;
+        let selected = row.children[1].value;
+
+        let correctDef = definitions[answers[term]];
+
+        row.classList.remove("correct", "incorrect");
+
+        if (selected === correctDef) {
+            row.classList.add("correct");
+            correctCount++;
+        } else {
+            row.classList.add("incorrect");
+        }
+    });
+
+    document.getElementById("score").innerText =
+        "Score: " + correctCount + " / " + terms.length;
+}
+</script>
+
+</body>
+</html>

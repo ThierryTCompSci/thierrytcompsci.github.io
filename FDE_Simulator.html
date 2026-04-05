@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CPU Simulator</title>
+
+<style>
+body {
+    font-family: "Segoe UI", sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+/* RAM */
+#ram {
+    background: #1e293b;
+    padding: 10px;
+    border-radius: 10px;
+    width: 250px;
+}
+
+.ram-cell {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    border-bottom: 1px solid #334155;
+}
+
+/* CPU */
+#cpu {
+    background: #1e293b;
+    padding: 15px;
+    border-radius: 10px;
+    width: 300px;
+}
+
+.register {
+    margin: 5px 0;
+}
+
+/* Controls */
+.controls {
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 8px;
+    border: none;
+    background: #6366f1;
+    color: white;
+    cursor: pointer;
+}
+
+select, input {
+    padding: 5px;
+    margin: 3px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Fetch–Decode–Execute Simulator</h1>
+
+<div class="controls">
+    Opcode:
+    <select id="opcode">
+        <option value="LDA">LDA</option>
+        <option value="STA">STA</option>
+        <option value="ADD">ADD</option>
+        <option value="SUB">SUB</option>
+        <option value="CMP">CMP</option>
+        <option value="JZ">JZ</option>
+        <option value="JNZ">JNZ</option>
+        <option value="JMP">JMP</option>
+        <option value="HLT">HLT</option>
+    </select>
+    
+    Mode:
+    <select id="mode">
+        <option value="instruction">Instruction</option>
+        <option value="data">Data</option>
+    </select>
+
+    Operand:
+    <input type="number" id="operand" min="0" max="19">
+
+    Address:
+    <input type="number" id="address" min="0" max="19">
+
+    <button onclick="insertInstruction()">Insert</button>
+</div>
+
+<div class="container">
+
+<!-- RAM -->
+<div id="ram"></div>
+
+<!-- CPU -->
+<div id="cpu">
+    <h3>CPU Registers</h3>
+    <div class="register">PC: <span id="pc">0</span></div>
+    <div class="register">IR: <span id="ir">-</span></div>
+    <div class="register">MAR: <span id="mar">-</span></div>
+    <div class="register">MDR: <span id="mdr">-</span></div>
+    <div class="register">ACC: <span id="acc">0</span></div>
+
+    <h3 id="stage">Stage: Idle</h3>
+
+    <button onclick="step()">Next Step</button>
+</div>
+
+</div>
+
+<div class="controls">
+    <button onclick="resetCPU()">Reset CPU</button>
+    <button onclick="clearAll()">Reset CPU + Clear RAM</button>
+</div>
+
+<script>
+
+// RAM (10 cells)
+let memory = Array(19).fill("000");
+
+// Registers
+let PC = 0;
+let IR = "";
+let MAR = "";
+let MDR = "";
+let ACC = 0;
+let ZF = 0; // Zero Flag
+
+let stage = 0;
+
+function renderRAM() {
+    const ramDiv = document.getElementById("ram");
+    ramDiv.innerHTML = "<h3>RAM</h3>";
+
+    memory.forEach((val, i) => {
+        ramDiv.innerHTML += `<div class="ram-cell">
+            <span>${i}</span>
+            <span>${val}</span>
+        </div>`;
+    });
+}
+
+function updateCPU() {
+    document.getElementById("pc").innerText = PC;
+    document.getElementById("ir").innerText = IR;
+    document.getElementById("mar").innerText = MAR;
+    document.getElementById("mdr").innerText = MDR;
+    document.getElementById("acc").innerText = ACC;
+
+    // Add Zero Flag display if not present
+    if (!document.getElementById("zf")) {
+        let zfDiv = document.createElement("div");
+        zfDiv.className = "register";
+        zfDiv.innerHTML = 'ZF: <span id="zf">0</span>';
+        document.getElementById("cpu").appendChild(zfDiv);
+    }
+    document.getElementById("zf").innerText = ZF;
+}
+
+function insertInstruction() {
+
+    let mode = document.getElementById("mode").value;
+    let addr = document.getElementById("address").value;
+
+    if (addr === "") return;
+    
+    if (addr < 0 || addr >= memory.length) {
+        alert("Invalid memory address");
+        return;
+    }
+
+    if (mode === "instruction") {
+        let op = document.getElementById("opcode").value;
+        let operand = document.getElementById("operand").value || "0";
+        memory[addr] = op + " " + operand;
+    } 
+    
+    else if (mode === "data") {
+        let value = document.getElementById("operand").value;
+
+        if (value === "") {
+            alert("Enter a value for data");
+            return;
+        }
+
+        memory[addr] = value; // pure number
+    }
+
+    renderRAM();
+} 
+
+function step() {
+
+    switch(stage) {
+
+        case 0: // FETCH 1
+            document.getElementById("stage").innerText = "Stage: Fetch (PC → MAR)";
+            MAR = PC;
+            stage++;
+            break;
+
+        case 1: // FETCH 2
+            document.getElementById("stage").innerText = "Stage: Fetch (Memory → MDR → IR)";
+            MDR = memory[MAR];
+            IR = MDR;
+            PC++;
+            stage++;
+            break;
+
+        case 2: // DECODE
+            document.getElementById("stage").innerText = "Stage: Decode";
+            stage++;
+            break;
+
+        case 3: // EXECUTE
+            document.getElementById("stage").innerText = "Stage: Execute";
+
+            let parts = IR.split(" ");
+            let op = parts[0];
+            let addr = parseInt(parts[1]);
+
+            let value = parseInt(memory[addr]) || 0;
+
+            if (op === "LDA") ACC = value;
+            else if (op === "ADD") ACC += value;
+            else if (op === "SUB") ACC -= value;
+            else if (op === "STA") memory[addr] = ACC.toString();
+
+            else if (op === "CMP") {
+                ZF = (ACC === value) ? 1 : 0;
+            }
+            else if (op === "CMP") {
+				ZF = (ACC === value) ? 1 : 0;
+			}
+			
+			else if (op === "JZ") {
+				if (ZF === 1) {
+					PC = addr;
+				}
+			}
+			
+			else if (op === "JNZ") {
+				if (ZF === 0) {
+					PC = addr;
+				}
+			}
+
+            else if (op === "JMP") {
+                PC = addr;
+            }
+
+            else if (op === "HLT") {
+                alert("Program Halted");
+                return;
+            }
+
+            stage = 0;
+            renderRAM();
+            break;
+    }
+
+    updateCPU();
+}
+
+function resetCPU() {
+    PC = 0;
+    IR = "";
+    MAR = "";
+    MDR = "";
+    ACC = 0;
+    ZF = 0;
+    stage = 0;
+
+    document.getElementById("stage").innerText = "Stage: Idle";
+    updateCPU();
+}
+
+function clearAll() {
+    resetCPU();
+
+    // Clear memory
+    memory = Array(20).fill("000");
+
+    renderRAM();
+}
+
+// init
+renderRAM();
+updateCPU();
+
+</script>
+
+</body>
+</html>

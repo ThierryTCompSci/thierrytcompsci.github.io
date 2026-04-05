@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CPU vs GPU Challenge</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #020617;
+  color: white;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 5px;
+}
+
+.container {
+  width: 80%;
+  margin: auto;
+}
+
+.task {
+  background: #1e293b;
+  border: 2px solid #38bdf8;
+  padding: 10px;
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+select {
+  padding: 5px;
+  font-size: 14px;
+}
+
+.correct {
+  background: #16a34a !important;
+}
+
+.wrong {
+  background: #dc2626 !important;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: #38bdf8;
+  border: none;
+  cursor: pointer;
+}
+
+#score {
+  margin-top: 15px;
+  font-size: 20px;
+}
+
+</style>
+</head>
+<body>
+
+<h1>CPU vs GPU Challenge</h1>
+<p>Select whether each task is best handled by the CPU or GPU</p>
+
+<div class="container">
+
+  <div class="task" data-answer="GPU">
+    Rendering graphics in a video game
+    <select>
+      <option value="">Choose</option>
+      <option value="CPU">CPU</option>
+      <option value="GPU">GPU</option>
+    </select>
+  </div>
+
+  <div class="task" data-answer="CPU">
+    Running the operating system
+    <select>
+      <option value="">Choose</option>
+      <option value="CPU">CPU</option>
+      <option value="GPU">GPU</option>
+    </select>
+  </div>
+
+  <div class="task" data-answer="GPU">
+    Training a machine learning model
+    <select>
+      <option value="">Choose</option>
+      <option value="CPU">CPU</option>
+      <option value="GPU">GPU</option>
+    </select>
+  </div>
+
+  <div class="task" data-answer="GPU">
+    Running large-scale physics simulations
+    <select>
+      <option value="">Choose</option>
+      <option value="CPU">CPU</option>
+      <option value="GPU">GPU</option>
+    </select>
+  </div>
+
+  <div class="task" data-answer="CPU">
+    Managing input/output devices
+    <select>
+      <option value="">Choose</option>
+      <option value="CPU">CPU</option>
+      <option value="GPU">GPU</option>
+    </select>
+  </div>
+
+  <div class="task" data-answer="CPU">
+    Executing program instructions sequentially
+    <select>
+      <option value="">Choose</option>
+      <option value="CPU">CPU</option>
+      <option value="GPU">GPU</option>
+    </select>
+  </div>
+
+</div>
+
+<button onclick="checkAnswers()">Check Answers</button>
+
+<h2 id="score"></h2>
+
+<script>
+function checkAnswers() {
+  let tasks = document.querySelectorAll('.task');
+  let score = 0;
+
+  tasks.forEach(task => {
+    let select = task.querySelector('select');
+    let answer = task.dataset.answer;
+
+    task.classList.remove('correct', 'wrong');
+
+    if (select.value === answer) {
+      task.classList.add('correct');
+      score++;
+    } else {
+      task.classList.add('wrong');
+    }
+  });
+
+  document.getElementById("score").textContent =
+    "Score: " + score + " / " + tasks.length;
+}
+</script>
+
+</body>
+</html>

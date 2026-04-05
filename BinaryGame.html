@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Binary Drop Game</title>
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #111;
+    color: #fff;
+    text-align: center;
+}
+
+#game {
+    position: relative;
+    width: 300px;
+    height: 500px;
+    margin: 20px auto;
+    border: 2px solid #fff;
+    background: #222;
+    overflow: hidden;
+}
+
+.block {
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    background: #4CAF50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+#binaryRow {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.bitContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5px;
+}
+
+.bit {
+    width: 30px;
+    height: 40px;
+    border: 2px solid #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: #333;
+}
+
+.bit.active {
+    background: #2196F3;
+}
+
+.bitValue {
+    font-size: 12px;
+    color: #ccc;
+}
+
+#currentValueBox, #scoreBox {
+    margin-top: 10px;
+    background: #333;
+    padding: 10px;
+    border: 2px solid #fff;
+    display: inline-block;
+}
+
+#overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    top: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<h2>Binary Drop Game</h2>
+
+<div id="game"></div>
+<div id="binaryRow"></div>
+
+<div id="currentValueBox">Current Value: 0</div>
+<div id="scoreBox">Score: 0</div>
+
+<div id="overlay">
+    <h2>Game Over</h2>
+    <p id="finalScore"></p>
+    <button onclick="restartGame()">Restart</button>
+</div>
+
+<script>
+const game = document.getElementById("game");
+const binaryRow = document.getElementById("binaryRow");
+const overlay = document.getElementById("overlay");
+const currentValueBox = document.getElementById("currentValueBox");
+const scoreBox = document.getElementById("scoreBox");
+const finalScore = document.getElementById("finalScore");
+
+const bitValues = [128,64,32,16,8,4,2,1];
+
+let bits, currentNumber, currentBlock;
+let fallSpeed, spawnInterval, gameRunning;
+let score = 0;
+
+// Create bits
+function createBits() {
+    binaryRow.innerHTML = "";
+    bits = Array(8).fill(0);
+
+    for (let i = 0; i < 8; i++) {
+        const container = document.createElement("div");
+        container.classList.add("bitContainer");
+
+        const bit = document.createElement("div");
+        bit.classList.add("bit");
+        bit.textContent = "0";
+
+        const label = document.createElement("div");
+        label.classList.add("bitValue");
+        label.textContent = bitValues[i];
+
+        bit.onclick = () => {
+            if (!gameRunning) return;
+
+            bits[i] ^= 1;
+            bit.textContent = bits[i];
+            bit.classList.toggle("active");
+
+            updateValue();
+            checkAnswer();
+        };
+
+        container.appendChild(bit);
+        container.appendChild(label);
+        binaryRow.appendChild(container);
+    }
+}
+
+function bitsToNumber() {
+    return bits.reduce((sum, b, i) => sum + b * bitValues[i], 0);
+}
+
+function updateValue() {
+    currentValueBox.textContent = "Current Value: " + bitsToNumber();
+}
+
+// Check answer
+function checkAnswer() {
+    if (currentNumber !== null && bitsToNumber() === currentNumber) {
+        score++;
+        scoreBox.textContent = "Score: " + score;
+        removeBlock();
+    }
+}
+
+// Spawn block
+function spawnBlock() {
+    if (!gameRunning || currentBlock) return;
+
+    currentNumber = Math.floor(Math.random() * 256);
+
+    const block = document.createElement("div");
+    block.classList.add("block");
+    block.textContent = currentNumber;
+    block.style.left = Math.random() * 200 + "px";
+    block.style.top = "0px";
+
+    game.appendChild(block);
+    currentBlock = block;
+
+    fall(block);
+}
+
+function removeBlock() {
+    if (!currentBlock) return;
+
+    currentBlock.remove();
+    currentBlock = null;
+    currentNumber = null;
+
+    resetBits();
+}
+
+function resetBits() {
+    bits.fill(0);
+    document.querySelectorAll(".bit").forEach(b => {
+        b.textContent = "0";
+        b.classList.remove("active");
+    });
+    updateValue();
+}
+
+// Falling
+function fall(block) {
+    let position = 0;
+
+    function step() {
+        if (!gameRunning) return;
+        if (block !== currentBlock) return;
+
+        position += fallSpeed;
+        block.style.top = position + "px";
+
+        if (position + 50 >= game.clientHeight) {
+            endGame();
+            return;
+        }
+
+        requestAnimationFrame(step);
+    }
+
+    requestAnimationFrame(step);
+}
+
+function endGame() {
+    gameRunning = false;
+    finalScore.textContent = "Your score: " + score;
+    overlay.style.display = "flex";
+}
+
+function increaseDifficulty() {
+    fallSpeed += 0.02;
+    spawnInterval = Math.max(1500, spawnInterval - 80);
+}
+
+function gameLoop() {
+    if (!gameRunning) return;
+
+    spawnBlock();
+    increaseDifficulty();
+
+    setTimeout(gameLoop, spawnInterval);
+}
+
+function restartGame() {
+    overlay.style.display = "none";
+    game.innerHTML = "";
+
+    fallSpeed = 0.4;
+    spawnInterval = 3500;
+    gameRunning = true;
+
+    currentBlock = null;
+    currentNumber = null;
+
+    score = 0;
+    scoreBox.textContent = "Score: 0";
+
+    createBits();
+    updateValue();
+    gameLoop();
+}
+
+restartGame();
+</script>
+
+</body>
+</html>
