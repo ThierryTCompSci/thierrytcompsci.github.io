@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Security Guessing Game</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.container {
+    max-width: 700px;
+    margin: auto;
+}
+
+h1 {
+    color: #38bdf8;
+}
+
+.score {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.timer {
+    font-size: 18px;
+    color: #facc15;
+}
+
+.hint {
+    background: #334155;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 10px;
+    display: none;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #38bdf8;
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0ea5e9;
+}
+
+.feedback {
+    margin-top: 15px;
+    font-size: 18px;
+}
+
+.nextHint {
+    margin-top: 10px;
+    background: #facc15;
+}
+
+.hidden {
+    display: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Cyber Security Game</h1>
+    <div class="score">Score: <span id="score">0</span></div>
+    <div class="timer">Time: <span id="time">10</span>s</div>
+
+    <div id="hint1" class="hint"></div>
+    <div id="hint2" class="hint"></div>
+    <div id="hint3" class="hint"></div>
+
+    <button id="nextHintBtn" class="nextHint">Reveal Next Hint</button>
+
+    <div class="buttons" id="answers"></div>
+
+    <div class="feedback" id="feedback"></div>
+</div>
+
+<div id="finalScreen" class="hidden">
+    <h1>Game Over</h1>
+    <h2>Your Final Score: <span id="finalScore"></span></h2>
+</div>
+
+<script>
+// ================= DATA =================
+const threats = [
+{
+    name: "Brute-force attack",
+    hints: [
+        "This attack involves trying many password combinations rapidly.",
+        "It relies on computing power rather than tricking people.",
+        "Often used to crack weak passwords."
+    ]
+},
+{
+    name: "Phishing",
+    hints: [
+        "This attack tricks users into revealing sensitive information.",
+        "It often comes through emails pretending to be legitimate.",
+        "Fake login pages are commonly used."
+    ]
+},
+{
+    name: "DDoS attack",
+    hints: [
+        "This attack floods a system with traffic.",
+        "It uses many devices at once.",
+        "The goal is to make a website unavailable."
+    ]
+},
+{
+    name: "Malware",
+    hints: [
+        "This is malicious software.",
+        "It includes viruses, worms, and Trojans.",
+        "It can damage or disrupt systems."
+    ]
+},
+{
+    name: "Pharming",
+    hints: [
+        "This redirects users to fake websites.",
+        "It can happen even if the correct URL is typed.",
+        "It often involves DNS manipulation."
+    ]
+},
+{
+    name: "Social engineering",
+    hints: [
+        "This attack manipulates people rather than systems.",
+        "It often involves impersonation.",
+        "Human psychology is exploited."
+    ]
+},
+{
+    name: "Hacking",
+    hints: [
+        "This involves unauthorized access to systems.",
+        "It can be ethical or malicious.",
+        "It often exploits vulnerabilities."
+    ]
+},
+{
+    name: "Data interception",
+    hints: [
+        "This involves capturing data during transmission.",
+        "Often happens on unsecured networks.",
+        "Attackers may read or alter the data."
+    ]
+}
+];
+
+// ================= VARIABLES =================
+let score = 0;
+let currentQuestion = 0;
+let shuffledThreats = [];
+let currentHint = 0;
+let timer;
+let timeLeft = 10;
+let attempts = 0;
+
+// sounds
+const correctSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3");
+const wrongSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-buzz-950.mp3");
+
+// ================= INIT =================
+function shuffle(array) {
+    return array.sort(() => Math.random() - 0.5);
+}
+
+function startGame() {
+    shuffledThreats = shuffle([...threats]);
+    loadQuestion();
+}
+
+function loadQuestion() {
+    if (currentQuestion >= shuffledThreats.length) {
+        endGame();
+        return;
+    }
+
+    currentHint = 0;
+    attempts = 0;
+
+    document.getElementById("feedback").innerText = "";
+
+    // reset hints
+    document.getElementById("hint1").style.display = "none";
+    document.getElementById("hint2").style.display = "none";
+    document.getElementById("hint3").style.display = "none";
+
+    showHint();
+    generateButtons();
+}
+
+// ================= HINT SYSTEM =================
+function showHint() {
+    if (currentHint > 2) return;
+
+    const hintDiv = document.getElementById(`hint${currentHint + 1}`);
+    hintDiv.innerText = shuffledThreats[currentQuestion].hints[currentHint];
+    hintDiv.style.display = "block";
+
+    startTimer();
+}
+
+document.getElementById("nextHintBtn").onclick = () => {
+    nextHint();
+};
+
+function nextHint() {
+    clearInterval(timer);
+    currentHint++;
+    if (currentHint < 3) {
+        showHint();
+    } else {
+        nextQuestion();
+    }
+}
+
+// ================= TIMER =================
+function startTimer() {
+    timeLeft = 10;
+    document.getElementById("time").innerText = timeLeft;
+
+    timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById("time").innerText = timeLeft;
+
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            nextHint();
+        }
+    }, 1000);
+}
+
+// ================= ANSWERS =================
+function generateButtons() {
+    const container = document.getElementById("answers");
+    container.innerHTML = "";
+
+    threats.forEach(threat => {
+        const btn = document.createElement("button");
+        btn.innerText = threat.name;
+
+        btn.onclick = () => checkAnswer(threat.name);
+
+        container.appendChild(btn);
+    });
+}
+
+function checkAnswer(answer) {
+    if (attempts >= 3) return;
+
+    const correct = shuffledThreats[currentQuestion].name;
+
+    attempts++;
+
+    if (answer === correct) {
+        correctSound.play();
+
+        let points = 3 - currentHint;
+        score += points;
+
+        document.getElementById("feedback").innerText = `Correct! +${points} points`;
+        updateScore();
+
+        clearInterval(timer);
+        setTimeout(nextQuestion, 1500);
+    } else {
+        wrongSound.play();
+
+        score -= 1;
+        document.getElementById("feedback").innerText = "Wrong! -1 point";
+        updateScore();
+
+        clearInterval(timer);
+        nextHint();
+    }
+}
+
+// ================= FLOW =================
+function nextQuestion() {
+    currentQuestion++;
+    loadQuestion();
+}
+
+function updateScore() {
+    document.getElementById("score").innerText = score;
+}
+
+function endGame() {
+    document.querySelector(".container").classList.add("hidden");
+    document.getElementById("finalScreen").classList.remove("hidden");
+    document.getElementById("finalScore").innerText = score;
+}
+
+// ================= START =================
+startGame();
+</script>
+
+</body>
+</html>
