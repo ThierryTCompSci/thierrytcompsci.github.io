@@ -3,37 +3,925 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Computer Science-Related Games</title>
+
+    <title>Computer Science Activities</title>
+
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+
+        /* =========================================
+           HEADER
+           ========================================= */
+
+        header {
+            background: #020617;
+            border-bottom: 1px solid #334155;
+            padding: 45px 25px;
             text-align: center;
-            margin-top: 50px;
         }
-        a {
+
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+            color: #f8fafc;
+        }
+
+        header p {
+            margin: 12px 0 0;
+            color: #94a3b8;
+            font-size: 17px;
+        }
+
+        /* =========================================
+           MAIN CONTENT
+           ========================================= */
+
+        main {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 35px 25px 60px;
+        }
+
+        /* =========================================
+           CURRICULUM SECTIONS
+           ========================================= */
+
+        .curriculum {
+            margin-bottom: 45px;
+        }
+
+        .curriculum-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+            margin: 0 0 25px;
+            padding-bottom: 15px;
+
+            font-size: 28px;
+            color: #f8fafc;
+
+            border-bottom: 2px solid #334155;
+        }
+
+        .curriculum-icon {
+            width: 45px;
+            height: 45px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #1e293b;
+            border: 1px solid #475569;
+            border-radius: 10px;
+
+            font-size: 22px;
+        }
+
+        /* =========================================
+           TOPIC GRID
+           ========================================= */
+
+        .topics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        /* =========================================
+           TOPIC CARD
+           ========================================= */
+
+        .topic {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            overflow: hidden;
+
+            transition:
+                transform 0.2s ease,
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .topic:hover {
+            transform: translateY(-3px);
+            border-color: #64748b;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        .topic-header {
+            padding: 20px 20px 10px;
+        }
+
+        .topic-number {
             display: block;
-            margin: 10px;
-            font-size: 18px;
-            color: blue;
-            text-decoration: none;
+            color: #64748b;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 5px;
         }
-        a:hover {
-            text-decoration: underline;
+
+        .topic h3 {
+            margin: 0;
+            color: #f1f5f9;
+            font-size: 19px;
+        }
+
+        /* =========================================
+           ACTIVITY LINKS
+           ========================================= */
+
+        .activities {
+            padding: 10px 20px 20px;
+        }
+
+        .activity-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 12px 14px;
+
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 7px;
+
+            color: #cbd5e1;
+            text-decoration: none;
+
+            font-size: 14px;
+
+            transition:
+                background 0.2s ease,
+                border-color 0.2s ease,
+                color 0.2s ease;
+        }
+
+        .activity-link:hover {
+            background: #273449;
+            border-color: #64748b;
+            color: white;
+        }
+
+        .arrow {
+            color: #64748b;
+            font-size: 18px;
+        }
+
+        .activity-link:hover .arrow {
+            color: #f8fafc;
+        }
+
+        /* =========================================
+           FOOTER
+           ========================================= */
+
+        footer {
+            border-top: 1px solid #334155;
+            padding: 25px;
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        /* =========================================
+           RESPONSIVE
+           ========================================= */
+
+        @media (max-width: 700px) {
+
+            header {
+                padding: 35px 20px;
+            }
+
+            header h1 {
+                font-size: 29px;
+            }
+
+            main {
+                padding: 25px 15px 45px;
+            }
+
+            .topics {
+                grid-template-columns: 1fr;
+            }
+
+            .curriculum-title {
+                font-size: 24px;
+            }
         }
     </style>
 </head>
+
+
 <body>
 
-    <h1>Computer Science-Related Games and Activities</h1>
 
-    <a href="BinaryGame.html">Binary Game</a>
-    <a href="https://flippybitandtheattackofthehexadecimalsfrombase16.com" target="_blank">Flippy Bit And the Attack Of The Hexadecimals From Base 16</a>
-    <a href="CpuPartsDefinitions.html">CPU Parts Definitions</a>
-    <a href="FDE_Cycle_Ordering_Game.html">Fetch-Decode-Execute (FDE) Cycle Ordering Game</a>
-    <a href="FDE_Simulator.html">Fetch-Decode-Execute (FDE) Simulator</a>
-    <a href="CPUvsGPU_Matcher.html">CPU vs GPU Matching Game</a>
-    <a href="TruthTables.html">Truth Table Activity</a>
-    <a href="cybersecuritythreats.html">Cyber Security Threats Game</a>
+<!-- =========================================
+     HEADER
+     ========================================= -->
+
+<header>
+
+    <h1>Computer Science Activities</h1>
+
+    <p>
+        Interactive activities and practice for Computer Science students
+    </p>
+
+</header>
+
+
+<!-- =========================================
+     MAIN CONTENT
+     ========================================= -->
+
+<main>
+
+
+    <!-- =========================================
+         IGCSE COMPUTER SCIENCE
+         ========================================= -->
+
+    <section class="curriculum">
+
+        <h2 class="curriculum-title">
+
+            IGCSE Computer Science
+
+        </h2>
+
+
+        <div class="topics">
+
+
+            <!-- 1 DATA REPRESENTATION -->
+
+            <article class="topic">
+
+                <div class="topic-header">
+
+                    <span class="topic-number">
+                        1.
+                    </span>
+
+                    <h3>
+                        Data Representation
+                    </h3>
+
+                </div>
+
+                <div class="activities">
+                    
+                    <a
+                        class="activity-link"
+                        href="binary/Cards1.html">
+
+                        <span>
+                            Binary Representation using cards
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+                <div class="activities">
+                    
+                    <a
+                        class="activity-link"
+                        href="binary/Light_bulb1.html">
+
+                        <span>
+                            Binary Representation using light bulbs
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+                
+                <div class="activities">
+                    
+                    <a
+                        class="activity-link"
+                        href="BinaryGame.html">
+
+                        <span>
+                            Binary Game
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+                
+                <div class="activities">
+
+                    <!-- Replace the href with your real activity -->
+
+                    <a
+                        class="activity-link"
+                        href="https://flippybitandtheattackofthehexadecimalsfrombase16.com" 
+                        target="_blank">
+
+                        <span>
+                            Flippy Bit And the Attack Of The Hexadecimals From Base 16
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+                
+                <div class="activities">
+
+                    <!-- Replace the href with your real activity -->
+
+                    <a
+                        class="activity-link"
+                        href="pixel-canva.html">
+
+                        <span>
+                            Image Representation
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+                
+                <div class="activities">
+
+                    <!-- Replace the href with your real activity -->
+
+                    <a
+                        class="activity-link"
+                        href="image-file-size-practice.html">
+
+                        <span>
+                            Image File Size
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+                
+                <div class="activities">
+
+                    <!-- Replace the href with your real activity -->
+
+                    <a
+                        class="activity-link"
+                        href="sound-file-size-practice.html">
+
+                        <span>
+                            Sound File Size
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- 2 DATA TRANSMISSION -->
+
+            <article class="topic">
+
+                <div class="topic-header">
+
+                    <span class="topic-number">
+                        2.
+                    </span>
+
+                    <h3>
+                        Data Transmission
+                    </h3>
+
+                </div>
+
+                <div class="activities">
+
+                    <a
+                        class="activity-link"
+                        href="igcse-data-transmission.html">
+
+                        <span>
+                            Activities coming soon...
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- 3 HARDWARE -->
+
+            <article class="topic">
+
+                <div class="topic-header">
+
+                    <span class="topic-number">
+                        3.
+                    </span>
+
+                    <h3>
+                        Hardware
+                    </h3>
+
+                </div>
+
+                <div class="activities">
+
+                    <a
+                        class="activity-link"
+                        href="CpuPartsDefinitions.html">
+
+                        <span>
+                            CPU Parts Definitions
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+                <div class="activities">
+
+                    <a
+                        class="activity-link"
+                        href="FDE_Cycle_Ordering_Game.html">
+
+                        <span>
+                            Fetch-Decode-Execute (FDE) Cycle Ordering Game
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+                <div class="activities">
+
+                    <a
+                        class="activity-link"
+                        href="CPUvsGPU_Matcher.html">
+
+                        <span>
+                            CPU vs GPU Matching Game
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+                <div class="activities">
+
+                    <a
+                        class="activity-link"
+                        href="TruthTables.html">
+
+                        <span>
+                            Truth Table Activity
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- 4 SOFTWARE -->
+
+            <article class="topic">
+
+                <div class="topic-header">
+
+                    <span class="topic-number">
+                        4.
+                    </span>
+
+                    <h3>
+                        Software
+                    </h3>
+
+                </div>
+
+                <div class="activities">
+
+                    <a
+                        class="activity-link"
+                        href="igcse-software.html">
+
+                        <span>
+                            Activities coming soon...
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- 5 INTERNET -->
+
+            <article class="topic">
+
+                <div class="topic-header">
+
+                    <span class="topic-number">
+                        5.
+                    </span>
+
+                    <h3>
+                        The Internet and its uses
+                    </h3>
+
+                </div>
+
+                <div class="activities">
+
+                    <a
+                        class="activity-link"
+                        href="cybersecuritythreats.html">
+
+                        <span>
+                            Cyber Security Threats Game
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- 6 AUTOMATED TECHNOLOGIES -->
+
+            <article class="topic">
+
+                <div class="topic-header">
+
+                    <span class="topic-number">
+                        6.
+                    </span>
+
+                    <h3>
+                        Automated and Emerging Technologies
+                    </h3>
+
+                </div>
+
+                <div class="activities">
+
+                    <a
+                        class="activity-link"
+                        href="igcse-automated-emerging.html">
+
+                        <span>
+                            Activities coming soon...
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         IB COMPUTER SCIENCE
+         ========================================= -->
+
+    <section class="curriculum">
+
+        <h2 class="curriculum-title">
+
+            IB Computer Science
+
+        </h2>
+
+
+        <div class="topics">
+
+
+            <!-- A1 COMPUTER FUNDAMENTALS -->
+
+            <article class="topic">
+
+                <div class="topic-header">
+
+                    <span class="topic-number">
+                        A1.
+                    </span>
+
+                    <h3>
+                        Computer Fundamentals
+                    </h3>
+
+                </div>
+
+                <div class="activities">
+
+                    <a
+                        class="activity-link"
+                        href="CpuPartsDefinitionsIB.html">
+
+                        <span>
+                            CPU Parts Definitions
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+                <div class="activities">
+
+                    <a
+                        class="activity-link"
+                        href="FDE_Cycle_Ordering_Game.html">
+
+                        <span>
+                            Fetch-Decode-Execute (FDE) Cycle Ordering Game
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+                <div class="activities">
+
+                    <a
+                        class="activity-link"
+                        href="FDE_Simulator.html">
+
+                        <span>
+                            Fetch-Decode-Execute (FDE) Simulator
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+                <div class="activities">
+
+                    <a
+                        class="activity-link"
+                        href="CPUvsGPU_Matcher.html">
+
+                        <span>
+                            CPU vs GPU Matching Game
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+                <div class="activities">
+
+                    <a
+                        class="activity-link"
+                        href="TruthTables.html">
+
+                        <span>
+                            Truth Table Activity
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- A2 NETWORKS -->
+
+            <article class="topic">
+
+                <div class="topic-header">
+
+                    <span class="topic-number">
+                        A2.
+                    </span>
+
+                    <h3>
+                        Networks
+                    </h3>
+
+                </div>
+
+                <div class="activities">
+
+                    <a
+                        class="activity-link"
+                        href="ib-networks.html">
+
+                        <span>
+                            Activities coming soon...
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- A3 DATABASES -->
+
+            <article class="topic">
+
+                <div class="topic-header">
+
+                    <span class="topic-number">
+                        A3.
+                    </span>
+
+                    <h3>
+                        Databases
+                    </h3>
+
+                </div>
+
+                <div class="activities">
+
+                    <a
+                        class="activity-link"
+                        href="ib-databases.html">
+
+                        <span>
+                            Activities coming soon...
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- A4 MACHINE LEARNING -->
+
+            <article class="topic">
+
+                <div class="topic-header">
+
+                    <span class="topic-number">
+                        A4.
+                    </span>
+
+                    <h3>
+                        Machine Learning
+                    </h3>
+
+                </div>
+
+                <div class="activities">
+
+                    <a
+                        class="activity-link"
+                        href="ib-machine-learning.html">
+
+                        <span>
+                            Activities coming soon...
+                        </span>
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- =========================================
+     FOOTER
+     ========================================= -->
+
+<footer>
+
+    Computer Science Learning Activities Created By Thierry Taberna
+
+</footer>
+
 
 </body>
 </html>
