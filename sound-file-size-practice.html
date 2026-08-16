@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>IGCSE Sound File Size Challenge</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            padding: 25px;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f1f5f9;
+            color: #1e293b;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        h1 {
+            text-align: center;
+            margin: 0 0 8px;
+            font-size: 30px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+
+        /* QUESTION */
+
+        .question-card {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .question-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* SPECIFICATIONS */
+
+        .specifications {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .specification {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 18px;
+            text-align: center;
+        }
+
+        .specification-label {
+            display: block;
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .specification-value {
+            display: block;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* FORMULA */
+
+        .formula {
+            margin: 25px 0;
+            padding: 18px;
+            background: #eff6ff;
+            border-left: 5px solid #2563eb;
+            border-radius: 6px;
+            line-height: 1.6;
+        }
+
+        .formula strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .formula-code {
+            font-family: "Courier New", monospace;
+            font-weight: bold;
+        }
+
+        /* ANSWER */
+
+        .answer-area {
+            margin-top: 25px;
+        }
+
+        .answer-label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .answer-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        #answer {
+            flex: 1;
+            min-width: 0;
+            padding: 14px;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 18px;
+            outline: none;
+        }
+
+        #answer:focus {
+            border-color: #2563eb;
+        }
+
+        #unit {
+            width: 120px;
+            padding: 14px;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 17px;
+            background: white;
+        }
+
+        /* BUTTONS */
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        button {
+            flex: 1;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #checkButton {
+            background: #2563eb;
+            color: white;
+        }
+
+        #checkButton:hover {
+            background: #1d4ed8;
+        }
+
+        #newQuestionButton {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+
+        #newQuestionButton:hover {
+            background: #cbd5e1;
+        }
+
+        /* FEEDBACK */
+
+        #feedback {
+            display: none;
+            margin-top: 20px;
+            padding: 18px;
+            border-radius: 9px;
+            line-height: 1.6;
+        }
+
+        #feedback.correct {
+            display: block;
+            background: #dcfce7;
+            border: 2px solid #86efac;
+            color: #166534;
+        }
+
+        #feedback.incorrect {
+            display: block;
+            background: #fee2e2;
+            border: 2px solid #fca5a5;
+            color: #991b1b;
+        }
+
+        .calculation {
+            margin-top: 12px;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.75);
+            border-radius: 6px;
+            font-family: "Courier New", monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+        }
+
+        /* SCORE */
+
+        .score {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 17px;
+        }
+
+        #score {
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 600px) {
+
+            .container {
+                padding: 20px;
+            }
+
+            .specifications {
+                grid-template-columns: 1fr;
+            }
+
+            .answer-row {
+                flex-direction: column;
+            }
+
+            #unit {
+                width: 100%;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🎵 Sound File Size Challenge</h1>
+
+    <p class="subtitle">
+        IGCSE Computer Science · Sound Representation
+    </p>
+
+
+    <div class="question-card">
+
+        <div class="question-title">
+            Calculate the file size of this sound file.
+        </div>
+
+
+        <!-- SOUND INFORMATION -->
+
+        <div class="specifications">
+
+            <div class="specification">
+
+                <span class="specification-label">
+                    Sample rate
+                </span>
+
+                <span
+                    class="specification-value"
+                    id="sampleRate">
+                    44,100 Hz
+                </span>
+
+            </div>
+
+
+            <div class="specification">
+
+                <span class="specification-label">
+                    Resolution
+                </span>
+
+                <span
+                    class="specification-value"
+                    id="resolution">
+                    16 bits
+                </span>
+
+            </div>
+
+
+            <div class="specification">
+
+                <span class="specification-label">
+                    Track length
+                </span>
+
+                <span
+                    class="specification-value"
+                    id="duration">
+                    60 seconds
+                </span>
+
+            </div>
+
+
+            <div class="specification">
+
+                <span class="specification-label">
+                    Sound type
+                </span>
+
+                <span
+                    class="specification-value"
+                    id="channels">
+                    Stereo
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- FORMULA -->
+
+        <div class="formula">
+
+            <strong>Remember:</strong>
+
+            <div class="formula-code">
+                File size in bits =
+                sample rate × resolution × duration × number of channels
+            </div>
+
+            <br>
+
+            <div class="formula-code">
+                File size in bytes = bits ÷ 8
+            </div>
+
+            <br>
+
+            Mono = 1 channel &nbsp;&nbsp;|&nbsp;&nbsp;
+            Stereo = 2 channels
+
+        </div>
+
+
+        <!-- ANSWER -->
+
+        <div class="answer-area">
+
+            <label
+                class="answer-label"
+                for="answer">
+                Enter the file size:
+            </label>
+
+            <div class="answer-row">
+
+                <input
+                    type="number"
+                    id="answer"
+                    placeholder="Enter your answer"
+                    min="0"
+                    step="any"
+                    autocomplete="off"
+                >
+
+                <select id="unit">
+
+                    <option value="bytes">
+                        bytes
+                    </option>
+
+                    <option value="KiB">
+                        KiB
+                    </option>
+
+                    <option value="MiB">
+                        MiB
+                    </option>
+
+                    <option value="GiB">
+                        GiB
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!-- BUTTONS -->
+
+        <div class="buttons">
+
+            <button
+                id="checkButton"
+                onclick="checkAnswer()">
+                Check Answer
+            </button>
+
+            <button
+                id="newQuestionButton"
+                onclick="newQuestion()">
+                New Question
+            </button>
+
+        </div>
+
+
+        <!-- FEEDBACK -->
+
+        <div id="feedback"></div>
+
+    </div>
+
+
+    <!-- SCORE -->
+
+    <div class="score">
+
+        Score:
+        <span id="score">0</span>
+
+        /
+
+        <span id="attempts">0</span>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /* =====================================================
+       UNIT CONVERSIONS
+       ===================================================== */
+
+    const UNITS = {
+
+        bytes: 1,
+
+        KiB: 1024,
+
+        MiB: 1024 * 1024,
+
+        GiB: 1024 * 1024 * 1024
+
+    };
+
+
+    /* =====================================================
+       POSSIBLE VALUES
+       ===================================================== */
+
+    const sampleRates = [
+
+        8000,
+        11025,
+        16000,
+        22050,
+        32000,
+        44100,
+        48000,
+        96000
+
+    ];
+
+
+    const resolutions = [
+
+        8,
+        12,
+        16,
+        24
+
+    ];
+
+
+    /*
+     * Durations are in seconds.
+     */
+
+    const durations = [
+
+        5,
+        10,
+        15,
+        20,
+        30,
+        45,
+        60,
+        90,
+        120,
+        180,
+        240,
+        300,
+        600,
+        900,
+        1200,
+        1800,
+        3600
+
+    ];
+
+
+    /* =====================================================
+       CURRENT QUESTION
+       ===================================================== */
+
+    let currentSampleRate;
+
+    let currentResolution;
+
+    let currentDuration;
+
+    let currentChannels;
+
+    let currentSoundType;
+
+
+    let score = 0;
+
+    let attempts = 0;
+
+    let questionAnswered = false;
+
+
+    /* =====================================================
+       RANDOM ITEM
+       ===================================================== */
+
+    function randomItem(array) {
+
+        return array[
+            Math.floor(
+                Math.random() * array.length
+            )
+        ];
+
+    }
+
+
+    /* =====================================================
+       GENERATE NEW QUESTION
+       ===================================================== */
+
+    function newQuestion() {
+
+        currentSampleRate =
+            randomItem(sampleRates);
+
+
+        currentResolution =
+            randomItem(resolutions);
+
+
+        currentDuration =
+            randomItem(durations);
+
+
+        /*
+         * Randomly choose mono or stereo.
+         */
+
+        if (Math.random() < 0.5) {
+
+            currentSoundType = "Mono";
+
+            currentChannels = 1;
+
+        } else {
+
+            currentSoundType = "Stereo";
+
+            currentChannels = 2;
+
+        }
+
+
+        /* Update screen */
+
+        document.getElementById(
+            "sampleRate"
+        ).textContent =
+            `${currentSampleRate.toLocaleString()} Hz`;
+
+
+        document.getElementById(
+            "resolution"
+        ).textContent =
+            `${currentResolution} bits`;
+
+
+        document.getElementById(
+            "duration"
+        ).textContent =
+            `${currentDuration} seconds`;
+
+
+        document.getElementById(
+            "channels"
+        ).textContent =
+            currentSoundType;
+
+
+        /*
+         * Automatically select the most
+         * appropriate unit.
+         */
+
+        const fileSizeBytes =
+            calculateFileSize();
+
+
+        const appropriateUnit =
+            getAppropriateUnit(
+                fileSizeBytes
+            );
+
+
+        document.getElementById(
+            "unit"
+        ).value = appropriateUnit;
+
+
+        /*
+         * Reset answer and feedback.
+         */
+
+        document.getElementById(
+            "answer"
+        ).value = "";
+
+
+        const feedback =
+            document.getElementById(
+                "feedback"
+            );
+
+
+        feedback.className = "";
+
+        feedback.innerHTML = "";
+
+
+        questionAnswered = false;
+
+
+        document.getElementById(
+            "answer"
+        ).focus();
+
+    }
+
+
+    /* =====================================================
+       CALCULATE FILE SIZE
+       ===================================================== */
+
+    function calculateFileSize() {
+
+        /*
+         * Sample rate tells us how many samples
+         * are recorded each second.
+         *
+         * Resolution tells us how many bits
+         * are used for each sample.
+         *
+         * Channels:
+         * Mono = 1
+         * Stereo = 2
+         */
+
+
+        const bits =
+            currentSampleRate *
+            currentResolution *
+            currentDuration *
+            currentChannels;
+
+
+        const bytes =
+            bits / 8;
+
+
+        return bytes;
+
+    }
+
+
+    /* =====================================================
+       FIND APPROPRIATE UNIT
+       ===================================================== */
+
+    function getAppropriateUnit(bytes) {
+
+        if (bytes >= UNITS.GiB) {
+
+            return "GiB";
+
+        }
+
+
+        if (bytes >= UNITS.MiB) {
+
+            return "MiB";
+
+        }
+
+
+        if (bytes >= UNITS.KiB) {
+
+            return "KiB";
+
+        }
+
+
+        return "bytes";
+
+    }
+
+
+    /* =====================================================
+       CONVERT BYTES TO SELECTED UNIT
+       ===================================================== */
+
+    function bytesToUnit(
+        bytes,
+        unit
+    ) {
+
+        return bytes / UNITS[unit];
+
+    }
+
+
+    /* =====================================================
+       FORMAT NUMBER
+       ===================================================== */
+
+    function formatNumber(number) {
+
+        if (Number.isInteger(number)) {
+
+            return number.toLocaleString();
+
+        }
+
+
+        return number.toLocaleString(
+            undefined,
+            {
+                maximumFractionDigits: 6
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       CHECK ANSWER
+       ===================================================== */
+
+    function checkAnswer() {
+
+        /*
+         * Do not allow a question to be
+         * answered repeatedly after success.
+         */
+
+        if (questionAnswered) {
+
+            return;
+
+        }
+
+
+        const answerInput =
+            document.getElementById(
+                "answer"
+            );
+
+
+        const unit =
+            document.getElementById(
+                "unit"
+            ).value;
+
+
+        const studentAnswer =
+            parseFloat(
+                answerInput.value
+            );
+
+
+        /*
+         * Validate input.
+         */
+
+        if (
+            isNaN(studentAnswer) ||
+            studentAnswer < 0
+        ) {
+
+            showInvalidFeedback();
+
+            return;
+
+        }
+
+
+        const correctBytes =
+            calculateFileSize();
+
+
+        const correctAnswer =
+            bytesToUnit(
+                correctBytes,
+                unit
+            );
+
+
+        /*
+         * Allow a very small tolerance
+         * for decimal answers.
+         */
+
+        const tolerance =
+            Math.max(
+                0.000001,
+                Math.abs(correctAnswer) * 0.000001
+            );
+
+
+        const isCorrect =
+            Math.abs(
+                studentAnswer -
+                correctAnswer
+            ) <= tolerance;
+
+
+        attempts++;
+
+
+        if (isCorrect) {
+
+            score++;
+
+            questionAnswered = true;
+
+            showCorrectFeedback(
+                correctBytes,
+                correctAnswer,
+                unit
+            );
+
+        } else {
+
+            showIncorrectFeedback();
+
+        }
+
+
+        updateScore();
+
+    }
+
+
+    /* =====================================================
+       CORRECT FEEDBACK
+       ===================================================== */
+
+    function showCorrectFeedback(
+        bytes,
+        answer,
+        unit
+    ) {
+
+        const feedback =
+            document.getElementById(
+                "feedback"
+            );
+
+
+        const totalSamples =
+            currentSampleRate *
+            currentDuration;
+
+
+        const bits =
+            currentSampleRate *
+            currentResolution *
+            currentDuration *
+            currentChannels;
+
+
+        feedback.className =
+            "correct";
+
+
+        feedback.innerHTML = `
+
+            <strong>✓ Correct!</strong>
+
+            <div class="calculation">
+
+Sample rate × resolution × duration × channels
+
+${formatNumber(currentSampleRate)}
+× ${currentResolution}
+× ${currentDuration}
+× ${currentChannels}
+
+= ${formatNumber(bits)} bits
+
+÷ 8
+
+= ${formatNumber(bytes)} bytes
+
+÷ ${formatNumber(UNITS[unit])}
+
+= ${formatNumber(answer)} ${unit}
+
+            </div>
+        `;
+
+    }
+
+
+    /* =====================================================
+       INCORRECT FEEDBACK
+       ===================================================== */
+
+    function showIncorrectFeedback() {
+
+        const feedback =
+            document.getElementById(
+                "feedback"
+            );
+
+
+        feedback.className =
+            "incorrect";
+
+
+        feedback.innerHTML = `
+
+            <strong>✗ Not quite.</strong>
+
+            Check your calculation and try again.
+
+            <div class="calculation">
+
+Remember:
+
+Sample rate =
+${formatNumber(currentSampleRate)} samples per second
+
+Resolution =
+${currentResolution} bits per sample
+
+Duration =
+${formatNumber(currentDuration)} seconds
+
+Channels =
+${currentChannels}
+
+File size in bits =
+
+sample rate × resolution × duration × channels
+
+Then divide the result by 8
+to convert bits into bytes.
+
+            </div>
+        `;
+
+    }
+
+
+    /* =====================================================
+       INVALID ANSWER
+       ===================================================== */
+
+    function showInvalidFeedback() {
+
+        const feedback =
+            document.getElementById(
+                "feedback"
+            );
+
+
+        feedback.className =
+            "incorrect";
+
+
+        feedback.innerHTML = `
+
+            <strong>Please enter a valid number.</strong>
+
+        `;
+
+    }
+
+
+    /* =====================================================
+       UPDATE SCORE
+       ===================================================== */
+
+    function updateScore() {
+
+        document.getElementById(
+            "score"
+        ).textContent = score;
+
+
+        document.getElementById(
+            "attempts"
+        ).textContent = attempts;
+
+    }
+
+
+    /* =====================================================
+       ENTER KEY
+       ===================================================== */
+
+    document.getElementById(
+        "answer"
+    ).addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Enter") {
+
+                checkAnswer();
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       START
+       ===================================================== */
+
+    newQuestion();
+
+</script>
+
+</body>
+</html>

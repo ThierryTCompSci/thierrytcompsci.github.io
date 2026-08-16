@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>IGCSE Image File Size Calculator</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f1f5f9;
+            color: #1e293b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        h1 {
+            text-align: center;
+            margin: 0 0 8px;
+            font-size: 30px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+
+        /* Question card */
+
+        .question-card {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .question-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .specifications {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .specification {
+            background: white;
+            border-radius: 10px;
+            padding: 18px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+
+        .specification-label {
+            display: block;
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .specification-value {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        /* Formula */
+
+        .formula {
+            margin: 25px 0;
+            padding: 18px;
+            background: #eff6ff;
+            border-left: 5px solid #2563eb;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .formula strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* Answer area */
+
+        .answer-area {
+            margin-top: 25px;
+        }
+
+        .answer-label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .answer-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        #answer {
+            flex: 1;
+            padding: 14px;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 18px;
+            outline: none;
+        }
+
+        #answer:focus {
+            border-color: #2563eb;
+        }
+
+        #unit {
+            width: 110px;
+            padding: 14px;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 17px;
+            background: white;
+        }
+
+        /* Buttons */
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        button {
+            flex: 1;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #checkButton {
+            background: #2563eb;
+            color: white;
+        }
+
+        #checkButton:hover {
+            background: #1d4ed8;
+        }
+
+        #newQuestionButton {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+
+        #newQuestionButton:hover {
+            background: #cbd5e1;
+        }
+
+        /* Feedback */
+
+        #feedback {
+            display: none;
+            margin-top: 20px;
+            padding: 18px;
+            border-radius: 9px;
+            line-height: 1.6;
+        }
+
+        #feedback.correct {
+            display: block;
+            background: #dcfce7;
+            border: 2px solid #86efac;
+            color: #166534;
+        }
+
+        #feedback.incorrect {
+            display: block;
+            background: #fee2e2;
+            border: 2px solid #fca5a5;
+            color: #991b1b;
+        }
+
+        .calculation {
+            margin-top: 12px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 6px;
+            font-family: "Courier New", monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+        }
+
+        /* Score */
+
+        .score {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 17px;
+        }
+
+        #score {
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .specifications {
+                grid-template-columns: 1fr;
+            }
+
+            .answer-row {
+                flex-direction: column;
+            }
+
+            #unit {
+                width: 100%;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Image File Size Challenge</h1>
+
+    <p class="subtitle">
+        IGCSE Computer Science · Images and File Size
+    </p>
+
+
+    <!-- QUESTION -->
+
+    <div class="question-card">
+
+        <div class="question-title">
+            Calculate the file size of this image.
+        </div>
+
+        <div class="specifications">
+
+            <div class="specification">
+                <span class="specification-label">
+                    Image resolution
+                </span>
+
+                <span class="specification-value" id="resolution">
+                    1920 × 1080
+                </span>
+            </div>
+
+            <div class="specification">
+                <span class="specification-label">
+                    Colour depth
+                </span>
+
+                <span class="specification-value" id="colourDepth">
+                    24 bits
+                </span>
+            </div>
+
+        </div>
+
+        <div class="formula">
+
+            <strong>Remember:</strong>
+
+            File size in bits =
+            width × height × colour depth
+
+            <br><br>
+
+            File size in bytes =
+            file size in bits ÷ 8
+
+        </div>
+
+
+        <!-- ANSWER -->
+
+        <div class="answer-area">
+
+            <label class="answer-label" for="answer">
+                Enter the file size:
+            </label>
+
+            <div class="answer-row">
+
+                <input
+                    type="number"
+                    id="answer"
+                    placeholder="Enter your answer"
+                    min="0"
+                    step="any"
+                    autocomplete="off"
+                >
+
+                <select id="unit">
+                    <option value="bytes">bytes</option>
+                    <option value="KiB">KiB</option>
+                    <option value="MiB">MiB</option>
+                    <option value="GiB">GiB</option>
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!-- BUTTONS -->
+
+        <div class="buttons">
+
+            <button id="checkButton" onclick="checkAnswer()">
+                Check Answer
+            </button>
+
+            <button id="newQuestionButton" onclick="newQuestion()">
+                New Question
+            </button>
+
+        </div>
+
+
+        <!-- FEEDBACK -->
+
+        <div id="feedback"></div>
+
+    </div>
+
+
+    <!-- SCORE -->
+
+    <div class="score">
+        Score:
+        <span id="score">0</span>
+        /
+        <span id="attempts">0</span>
+    </div>
+
+</div>
+
+
+<script>
+
+    /* =====================================================
+       SETTINGS
+       ===================================================== */
+
+    const UNITS = {
+        bytes: 1,
+        KiB: 1024,
+        MiB: 1024 * 1024,
+        GiB: 1024 * 1024 * 1024
+    };
+
+
+    /*
+     * Resolutions are deliberately varied.
+     *
+     * The program will choose the most appropriate unit
+     * based on the resulting file size.
+     */
+
+    const resolutions = [
+
+        [320, 240],
+        [640, 480],
+        [800, 600],
+        [1024, 768],
+        [1280, 720],
+        [1280, 800],
+        [1366, 768],
+        [1440, 900],
+        [1600, 900],
+        [1920, 1080],
+        [1920, 1200],
+        [2560, 1440],
+        [3840, 2160],
+        [4000, 3000],
+        [4096, 2160],
+        [5120, 2880],
+        [6000, 4000],
+        [7680, 4320]
+
+    ];
+
+
+    let currentWidth;
+    let currentHeight;
+    let currentColourDepth;
+
+    let score = 0;
+    let attempts = 0;
+
+    let questionAnswered = false;
+
+
+    /* =====================================================
+       GENERATE RANDOM QUESTION
+       ===================================================== */
+
+    function newQuestion() {
+
+        const randomResolution =
+            resolutions[
+                Math.floor(Math.random() * resolutions.length)
+            ];
+
+        currentWidth = randomResolution[0];
+        currentHeight = randomResolution[1];
+
+        /*
+         * Colour depth is always either 12 or 24 bits.
+         */
+
+        currentColourDepth =
+            Math.random() < 0.5 ? 12 : 24;
+
+
+        document.getElementById("resolution").textContent =
+            `${currentWidth} × ${currentHeight}`;
+
+        document.getElementById("colourDepth").textContent =
+            `${currentColourDepth} bits`;
+
+
+        /*
+         * Determine the appropriate unit.
+         */
+
+        const fileSizeBytes = calculateFileSize();
+
+        const appropriateUnit =
+            getAppropriateUnit(fileSizeBytes);
+
+        document.getElementById("unit").value =
+            appropriateUnit;
+
+
+        /*
+         * Clear previous answer and feedback.
+         */
+
+        document.getElementById("answer").value = "";
+
+        const feedback =
+            document.getElementById("feedback");
+
+        feedback.className = "";
+        feedback.innerHTML = "";
+
+        questionAnswered = false;
+
+        document.getElementById("answer").focus();
+
+    }
+
+
+    /* =====================================================
+       CALCULATE FILE SIZE IN BYTES
+       ===================================================== */
+
+    function calculateFileSize() {
+
+        /*
+         * Number of pixels
+         */
+
+        const pixels =
+            currentWidth * currentHeight;
+
+
+        /*
+         * Total number of bits
+         */
+
+        const bits =
+            pixels * currentColourDepth;
+
+
+        /*
+         * Convert bits to bytes
+         */
+
+        const bytes =
+            bits / 8;
+
+
+        return bytes;
+
+    }
+
+
+    /* =====================================================
+       SELECT APPROPRIATE UNIT
+       ===================================================== */
+
+    function getAppropriateUnit(bytes) {
+
+        /*
+         * Choose the largest sensible binary unit
+         * while keeping the displayed value at least 1.
+         */
+
+        if (bytes >= UNITS.GiB) {
+            return "GiB";
+        }
+
+        if (bytes >= UNITS.MiB) {
+            return "MiB";
+        }
+
+        if (bytes >= UNITS.KiB) {
+            return "KiB";
+        }
+
+        return "bytes";
+
+    }
+
+
+    /* =====================================================
+       CONVERT BYTES TO SELECTED UNIT
+       ===================================================== */
+
+    function bytesToUnit(bytes, unit) {
+
+        return bytes / UNITS[unit];
+
+    }
+
+
+    /* =====================================================
+       FORMAT NUMBERS
+       ===================================================== */
+
+    function formatNumber(number) {
+
+        /*
+         * Avoid unnecessary decimal places.
+         */
+
+        if (Number.isInteger(number)) {
+            return number.toLocaleString();
+        }
+
+        return number.toLocaleString(
+            undefined,
+            {
+                maximumFractionDigits: 6
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       CHECK ANSWER
+       ===================================================== */
+
+    function checkAnswer() {
+
+        if (questionAnswered) {
+            return;
+        }
+
+
+        const answerInput =
+            document.getElementById("answer");
+
+        const unit =
+            document.getElementById("unit").value;
+
+
+        const studentAnswer =
+            parseFloat(answerInput.value);
+
+
+        /*
+         * Make sure something has been entered.
+         */
+
+        if (
+            isNaN(studentAnswer) ||
+            studentAnswer < 0
+        ) {
+
+            showFeedback(
+                false,
+                "Please enter a valid number."
+            );
+
+            return;
+        }
+
+
+        const correctBytes =
+            calculateFileSize();
+
+
+        const correctAnswer =
+            bytesToUnit(correctBytes, unit);
+
+
+        /*
+         * Answers are normally exact.
+         *
+         * A tiny tolerance is used to avoid problems
+         * caused by floating-point calculations.
+         */
+
+        const tolerance =
+            Math.max(
+                0.000001,
+                Math.abs(correctAnswer) * 0.000001
+            );
+
+
+        const isCorrect =
+            Math.abs(
+                studentAnswer - correctAnswer
+            ) <= tolerance;
+
+
+        attempts++;
+
+
+        if (isCorrect) {
+
+            score++;
+
+            questionAnswered = true;
+
+            showCorrectFeedback(
+                correctBytes,
+                correctAnswer,
+                unit
+            );
+
+        } else {
+
+            showIncorrectFeedback(
+                correctBytes,
+                correctAnswer,
+                unit
+            );
+
+        }
+
+
+        updateScore();
+
+    }
+
+
+    /* =====================================================
+       CORRECT FEEDBACK
+       ===================================================== */
+
+    function showCorrectFeedback(
+        bytes,
+        correctAnswer,
+        unit
+    ) {
+
+        const feedback =
+            document.getElementById("feedback");
+
+
+        feedback.className = "correct";
+
+
+        feedback.innerHTML = `
+            <strong>✓ Correct!</strong>
+            <div class="calculation">
+Width × Height × Colour depth
+
+${formatNumber(currentWidth)}
+× ${formatNumber(currentHeight)}
+× ${currentColourDepth}
+
+= ${formatNumber(
+    currentWidth *
+    currentHeight *
+    currentColourDepth
+)} bits
+
+÷ 8
+
+= ${formatNumber(bytes)} bytes
+
+÷ ${formatNumber(UNITS[unit])}
+
+= ${formatNumber(correctAnswer)} ${unit}
+            </div>
+        `;
+
+    }
+
+
+    /* =====================================================
+       INCORRECT FEEDBACK
+       ===================================================== */
+
+    function showIncorrectFeedback(
+        bytes,
+        correctAnswer,
+        unit
+    ) {
+
+        const feedback =
+            document.getElementById("feedback");
+
+
+        feedback.className = "incorrect";
+
+
+        feedback.innerHTML = `
+            <strong>✗ Not quite.</strong>
+            Check your calculation and try again.
+
+            <div class="calculation">
+Remember:
+
+Number of pixels =
+${formatNumber(currentWidth)}
+× ${formatNumber(currentHeight)}
+
+File size in bits =
+number of pixels
+× colour depth
+
+File size in bytes =
+bits ÷ 8
+
+Your answer should be in ${unit}.
+            </div>
+        `;
+
+    }
+
+
+    /* =====================================================
+       SIMPLE FEEDBACK FOR INVALID INPUT
+       ===================================================== */
+
+    function showFeedback(correct, message) {
+
+        const feedback =
+            document.getElementById("feedback");
+
+        feedback.className =
+            correct ? "correct" : "incorrect";
+
+        feedback.innerHTML =
+            `<strong>${message}</strong>`;
+
+    }
+
+
+    /* =====================================================
+       UPDATE SCORE
+       ===================================================== */
+
+    function updateScore() {
+
+        document.getElementById("score").textContent =
+            score;
+
+        document.getElementById("attempts").textContent =
+            attempts;
+
+    }
+
+
+    /* =====================================================
+       ALLOW ENTER KEY TO CHECK ANSWER
+       ===================================================== */
+
+    document.getElementById("answer")
+        .addEventListener("keydown", function(event) {
+
+            if (event.key === "Enter") {
+                checkAnswer();
+            }
+
+        });
+
+
+    /* =====================================================
+       START THE ACTIVITY
+       ===================================================== */
+
+    newQuestion();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IGCSE Computer Science - Pixel Canva</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f8;
+            color: #222;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .instructions {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #555;
+        }
+
+        .app {
+            max-width: 1200px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+        }
+
+        .drawing-area {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 35px;
+        }
+
+        /* =========================
+           PIXEL GRID
+           ========================= */
+
+        .canvas-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #pixelGrid {
+            display: grid;
+            grid-template-columns: repeat(16, 30px);
+            grid-template-rows: repeat(16, 30px);
+            border: 3px solid #222;
+            user-select: none;
+        }
+
+        .pixel {
+            width: 30px;
+            height: 30px;
+            background: white;
+            border-right: 1px solid #aaa;
+            border-bottom: 1px solid #aaa;
+            cursor: crosshair;
+        }
+
+        .pixel:hover {
+            outline: 2px solid #555;
+            outline-offset: -2px;
+        }
+
+        /* =========================
+           PALETTE
+           ========================= */
+
+        .controls {
+            width: 270px;
+        }
+
+        .controls h2 {
+            margin-top: 0;
+            font-size: 20px;
+        }
+
+        .palette {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .color-button {
+            width: 35px;
+            height: 35px;
+            border: 2px solid #bbb;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .color-button:hover {
+            transform: scale(1.08);
+        }
+
+        .color-button.selected {
+            border: 3px solid #000;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #000;
+        }
+
+        .selected-color {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #selectedColorPreview {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #222;
+            border-radius: 5px;
+            background: #000000;
+        }
+
+        button.action {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            border: none;
+            border-radius: 5px;
+            background: #333;
+            color: white;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button.action:hover {
+            background: #111;
+        }
+
+        /* =========================
+           RGB INFORMATION
+           ========================= */
+
+        .rgb-info {
+            margin-top: 15px;
+            padding: 12px;
+            background: #f0f0f0;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+
+        /* =========================
+           BINARY OUTPUT
+           ========================= */
+
+        .binary-section {
+            margin-top: 30px;
+        }
+
+        .binary-section h2 {
+            margin-bottom: 5px;
+        }
+
+        .binary-description {
+            color: #555;
+            margin-top: 0;
+        }
+
+        #binaryOutput {
+            width: 100%;
+            min-height: 250px;
+            padding: 15px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background: #fafafa;
+            overflow: auto;
+            font-family: "Courier New", monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+
+        .binary-pixel {
+            display: inline;
+            font-weight: bold;
+        }
+
+        .row-label {
+            color: #888;
+            font-weight: bold;
+        }
+
+        /* =========================
+           RESPONSIVE DESIGN
+           ========================= */
+
+        @media (max-width: 800px) {
+            .drawing-area {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .controls {
+                width: 100%;
+                max-width: 400px;
+            }
+
+            #pixelGrid {
+                grid-template-columns: repeat(16, 22px);
+                grid-template-rows: repeat(16, 22px);
+            }
+
+            .pixel {
+                width: 22px;
+                height: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <h1>Pixel Canva</h1>
+
+    <p class="instructions">
+        Select a colour and click the pixels to create an image.
+        Each pixel is represented by 24 bits: 8 bits for Red, 8 bits for Green and 8 bits for Blue.
+    </p>
+
+    <div class="drawing-area">
+
+        <!-- =========================
+             16 × 16 CANVAS
+             ========================= -->
+
+        <div class="canvas-container">
+
+            <div id="pixelGrid"></div>
+
+        </div>
+
+        <!-- =========================
+             COLOUR CONTROLS
+             ========================= -->
+
+        <div class="controls">
+
+            <h2>Colour Palette</h2>
+
+            <div class="palette" id="palette"></div>
+
+            <div class="selected-color">
+                <div id="selectedColorPreview"></div>
+                <div>
+                    <strong>Selected colour</strong>
+                    <br>
+                    <span id="selectedColorName">Black</span>
+                </div>
+            </div>
+
+            <div class="rgb-info">
+                <div>R: <span id="redValue">0</span></div>
+                <div>G: <span id="greenValue">0</span></div>
+                <div>B: <span id="blueValue">0</span></div>
+                <br>
+                <div>RGB: <span id="hexValue">#000000</span></div>
+            </div>
+
+            <button class="action" onclick="clearCanvas()">
+                Clear Canvas
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+         BINARY REPRESENTATION
+         ========================= -->
+
+    <div class="binary-section">
+
+        <h2>Binary representation</h2>
+
+        <p class="binary-description">
+            Each group of 24 bits represents one pixel.
+            The colour of the bits shows which pixel they represent.
+        </p>
+
+        <div id="binaryOutput"></div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /* =========================================
+       COLOUR PALETTE
+       ========================================= */
+
+    const colours = [
+        { name: "Black",       hex: "#000000" },
+        { name: "White",       hex: "#FFFFFF" },
+        { name: "Red",         hex: "#FF0000" },
+        { name: "Green",       hex: "#00FF00" },
+        { name: "Blue",        hex: "#0000FF" },
+        { name: "Yellow",      hex: "#FFFF00" },
+
+        { name: "Cyan",        hex: "#00FFFF" },
+        { name: "Magenta",     hex: "#FF00FF" },
+        { name: "Orange",      hex: "#FF8000" },
+        { name: "Purple",      hex: "#800080" },
+        { name: "Pink",        hex: "#FF69B4" },
+        { name: "Brown",       hex: "#8B4513" },
+
+        { name: "Dark Green",  hex: "#008000" },
+        { name: "Navy",        hex: "#000080" },
+        { name: "Grey",        hex: "#808080" },
+        { name: "Light Grey",  hex: "#C0C0C0" },
+        { name: "Gold",        hex: "#FFD700" },
+        { name: "Lime",        hex: "#80FF00" }
+    ];
+
+
+    let selectedColour = colours[0];
+
+
+    /* =========================================
+       CREATE 16 × 16 PIXEL GRID
+       ========================================= */
+
+    const pixelGrid = document.getElementById("pixelGrid");
+
+    const pixels = [];
+
+    for (let row = 0; row < 16; row++) {
+
+        for (let column = 0; column < 16; column++) {
+
+            const pixel = document.createElement("div");
+
+            pixel.classList.add("pixel");
+
+            pixel.dataset.row = row;
+            pixel.dataset.column = column;
+            pixel.dataset.colour = "#FFFFFF";
+
+            pixel.addEventListener("click", function () {
+
+                colourPixel(pixel);
+
+            });
+
+            pixelGrid.appendChild(pixel);
+
+            pixels.push(pixel);
+        }
+    }
+
+
+    /* =========================================
+       CREATE COLOUR PALETTE
+       ========================================= */
+
+    const palette = document.getElementById("palette");
+
+    colours.forEach((colour, index) => {
+
+        const button = document.createElement("button");
+
+        button.classList.add("color-button");
+
+        button.style.backgroundColor = colour.hex;
+
+        button.title = `${colour.name} (${colour.hex})`;
+
+        if (index === 0) {
+            button.classList.add("selected");
+        }
+
+        button.addEventListener("click", function () {
+
+            selectColour(colour, button);
+
+        });
+
+        palette.appendChild(button);
+
+    });
+
+
+    /* =========================================
+       SELECT COLOUR
+       ========================================= */
+
+    function selectColour(colour, button) {
+
+        selectedColour = colour;
+
+        document.querySelectorAll(".color-button")
+            .forEach(btn => btn.classList.remove("selected"));
+
+        button.classList.add("selected");
+
+        updateColourInformation();
+
+    }
+
+
+    /* =========================================
+       UPDATE COLOUR INFORMATION
+       ========================================= */
+
+    function updateColourInformation() {
+
+        const rgb = hexToRGB(selectedColour.hex);
+
+        document.getElementById("selectedColorPreview")
+            .style.backgroundColor = selectedColour.hex;
+
+        document.getElementById("selectedColorName")
+            .textContent = selectedColour.name;
+
+        document.getElementById("redValue")
+            .textContent = rgb.r;
+
+        document.getElementById("greenValue")
+            .textContent = rgb.g;
+
+        document.getElementById("blueValue")
+            .textContent = rgb.b;
+
+        document.getElementById("hexValue")
+            .textContent = selectedColour.hex;
+
+    }
+
+
+    /* =========================================
+       COLOUR A PIXEL
+       ========================================= */
+
+    function colourPixel(pixel) {
+
+        pixel.style.backgroundColor = selectedColour.hex;
+
+        pixel.dataset.colour = selectedColour.hex;
+
+        updateBinary();
+
+    }
+
+
+    /* =========================================
+       CLEAR CANVAS
+       ========================================= */
+
+    function clearCanvas() {
+
+        pixels.forEach(pixel => {
+
+            pixel.style.backgroundColor = "#FFFFFF";
+
+            pixel.dataset.colour = "#FFFFFF";
+
+        });
+
+        updateBinary();
+
+    }
+
+
+    /* =========================================
+       CONVERT HEX TO RGB
+       ========================================= */
+
+    function hexToRGB(hex) {
+
+        hex = hex.replace("#", "");
+
+        return {
+            r: parseInt(hex.substring(0, 2), 16),
+            g: parseInt(hex.substring(2, 4), 16),
+            b: parseInt(hex.substring(4, 6), 16)
+        };
+
+    }
+
+
+    /* =========================================
+       CONVERT NUMBER TO 8-BIT BINARY
+       ========================================= */
+
+    function to8BitBinary(number) {
+
+        return number.toString(2).padStart(8, "0");
+
+    }
+
+
+    /* =========================================
+       CREATE 24-BIT RGB CODE
+       ========================================= */
+
+    function getBinary(hex) {
+
+        const rgb = hexToRGB(hex);
+
+        const redBinary = to8BitBinary(rgb.r);
+        const greenBinary = to8BitBinary(rgb.g);
+        const blueBinary = to8BitBinary(rgb.b);
+
+        return redBinary + greenBinary + blueBinary;
+
+    }
+
+
+    /* =========================================
+       UPDATE BINARY REPRESENTATION
+       ========================================= */
+
+    function updateBinary() {
+
+        const output = document.getElementById("binaryOutput");
+
+        output.innerHTML = "";
+
+        for (let row = 0; row < 16; row++) {
+
+            const rowLabel = document.createElement("span");
+
+            rowLabel.classList.add("row-label");
+
+            rowLabel.textContent =
+                `Row ${String(row + 1).padStart(2, "0")}: `;
+
+            output.appendChild(rowLabel);
+
+
+            for (let column = 0; column < 16; column++) {
+
+                const index = row * 16 + column;
+
+                const pixel = pixels[index];
+
+                const hex = pixel.dataset.colour;
+
+                const binary = getBinary(hex);
+
+                const binaryPixel =
+                    document.createElement("span");
+
+                binaryPixel.classList.add("binary-pixel");
+
+                binaryPixel.textContent = binary;
+
+                /*
+                 * The binary code is displayed using
+                 * the same colour as its pixel.
+                 */
+                binaryPixel.style.color = hex;
+
+                /*
+                 * Add a white outline/shadow for very
+                 * light colours so they remain visible.
+                 */
+                if (hex === "#FFFFFF") {
+
+                    binaryPixel.style.textShadow =
+                        "0 0 1px #000";
+
+                }
+
+                output.appendChild(binaryPixel);
+
+                /*
+                 * Separate pixels with a space.
+                 */
+                if (column < 15) {
+
+                    output.appendChild(
+                        document.createTextNode(" ")
+                    );
+
+                }
+
+            }
+
+            output.appendChild(
+                document.createTextNode("\n")
+            );
+
+        }
+
+    }
+
+
+    /* =========================================
+       INITIALISE
+       ========================================= */
+
+    updateColourInformation();
+
+    updateBinary();
+
+</script>
+
+</body>
+</html>
