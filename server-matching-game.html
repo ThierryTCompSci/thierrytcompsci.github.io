@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Server Functions Matching Game</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #f4f6f9;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    .instructions {
+        background: #ffffff;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        border-left: 5px solid #0078d4;
+    }
+
+    .question {
+        background: white;
+        margin-bottom: 10px;
+        padding: 12px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .function-text {
+        flex: 1;
+    }
+
+    select {
+        padding: 6px;
+        min-width: 180px;
+    }
+
+    .feedback {
+        font-weight: bold;
+        min-width: 30px;
+    }
+
+    .correct {
+        color: green;
+    }
+
+    .incorrect {
+        color: red;
+    }
+
+    .buttons {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    button {
+        padding: 10px 20px;
+        margin: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+    }
+
+    #checkBtn {
+        background-color: #0078d4;
+        color: white;
+    }
+
+    #resetBtn {
+        background-color: #666;
+        color: white;
+    }
+
+    #score {
+        text-align: center;
+        font-size: 1.5em;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<h1>Server Functions Matching Game</h1>
+
+<div class="instructions">
+    <p><strong>Task:</strong> Match each function to the correct type of server.</p>
+    <p>Select a server type for each function, then click <strong>Check Answers</strong>.</p>
+</div>
+
+<div id="questions"></div>
+
+<div class="buttons">
+    <button id="checkBtn" onclick="checkAnswers()">Check Answers</button>
+    <button id="resetBtn" onclick="resetGame()">Reset Game</button>
+</div>
+
+<div id="score"></div>
+
+<script>
+
+const serverTypes = [
+    "DNS Server",
+    "DHCP Server",
+    "File Server",
+    "Mail Server",
+    "Proxy Server",
+    "Web Server"
+];
+
+const functions = [
+    // DNS
+    ["Converts domain names (e.g., www.example.com) into IP addresses.", "DNS Server"],
+    ["Allows users to access websites using names rather than numeric IP addresses.", "DNS Server"],
+    ["Supports hierarchical and distributed name resolution.", "DNS Server"],
+    ["Caches DNS lookups to improve performance.", "DNS Server"],
+
+    // DHCP
+    ["Automatically assigns IP addresses to devices on a network.", "DHCP Server"],
+    ["Prevents IP address conflicts.", "DHCP Server"],
+    ["Manages address leases and renewals.", "DHCP Server"],
+    ["Reduces the need for manual network configuration.", "DHCP Server"],
+
+    // File
+    ["Centralized storage of files and folders.", "File Server"],
+    ["Allows users to share files across a network.", "File Server"],
+    ["Controls access through permissions and user accounts.", "File Server"],
+    ["Supports file backup and recovery.", "File Server"],
+
+    // Mail
+    ["Sends outgoing email using SMTP.", "Mail Server"],
+    ["Provides email access through protocols such as IMAP and POP3.", "Mail Server"],
+    ["Filters spam and malicious attachments.", "Mail Server"],
+    ["Supports mailing lists, forwarding, and autoresponders.", "Mail Server"],
+
+    // Proxy
+    ["Hides the client's IP address from external servers.", "Proxy Server"],
+    ["Filters and blocks access to specific websites or content.", "Proxy Server"],
+    ["Caches frequently accessed web pages to improve performance.", "Proxy Server"],
+    ["Enhances security by preventing direct connections to external servers.", "Proxy Server"],
+
+    // Web
+    ["Stores website files such as HTML, CSS, JavaScript, and images.", "Web Server"],
+    ["Responds to HTTP and HTTPS requests from web browsers.", "Web Server"],
+    ["Delivers web pages to users.", "Web Server"],
+    ["Supports secure communication through SSL/TLS certificates.", "Web Server"]
+];
+
+// Shuffle questions
+const shuffledFunctions = [...functions].sort(() => Math.random() - 0.5);
+
+const container = document.getElementById("questions");
+
+shuffledFunctions.forEach((item, index) => {
+
+    const div = document.createElement("div");
+    div.className = "question";
+
+    div.innerHTML = `
+        <div class="function-text">${index + 1}. ${item[0]}</div>
+        <select id="answer${index}">
+            <option value="">-- Select Server Type --</option>
+            ${serverTypes.map(server =>
+                `<option value="${server}">${server}</option>`
+            ).join("")}
+        </select>
+        <span class="feedback" id="feedback${index}"></span>
+    `;
+
+    container.appendChild(div);
+});
+
+function checkAnswers() {
+
+    let score = 0;
+
+    shuffledFunctions.forEach((item, index) => {
+
+        const studentAnswer =
+            document.getElementById(`answer${index}`).value;
+
+        const feedback =
+            document.getElementById(`feedback${index}`);
+
+        if (studentAnswer === item[1]) {
+            score++;
+            feedback.textContent = "✅";
+            feedback.className = "feedback correct";
+        } else {
+            feedback.textContent = "❌";
+            feedback.className = "feedback incorrect";
+        }
+    });
+
+    document.getElementById("score").innerHTML =
+        `Score: ${score} / 24`;
+}
+
+function resetGame() {
+
+    document.querySelectorAll("select").forEach(select => {
+        select.selectedIndex = 0;
+    });
+
+    document.querySelectorAll(".feedback").forEach(feedback => {
+        feedback.textContent = "";
+        feedback.className = "feedback";
+    });
+
+    document.getElementById("score").textContent = "";
+}
+
+</script>
+
+</body>
+</html>
