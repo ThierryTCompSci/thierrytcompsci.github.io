@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build the Packet - IB Computer Science A2.3.3</title>
+<style>
+:root{--navy:#172554;--blue:#2563eb;--cyan:#06b6d4;--bg:#f1f5f9;--card:#fff;--text:#0f172a;--muted:#64748b;--line:#cbd5e1;--green:#dcfce7;--green2:#16a34a;--red:#fee2e2;--red2:#dc2626;--amber:#fef3c7}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);line-height:1.45}.wrap{width:min(1050px,94%);margin:24px auto 48px}.hero{background:linear-gradient(135deg,#172554,#1e3a8a);color:#fff;border-radius:20px;padding:28px;box-shadow:0 10px 28px #0f172a25}.eyebrow{color:#67e8f9;font-size:.8rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase}.hero h1{margin:6px 0 8px;font-size:clamp(2rem,5vw,3rem)}.hero p{margin:0;max-width:780px;color:#dbeafe}.panel{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:20px;margin-top:18px;box-shadow:0 3px 12px #0f172a0b}.panel h2{margin:0 0 8px}.instruction{color:#475569;margin:0}.packet{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}.zone{border:3px dashed #94a3b8;min-height:210px;border-radius:18px;padding:14px;background:#f8fafc;transition:.2s}.zone.over{border-color:var(--blue);background:#eff6ff}.zone-title{font-weight:850;font-size:1.1rem}.zone-sub{font-size:.82rem;color:var(--muted);margin:3px 0 10px}.slots{display:flex;flex-wrap:wrap;gap:8px}.empty{color:#94a3b8;font-style:italic;font-size:.9rem}.bank{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.item{border:2px solid #cbd5e1;border-radius:12px;background:#fff;padding:12px;font-weight:700;cursor:grab;user-select:none;box-shadow:0 2px 7px #0f172a12;transition:.15s}.item:hover{border-color:#60a5fa;transform:translateY(-1px)}.item:active{cursor:grabbing}.item.selected{outline:3px solid #60a5fa}.placed{display:flex;align-items:center;gap:7px;border:2px solid #cbd5e1;background:#fff;padding:9px 10px;border-radius:10px;font-size:.9rem;font-weight:700;cursor:pointer}.correct{background:var(--green)!important;border-color:#86efac!important}.incorrect{background:var(--red)!important;border-color:#fca5a5!important}.controls{display:flex;gap:10px;margin-top:18px}.btn{border:0;border-radius:11px;padding:13px 18px;font-size:1rem;font-weight:800;cursor:pointer}.verify{flex:1;background:var(--blue);color:#fff}.verify:hover{background:#1d4ed8}.reset{background:#fff;border:1px solid var(--line)}.feedback{padding:17px;border:1px solid #fbbf24;background:#fffbeb;border-radius:14px;margin-top:15px}.feedback.good{background:#f0fdf4;border-color:#86efac}.feedback h3{margin:0 0 5px}.feedback p{margin:0;color:#475569}.hidden{display:none}.explanation{margin-top:10px;padding-top:10px;border-top:1px solid #e2e8f0;font-size:.9rem;color:#334155}.score{font-weight:800}.hint{margin-top:8px;font-size:.85rem;color:#64748b}.footer{text-align:center;color:#64748b;font-size:.78rem;margin-top:24px}.tap-note{font-size:.82rem;color:#64748b;margin-top:8px}
+@media(max-width:700px){.packet{grid-template-columns:1fr}.bank{grid-template-columns:1fr 1fr}}@media(max-width:480px){.bank{grid-template-columns:1fr}.controls{flex-direction:column}.hero{padding:20px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header class="hero"><div class="eyebrow">IB Computer Science • A2.3.3</div><h1>Build the Packet</h1><p>A message has been segmented into packets. Decide which pieces of information belong in the packet's <strong>header</strong>, which belong in its <strong>data/payload</strong>, and which do <strong>not</strong> belong in the packet.</p></header>
+<section class="panel"><h2>Your mission</h2><p class="instruction">Drag each card into the correct area. On a touchscreen, you can also tap a card and then tap a destination. When all cards have been placed, select <strong>Verify my packet</strong>.</p><div class="tap-note">You can click a placed card to return it to the card bank.</div></section>
+<section class="packet">
+<div class="zone" data-zone="header"><div class="zone-title">📋 HEADER</div><div class="zone-sub">Control information used to deliver and manage the packet</div><div class="slots" id="headerSlots"><span class="empty">Drop header information here</span></div></div>
+<div class="zone" data-zone="payload"><div class="zone-title">📦 DATA / PAYLOAD</div><div class="zone-sub">A portion of the original data being transmitted</div><div class="slots" id="payloadSlots"><span class="empty">Drop payload information here</span></div></div>
+</section>
+<section class="panel"><h2>Card bank</h2><div id="bank" class="bank"></div></section>
+<section class="panel"><h2>Does not belong in the packet</h2><div class="zone" data-zone="discard" style="min-height:100px"><div class="slots" id="discardSlots"><span class="empty">Drop unnecessary information here</span></div></div></section>
+<div class="controls"><button class="btn verify" id="verify">Verify my packet</button><button class="btn reset" id="reset">↻ Start again</button></div>
+<div id="feedback" class="feedback hidden" aria-live="polite"></div>
+<div class="footer">Learning focus: data segmentation, packet headers, control information and payload.</div>
+</main>
+<script>
+const cards=[
+{id:'source',text:'Source address',answer:'header',why:'The source address identifies where the packet came from.'},
+{id:'destination',text:'Destination address',answer:'header',why:'The destination address is routing/control information used to help deliver the packet.'},
+{id:'sequence',text:'Sequence information',answer:'header',why:'Sequence information can help the receiver reassemble packets in the correct order.'},
+{id:'payload',text:'Part of the original data',answer:'payload',why:'A packet carries a portion of the segmented original data as its payload.'},
+{id:'whole',text:'The entire original file',answer:'discard',why:'Packet switching segments the original data, so an individual packet carries only part of it rather than the entire file.'},
+{id:'resolution',text:'Monitor screen resolution',answer:'discard',why:'The sender’s monitor resolution is not information needed to route or reassemble the packet.'},
+{id:'wallpaper',text:'Desktop wallpaper',answer:'discard',why:'The desktop wallpaper is unrelated to transmitting this packet.'},
+{id:'route',text:'Routing / control information',answer:'header',why:'Routing and other control information belongs in the header rather than the payload.'},
+{id:'application',text:'Another portion of the message',answer:'payload',why:'The payload contains a portion of the original message or data.'}
+];
+let locations={};let selected=null;let checked=false;
+function shuffled(a){let x=[...a];for(let i=x.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}return x}
+let order=shuffled(cards);
+function render(){
+ document.getElementById('bank').innerHTML='';['header','payload','discard'].forEach(z=>document.querySelector(`[data-zone="${z}"] .slots`).innerHTML='');
+ order.forEach(c=>{const loc=locations[c.id];if(!loc){let d=document.createElement('div');d.className='item'+(selected===c.id?' selected':'');d.draggable=true;d.textContent=c.text;d.dataset.id=c.id;d.ondragstart=e=>e.dataTransfer.setData('text/plain',c.id);d.onclick=()=>{selected=selected===c.id?null:c.id;render()};document.getElementById('bank').appendChild(d)}else{let d=document.createElement('div');d.className='placed';if(checked)d.classList.add(loc===c.answer?'correct':'incorrect');d.textContent=c.text;d.title='Click to return this card to the bank';d.onclick=()=>{delete locations[c.id];checked=false;selected=null;hideFeedback();render()};document.querySelector(`[data-zone="${loc}"] .slots`).appendChild(d)}});
+ ['header','payload','discard'].forEach(z=>{let s=document.querySelector(`[data-zone="${z}"] .slots`);if(!s.children.length){let e=document.createElement('span');e.className='empty';e.textContent=z==='header'?'Drop header information here':z==='payload'?'Drop payload information here':'Drop unnecessary information here';s.appendChild(e)}})
+}
+function place(id,zone){locations[id]=zone;selected=null;checked=false;hideFeedback();render()}
+document.querySelectorAll('.zone').forEach(z=>{z.ondragover=e=>{e.preventDefault();z.classList.add('over')};z.ondragleave=()=>z.classList.remove('over');z.ondrop=e=>{e.preventDefault();z.classList.remove('over');place(e.dataTransfer.getData('text/plain'),z.dataset.zone)};z.onclick=e=>{if(selected && !e.target.closest('.placed'))place(selected,z.dataset.zone)}});
+function verify(){const box=document.getElementById('feedback');if(Object.keys(locations).length<cards.length){box.className='feedback';box.innerHTML=`<h3>Packet incomplete</h3><p>You still have ${cards.length-Object.keys(locations).length} card(s) in the bank. Place every card before checking your answer.</p>`;return}checked=true;render();let score=cards.filter(c=>locations[c.id]===c.answer).length;box.className='feedback'+(score===cards.length?' good':'');let wrong=cards.filter(c=>locations[c.id]!==c.answer);if(!wrong.length){box.innerHTML=`<h3>Excellent! You built the packet correctly.</h3><p class="score">${score} / ${cards.length} correct</p><div class="explanation"><strong>Remember:</strong> the header carries routing/control information, while the payload carries a portion of the original segmented data.</div>`}else{box.innerHTML=`<h3>${score} / ${cards.length} correct</h3><p>Green cards are correctly placed. Red cards are in the wrong area. Click a red card to return it to the bank and try again.</p><div class="hint">Think about whether each item helps control/deliver the packet, is part of the data itself, or is unrelated to transmission.</div>`}}
+function hideFeedback(){document.getElementById('feedback').classList.add('hidden')}
+document.getElementById('verify').onclick=verify;document.getElementById('reset').onclick=()=>{locations={};selected=null;checked=false;order=shuffled(cards);hideFeedback();render()};render();
+</script>
+</body>
+</html>
