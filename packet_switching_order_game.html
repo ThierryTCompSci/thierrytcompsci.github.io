@@ -3,42 +3,740 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Packet Switching: Put the Process in Order</title>
+
 <style>
-:root{--navy:#172554;--blue:#1d4ed8;--bg:#f1f5f9;--text:#0f172a;--muted:#64748b;--border:#cbd5e1;--green:#dcfce7;--green-border:#86efac;--red:#fee2e2;--red-border:#fca5a5}
-*{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);line-height:1.45}
-.container{width:min(900px,94%);margin:28px auto 50px}.hero{background:var(--navy);color:white;padding:28px;border-radius:18px;box-shadow:0 8px 22px #0f172a22}.kicker{color:#67e8f9;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.hero h1{margin:8px 0;font-size:clamp(1.8rem,5vw,2.7rem)}.hero p{margin:0;color:#dbeafe;max-width:760px}.panel{background:white;border:1px solid #e2e8f0;border-radius:16px;padding:20px;margin-top:18px;box-shadow:0 3px 12px #0f172a0d}.panel h2{margin:0 0 8px;font-size:1.15rem}.panel ol{margin:8px 0 0;padding-left:24px;color:#475569}.list{display:grid;gap:10px;margin-top:18px}.item{background:white;border:2px solid #e2e8f0;border-radius:15px;padding:12px;display:grid;grid-template-columns:46px 1fr auto;gap:12px;align-items:center;box-shadow:0 2px 8px #0f172a0c;transition:.2s}.item.correct{background:var(--green);border-color:var(--green-border)}.item.incorrect{background:var(--red);border-color:var(--red-border)}.number{width:42px;height:42px;border-radius:11px;background:var(--navy);color:white;display:grid;place-items:center;font-weight:800}.stage{text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-size:.7rem;font-weight:700;margin-bottom:3px}.text{font-weight:600}.arrows{display:flex;flex-direction:column;gap:5px}.arrow{width:39px;height:35px;border:1px solid var(--border);border-radius:8px;background:white;font-size:18px;cursor:pointer}.arrow:hover:not(:disabled){background:#e2e8f0}.arrow:disabled{opacity:.3;cursor:not-allowed}.controls{display:flex;gap:10px;margin-top:18px}.btn{border:0;border-radius:11px;padding:13px 18px;font-size:1rem;font-weight:700;cursor:pointer}.verify{background:var(--blue);color:white;flex:1}.verify:hover{background:#1e40af}.reset{background:white;border:1px solid var(--border);color:var(--text)}.feedback{margin-top:16px;padding:17px;border-radius:14px;border:1px solid #fbbf24;background:#fffbeb}.feedback.success{background:#f0fdf4;border-color:#86efac}.feedback h2{font-size:1.1rem;margin:0 0 4px}.feedback p{margin:0;color:#475569}.legend{margin-top:10px;font-size:.88rem;color:#475569}.hidden{display:none}.footer{text-align:center;color:#64748b;font-size:.78rem;margin-top:22px}
-@media(max-width:560px){.container{margin-top:12px}.hero{padding:20px}.item{grid-template-columns:38px 1fr auto;padding:10px;gap:8px}.number{width:36px;height:36px}.text{font-size:.92rem}.controls{flex-direction:column}.verify{width:100%}}
+:root{
+  --navy:#172554;
+  --blue:#1d4ed8;
+  --bg:#f1f5f9;
+  --text:#0f172a;
+  --muted:#64748b;
+  --border:#cbd5e1;
+  --green:#dcfce7;
+  --green-border:#86efac;
+  --red:#fee2e2;
+  --red-border:#fca5a5;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.45;
+}
+
+.container{
+  width:min(900px,94%);
+  margin:28px auto 50px;
+}
+
+.hero{
+  background:var(--navy);
+  color:white;
+  padding:28px;
+  border-radius:18px;
+  box-shadow:0 8px 22px #0f172a22;
+}
+
+.kicker{
+  color:#67e8f9;
+  font-size:.82rem;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.hero h1{
+  margin:8px 0;
+  font-size:clamp(1.8rem,5vw,2.7rem);
+}
+
+.hero p{
+  margin:0;
+  color:#dbeafe;
+  max-width:760px;
+}
+
+.panel{
+  background:white;
+  border:1px solid #e2e8f0;
+  border-radius:16px;
+  padding:20px;
+  margin-top:18px;
+  box-shadow:0 3px 12px #0f172a0d;
+}
+
+.panel h2{
+  margin:0 0 8px;
+  font-size:1.15rem;
+}
+
+.panel ol{
+  margin:8px 0 0;
+  padding-left:24px;
+  color:#475569;
+}
+
+.list{
+  display:grid;
+  gap:10px;
+  margin-top:18px;
+}
+
+.item{
+  background:white;
+  border:2px solid #e2e8f0;
+  border-radius:15px;
+  padding:12px;
+  display:grid;
+  grid-template-columns:46px 1fr 44px;
+  gap:12px;
+  align-items:center;
+  box-shadow:0 2px 8px #0f172a0c;
+  transition:.2s;
+  cursor:grab;
+  user-select:none;
+}
+
+.item:hover{
+  border-color:#94a3b8;
+}
+
+.item:active{
+  cursor:grabbing;
+}
+
+.item.correct{
+  background:var(--green);
+  border-color:var(--green-border);
+}
+
+.item.incorrect{
+  background:var(--red);
+  border-color:var(--red-border);
+}
+
+/* Card currently being dragged */
+.item.dragging{
+  opacity:.35;
+}
+
+/* Position where the card will be dropped */
+.item.drag-over{
+  border-color:var(--blue);
+  box-shadow:0 0 0 3px #bfdbfe;
+}
+
+.number{
+  width:42px;
+  height:42px;
+  border-radius:11px;
+  background:var(--navy);
+  color:white;
+  display:grid;
+  place-items:center;
+  font-weight:800;
+}
+
+.stage{
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  color:var(--muted);
+  font-size:.7rem;
+  font-weight:700;
+  margin-bottom:3px;
+}
+
+.text{
+  font-weight:600;
+}
+
+/* Drag handle replacing the arrows */
+.drag-handle{
+  width:40px;
+  height:40px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:white;
+  color:#64748b;
+  display:grid;
+  place-items:center;
+  font-size:22px;
+  cursor:grab;
+}
+
+.drag-handle:hover{
+  background:#e2e8f0;
+  color:var(--blue);
+}
+
+.controls{
+  display:flex;
+  gap:10px;
+  margin-top:18px;
+}
+
+.btn{
+  border:0;
+  border-radius:11px;
+  padding:13px 18px;
+  font-size:1rem;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.verify{
+  background:var(--blue);
+  color:white;
+  flex:1;
+}
+
+.verify:hover{
+  background:#1e40af;
+}
+
+.reset{
+  background:white;
+  border:1px solid var(--border);
+  color:var(--text);
+}
+
+.feedback{
+  margin-top:16px;
+  padding:17px;
+  border-radius:14px;
+  border:1px solid #fbbf24;
+  background:#fffbeb;
+}
+
+.feedback.success{
+  background:#f0fdf4;
+  border-color:#86efac;
+}
+
+.feedback h2{
+  font-size:1.1rem;
+  margin:0 0 4px;
+}
+
+.feedback p{
+  margin:0;
+  color:#475569;
+}
+
+.legend{
+  margin-top:10px;
+  font-size:.88rem;
+  color:#475569;
+}
+
+.hidden{
+  display:none;
+}
+
+.footer{
+  text-align:center;
+  color:#64748b;
+  font-size:.78rem;
+  margin-top:22px;
+}
+
+@media(max-width:560px){
+  .container{
+    margin-top:12px;
+  }
+
+  .hero{
+    padding:20px;
+  }
+
+  .item{
+    grid-template-columns:38px 1fr 40px;
+    padding:10px;
+    gap:8px;
+  }
+
+  .number{
+    width:36px;
+    height:36px;
+  }
+
+  .text{
+    font-size:.92rem;
+  }
+
+  .drag-handle{
+    width:36px;
+    height:36px;
+  }
+
+  .controls{
+    flex-direction:column;
+  }
+
+  .verify{
+    width:100%;
+  }
+}
 </style>
 </head>
+
+
 <body>
+
 <main class="container">
-<section class="hero"><div class="kicker">IB Computer Science • A2.3.3</div><h1>Packet Switching: Put the Process in Order</h1><p>Data needs to travel from a sender to a receiver. Put the actions below into the sequence that best explains the packet-switching process.</p></section>
-<section class="panel"><h2>Instructions</h2><ol><li>Read every action carefully.</li><li>Use the ▲ and ▼ buttons to move actions up or down.</li><li>When you are happy with your sequence, click <strong>Verify my answer</strong>.</li><li>Green means the action is in the correct position. Red means it needs to move.</li></ol></section>
-<div id="list" class="list" aria-label="Packet switching actions"></div>
-<div class="controls"><button id="verify" class="btn verify">Verify my answer</button><button id="reset" class="btn reset">↻ Start again</button></div>
-<div id="feedback" class="feedback hidden" role="status" aria-live="polite"></div>
-<div class="footer">Learning focus: segmentation, routing/control information, independent packet transmission, switches, routers and reassembly.</div>
+
+<section class="hero">
+  <div class="kicker">IB Computer Science • A2.3.3</div>
+
+  <h1>Packet Switching: Put the Process in Order</h1>
+
+  <p>
+    Data needs to travel from a sender to a receiver.
+    Put the actions below into the sequence that best explains
+    the packet-switching process.
+  </p>
+</section>
+
+
+<section class="panel">
+  <h2>Instructions</h2>
+
+  <ol>
+    <li>Read every action carefully.</li>
+
+    <li>
+      <strong>Click and drag</strong> an action to move it
+      to another position in the sequence.
+    </li>
+
+    <li>
+      When you are happy with your sequence,
+      click <strong>Verify my answer</strong>.
+    </li>
+
+    <li>
+      Green means the action is in the correct position.
+      Red means it needs to move.
+    </li>
+  </ol>
+</section>
+
+
+<div
+  id="list"
+  class="list"
+  aria-label="Packet switching actions">
+</div>
+
+
+<div class="controls">
+
+  <button
+    id="verify"
+    class="btn verify">
+    Verify my answer
+  </button>
+
+  <button
+    id="reset"
+    class="btn reset">
+    ↻ Start again
+  </button>
+
+</div>
+
+
+<div
+  id="feedback"
+  class="feedback hidden"
+  role="status"
+  aria-live="polite">
+</div>
+
+
+<div class="footer">
+  Learning focus: segmentation, routing/control information,
+  independent packet transmission, switches, routers and reassembly.
+</div>
+
 </main>
+
+
 <script>
-const correctOrder=[
-{id:'segment',stage:"Sender's device",text:'The sender divides the data into smaller packets.'},
-{id:'header',stage:"Sender's device",text:'A routing header containing control information is attached to each packet.'},
-{id:'transmit',stage:'During transfer',text:'The packets are transmitted onto the network independently.'},
-{id:'switch',stage:'During transfer',text:'Switches forward packets towards the appropriate device or next point on the network.'},
-{id:'router',stage:'During transfer',text:'Routers examine routing information and forward packets between networks towards the destination.'},
-{id:'routes',stage:'During transfer',text:'Because packets are handled independently, different packets may take different routes to the destination.'},
-{id:'arrive',stage:"Receiver's device",text:"The packets arrive at the receiver's device."},
-{id:'reassemble',stage:"Receiver's device",text:'The receiver uses the control information to put the packets back together in the correct order.'},
-{id:'original',stage:"Receiver's device",text:'The original data is reassembled and can be used by the receiving application.'}
+
+const correctOrder = [
+  {
+    id:'segment',
+    stage:"Sender's device",
+    text:'The sender divides the data into smaller packets.'
+  },
+
+  {
+    id:'header',
+    stage:"Sender's device",
+    text:'A routing header containing control information is attached to each packet.'
+  },
+
+  {
+    id:'transmit',
+    stage:'During transfer',
+    text:'The packets are transmitted onto the network independently.'
+  },
+
+  {
+    id:'switch',
+    stage:'During transfer',
+    text:'Switches forward packets towards the appropriate device or next point on the network.'
+  },
+
+  {
+    id:'router',
+    stage:'During transfer',
+    text:'Routers examine routing information and forward packets between networks towards the destination.'
+  },
+
+  {
+    id:'routes',
+    stage:'During transfer',
+    text:'Because packets are handled independently, different packets may take different routes to the destination.'
+  },
+
+  {
+    id:'arrive',
+    stage:"Receiver's device",
+    text:"The packets arrive at the receiver's device."
+  },
+
+  {
+    id:'reassemble',
+    stage:"Receiver's device",
+    text:'The receiver uses the control information to put the packets back together in the correct order.'
+  },
+
+  {
+    id:'original',
+    stage:"Receiver's device",
+    text:'The original data is reassembled and can be used by the receiving application.'
+  }
 ];
-let items=[];let checked=false;
-function shuffle(){do{items=[...correctOrder].sort(()=>Math.random()-.5)}while(items.every((x,i)=>x.id===correctOrder[i].id));checked=false;render();hideFeedback()}
-function move(i,d){const j=i+d;if(j<0||j>=items.length)return;[items[i],items[j]]=[items[j],items[i]];checked=false;render();hideFeedback()}
-function render(){const list=document.getElementById('list');list.innerHTML='';items.forEach((item,i)=>{const ok=checked&&item.id===correctOrder[i].id;const state=!checked?'':ok?' correct':' incorrect';const el=document.createElement('div');el.className='item'+state;el.innerHTML=`<div class="number">${i+1}</div><div><div class="stage">${item.stage}</div><div class="text">${item.text}</div></div><div class="arrows"><button class="arrow up" ${i===0?'disabled':''} aria-label="Move item ${i+1} up">▲</button><button class="arrow down" ${i===items.length-1?'disabled':''} aria-label="Move item ${i+1} down">▼</button></div>`;el.querySelector('.up').onclick=()=>move(i,-1);el.querySelector('.down').onclick=()=>move(i,1);list.appendChild(el)})}
-function verify(){checked=true;render();const score=items.filter((x,i)=>x.id===correctOrder[i].id).length;const box=document.getElementById('feedback');box.classList.remove('hidden','success');if(score===correctOrder.length){box.classList.add('success');box.innerHTML='<h2>Excellent! The sequence is correct.</h2><p>You have correctly sequenced the packet-switching process from segmentation to reassembly.</p>'}else{box.innerHTML=`<h2>${score} of ${correctOrder.length} actions are in the correct position.</h2><p>Green actions are correctly positioned. Move the red actions, then verify your answer again.</p><div class="legend">Tip: think about what must happen at the sender before packets can travel, how network devices move them, and what the receiver must do at the end.</div>`}}
-function hideFeedback(){document.getElementById('feedback').classList.add('hidden')}
-document.getElementById('verify').onclick=verify;document.getElementById('reset').onclick=shuffle;shuffle();
+
+
+let items = [];
+let checked = false;
+let draggedIndex = null;
+
+
+/* Shuffle all actions */
+
+function shuffle(){
+
+  do{
+
+    items = [...correctOrder].sort(
+      () => Math.random() - 0.5
+    );
+
+  } while(
+    items.every(
+      (x,i) => x.id === correctOrder[i].id
+    )
+  );
+
+  checked = false;
+
+  render();
+
+  hideFeedback();
+}
+
+
+/* Move an item from one position to another */
+
+function moveItem(fromIndex,toIndex){
+
+  if(
+    fromIndex === null ||
+    fromIndex === toIndex
+  ){
+    return;
+  }
+
+  const movedItem =
+    items.splice(fromIndex,1)[0];
+
+  items.splice(toIndex,0,movedItem);
+
+  checked = false;
+
+  render();
+
+  hideFeedback();
+}
+
+
+/* Display all cards */
+
+function render(){
+
+  const list =
+    document.getElementById('list');
+
+  list.innerHTML = '';
+
+
+  items.forEach((item,i) => {
+
+    const ok =
+      checked &&
+      item.id === correctOrder[i].id;
+
+    const state =
+      !checked
+      ? ''
+      : ok
+      ? ' correct'
+      : ' incorrect';
+
+
+    const el =
+      document.createElement('div');
+
+
+    el.className =
+      'item' + state;
+
+    el.draggable = true;
+
+    el.dataset.index = i;
+
+
+    el.innerHTML = `
+      <div class="number">${i + 1}</div>
+
+      <div>
+        <div class="stage">${item.stage}</div>
+        <div class="text">${item.text}</div>
+      </div>
+
+      <div
+        class="drag-handle"
+        title="Drag to move this action"
+        aria-hidden="true">
+        ☰
+      </div>
+    `;
+
+
+    /* When dragging starts */
+
+    el.addEventListener(
+      'dragstart',
+      function(event){
+
+        draggedIndex =
+          Number(this.dataset.index);
+
+        this.classList.add('dragging');
+
+        event.dataTransfer.effectAllowed =
+          'move';
+
+        event.dataTransfer.setData(
+          'text/plain',
+          String(draggedIndex)
+        );
+      }
+    );
+
+
+    /* Allow this item to receive a drop */
+
+    el.addEventListener(
+      'dragover',
+      function(event){
+
+        event.preventDefault();
+
+        if(
+          Number(this.dataset.index)
+          !== draggedIndex
+        ){
+          this.classList.add(
+            'drag-over'
+          );
+        }
+
+        event.dataTransfer.dropEffect =
+          'move';
+      }
+    );
+
+
+    /* Remove highlight when leaving */
+
+    el.addEventListener(
+      'dragleave',
+      function(){
+
+        this.classList.remove(
+          'drag-over'
+        );
+      }
+    );
+
+
+    /* Drop the dragged item here */
+
+    el.addEventListener(
+      'drop',
+      function(event){
+
+        event.preventDefault();
+
+        this.classList.remove(
+          'drag-over'
+        );
+
+        const fromIndex =
+          Number(
+            event.dataTransfer.getData(
+              'text/plain'
+            )
+          );
+
+        const toIndex =
+          Number(this.dataset.index);
+
+        moveItem(
+          fromIndex,
+          toIndex
+        );
+
+        draggedIndex = null;
+      }
+    );
+
+
+    /* Clean up after dragging */
+
+    el.addEventListener(
+      'dragend',
+      function(){
+
+        draggedIndex = null;
+
+        document
+          .querySelectorAll('.item')
+          .forEach(card => {
+
+            card.classList.remove(
+              'dragging'
+            );
+
+            card.classList.remove(
+              'drag-over'
+            );
+
+          });
+      }
+    );
+
+
+    list.appendChild(el);
+  });
+}
+
+
+/* Check student's answer */
+
+function verify(){
+
+  checked = true;
+
+  render();
+
+  const score =
+    items.filter(
+      (x,i) =>
+        x.id === correctOrder[i].id
+    ).length;
+
+
+  const box =
+    document.getElementById(
+      'feedback'
+    );
+
+
+  box.classList.remove(
+    'hidden',
+    'success'
+  );
+
+
+  if(score === correctOrder.length){
+
+    box.classList.add('success');
+
+    box.innerHTML =
+      '<h2>Excellent! The sequence is correct.</h2>' +
+      '<p>You have correctly sequenced the packet-switching process from segmentation to reassembly.</p>';
+
+  } else {
+
+    box.innerHTML =
+      '<h2>' +
+      score +
+      ' of ' +
+      correctOrder.length +
+      ' actions are in the correct position.</h2>' +
+
+      '<p>Green actions are correctly positioned. Move the red actions, then verify your answer again.</p>' +
+
+      '<div class="legend">' +
+      'Tip: think about what must happen at the sender before packets can travel, ' +
+      'how network devices move them, and what the receiver must do at the end.' +
+      '</div>';
+  }
+}
+
+
+/* Hide answer feedback */
+
+function hideFeedback(){
+
+  document
+    .getElementById('feedback')
+    .classList
+    .add('hidden');
+}
+
+
+/* Buttons */
+
+document
+  .getElementById('verify')
+  .onclick = verify;
+
+
+document
+  .getElementById('reset')
+  .onclick = shuffle;
+
+
+/* Start game */
+
+shuffle();
+
 </script>
+
 </body>
 </html>
