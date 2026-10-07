@@ -1,29 +1,969 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Asymmetric Encryption: Put the Process in Order</title>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Asymmetric Encryption: Put the Process in Order</title>
+
 <style>
-:root{--navy:#172554;--blue:#2563eb;--bg:#f1f5f9;--text:#0f172a;--muted:#64748b;--green:#dcfce7;--greenb:#86efac;--red:#fee2e2;--redb:#fca5a5}*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);line-height:1.45}.wrap{width:min(900px,94%);margin:25px auto 50px}.hero{background:linear-gradient(135deg,#172554,#312e81);color:#fff;border-radius:20px;padding:28px;box-shadow:0 9px 25px #0f172a22}.tag{color:#67e8f9;font-size:.8rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.hero h1{margin:6px 0;font-size:clamp(1.9rem,5vw,2.8rem)}.hero p{margin:0;color:#dbeafe}.panel{background:#fff;border:1px solid #e2e8f0;border-radius:17px;padding:19px;margin-top:17px;box-shadow:0 3px 12px #0f172a0c}.panel h2{margin:0 0 7px}.panel ol{color:#475569;margin:6px 0;padding-left:24px}.list{display:grid;gap:10px;margin-top:18px}.item{display:grid;grid-template-columns:44px 1fr auto;gap:11px;align-items:center;background:#fff;border:2px solid #e2e8f0;border-radius:15px;padding:12px;box-shadow:0 2px 8px #0f172a0c;transition:.2s}.item.correct{background:var(--green);border-color:var(--greenb)}.item.incorrect{background:var(--red);border-color:var(--redb)}.num{height:40px;width:40px;display:grid;place-items:center;background:var(--navy);color:#fff;border-radius:11px;font-weight:900}.stage{text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-size:.69rem;font-weight:800;margin-bottom:2px}.text{font-weight:650}.arrows{display:flex;flex-direction:column;gap:4px}.arrow{width:39px;height:35px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;font-size:18px;cursor:pointer}.arrow:hover:not(:disabled){background:#e2e8f0}.arrow:disabled{opacity:.28;cursor:default}.controls{display:flex;gap:9px;margin-top:18px}.btn{border:0;border-radius:11px;padding:13px 18px;font-weight:850;font-size:1rem;cursor:pointer}.verify{background:var(--blue);color:#fff;flex:1}.reset{background:#fff;border:1px solid #cbd5e1}.feedback{margin-top:15px;padding:16px;border-radius:14px;background:#fffbeb;border:1px solid #fbbf24}.feedback.success{background:#f0fdf4;border-color:#86efac}.feedback h2{margin:0 0 4px;font-size:1.1rem}.feedback p{margin:0;color:#475569}.hidden{display:none}.reminder{margin-top:8px;font-size:.86rem;color:#475569}.footer{text-align:center;color:#64748b;font-size:.78rem;margin-top:22px}@media(max-width:550px){.hero{padding:20px}.item{grid-template-columns:37px 1fr auto;padding:10px;gap:7px}.num{height:35px;width:35px}.text{font-size:.91rem}.controls{flex-direction:column}}
-</style></head><body><main class="wrap">
-<header class="hero"><div class="tag">IB Computer Science • A2.4.4</div><h1>Asymmetric Encryption: Put the Process in Order</h1><p>Alice needs to send Bob a confidential message. Reconstruct how Bob's public and private keys are used to protect the message.</p></header>
-<section class="panel"><h2>Instructions</h2><ol><li>Read all the actions.</li><li>Use the ▲ and ▼ buttons to move actions into the correct order.</li><li>When finished, click <strong>Verify my answer</strong>.</li><li>Green actions are correctly positioned. Red actions need to move.</li></ol><div class="reminder"><strong>Key idea:</strong> for confidentiality in this simplified scenario, the sender encrypts using the recipient's public key and the recipient decrypts using the corresponding private key.</div></section>
-<div id="list" class="list"></div><div class="controls"><button id="verify" class="btn verify">Verify my answer</button><button id="reset" class="btn reset">↻ Start again</button></div><div id="feedback" class="feedback hidden" aria-live="polite"></div><div class="footer">Learning focus: the use of public and private keys in asymmetric cryptography.</div></main>
+
+:root{
+  --navy:#172554;
+  --blue:#2563eb;
+  --bg:#f1f5f9;
+  --text:#0f172a;
+  --muted:#64748b;
+  --green:#dcfce7;
+  --greenb:#86efac;
+  --red:#fee2e2;
+  --redb:#fca5a5;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.45;
+}
+
+.wrap{
+  width:min(900px,94%);
+  margin:25px auto 50px;
+}
+
+.hero{
+  background:linear-gradient(135deg,#172554,#312e81);
+  color:#fff;
+  border-radius:20px;
+  padding:28px;
+  box-shadow:0 9px 25px #0f172a22;
+}
+
+.tag{
+  color:#67e8f9;
+  font-size:.8rem;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.hero h1{
+  margin:6px 0;
+  font-size:clamp(1.9rem,5vw,2.8rem);
+}
+
+.hero p{
+  margin:0;
+  color:#dbeafe;
+}
+
+.panel{
+  background:#fff;
+  border:1px solid #e2e8f0;
+  border-radius:17px;
+  padding:19px;
+  margin-top:17px;
+  box-shadow:0 3px 12px #0f172a0c;
+}
+
+.panel h2{
+  margin:0 0 7px;
+}
+
+.panel ol{
+  color:#475569;
+  margin:6px 0;
+  padding-left:24px;
+}
+
+.list{
+  display:grid;
+  gap:10px;
+  margin-top:18px;
+}
+
+/* DRAGGABLE ITEM */
+
+.item{
+  display:grid;
+  grid-template-columns:44px 1fr 42px;
+  gap:11px;
+  align-items:center;
+
+  background:#fff;
+  border:2px solid #e2e8f0;
+  border-radius:15px;
+  padding:12px;
+
+  box-shadow:0 2px 8px #0f172a0c;
+
+  transition:
+    background .2s,
+    border-color .2s,
+    opacity .2s,
+    transform .15s,
+    box-shadow .15s;
+
+  cursor:grab;
+  user-select:none;
+}
+
+.item:hover{
+  border-color:#94a3b8;
+  box-shadow:0 4px 12px #0f172a18;
+}
+
+.item:active{
+  cursor:grabbing;
+}
+
+/* Card currently being dragged */
+
+.item.dragging{
+  opacity:.35;
+  transform:scale(.98);
+}
+
+/* Card currently being hovered over */
+
+.item.drag-over{
+  border-color:var(--blue);
+  background:#eff6ff;
+  transform:scale(1.01);
+}
+
+/* Verification colours */
+
+.item.correct{
+  background:var(--green);
+  border-color:var(--greenb);
+}
+
+.item.incorrect{
+  background:var(--red);
+  border-color:var(--redb);
+}
+
+
+/* NUMBER */
+
+.num{
+  height:40px;
+  width:40px;
+  display:grid;
+  place-items:center;
+  background:var(--navy);
+  color:#fff;
+  border-radius:11px;
+  font-weight:900;
+}
+
+
+/* TEXT */
+
+.stage{
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  color:var(--muted);
+  font-size:.69rem;
+  font-weight:800;
+  margin-bottom:2px;
+}
+
+.text{
+  font-weight:650;
+}
+
+
+/* DRAG HANDLE */
+
+.drag-handle{
+  display:grid;
+  place-items:center;
+
+  height:40px;
+  width:40px;
+
+  color:#64748b;
+  background:#f8fafc;
+  border:1px solid #cbd5e1;
+  border-radius:9px;
+
+  font-size:22px;
+  font-weight:bold;
+
+  cursor:grab;
+}
+
+.item:hover .drag-handle{
+  color:var(--blue);
+  border-color:#93c5fd;
+  background:#eff6ff;
+}
+
+
+/* BUTTONS */
+
+.controls{
+  display:flex;
+  gap:9px;
+  margin-top:18px;
+}
+
+.btn{
+  border:0;
+  border-radius:11px;
+  padding:13px 18px;
+  font-weight:850;
+  font-size:1rem;
+  cursor:pointer;
+}
+
+.verify{
+  background:var(--blue);
+  color:#fff;
+  flex:1;
+}
+
+.reset{
+  background:#fff;
+  border:1px solid #cbd5e1;
+}
+
+
+/* FEEDBACK */
+
+.feedback{
+  margin-top:15px;
+  padding:16px;
+  border-radius:14px;
+  background:#fffbeb;
+  border:1px solid #fbbf24;
+}
+
+.feedback.success{
+  background:#f0fdf4;
+  border-color:#86efac;
+}
+
+.feedback h2{
+  margin:0 0 4px;
+  font-size:1.1rem;
+}
+
+.feedback p{
+  margin:0;
+  color:#475569;
+}
+
+.hidden{
+  display:none;
+}
+
+.reminder{
+  margin-top:8px;
+  font-size:.86rem;
+  color:#475569;
+}
+
+.footer{
+  text-align:center;
+  color:#64748b;
+  font-size:.78rem;
+  margin-top:22px;
+}
+
+
+/* MOBILE */
+
+@media(max-width:550px){
+
+  .hero{
+    padding:20px;
+  }
+
+  .item{
+    grid-template-columns:37px 1fr 38px;
+    padding:10px;
+    gap:7px;
+  }
+
+  .num{
+    height:35px;
+    width:35px;
+  }
+
+  .drag-handle{
+    width:36px;
+    height:36px;
+  }
+
+  .text{
+    font-size:.91rem;
+  }
+
+  .controls{
+    flex-direction:column;
+  }
+}
+
+</style>
+</head>
+
+
+<body>
+
+<main class="wrap">
+
+<header class="hero">
+
+  <div class="tag">
+    IB Computer Science • A2.4.4
+  </div>
+
+  <h1>
+    Asymmetric Encryption: Put the Process in Order
+  </h1>
+
+  <p>
+    Alice needs to send Bob a confidential message.
+    Reconstruct how Bob's public and private keys are used
+    to protect the message.
+  </p>
+
+</header>
+
+
+<section class="panel">
+
+  <h2>Instructions</h2>
+
+  <ol>
+    <li>Read all the actions.</li>
+
+    <li>
+      <strong>Drag and drop</strong> the actions to put them
+      into the correct order.
+    </li>
+
+    <li>
+      When finished, click
+      <strong>Verify my answer</strong>.
+    </li>
+
+    <li>
+      Green actions are correctly positioned.
+      Red actions need to move.
+    </li>
+  </ol>
+
+  <div class="reminder">
+    <strong>Key idea:</strong>
+    for confidentiality in this simplified scenario,
+    the sender encrypts using the recipient's public key
+    and the recipient decrypts using the corresponding
+    private key.
+  </div>
+
+</section>
+
+
+<div id="list" class="list"></div>
+
+
+<div class="controls">
+
+  <button id="verify" class="btn verify">
+    Verify my answer
+  </button>
+
+  <button id="reset" class="btn reset">
+    ↻ Start again
+  </button>
+
+</div>
+
+
+<div
+  id="feedback"
+  class="feedback hidden"
+  aria-live="polite">
+</div>
+
+
+<div class="footer">
+  Learning focus: the use of public and private keys
+  in asymmetric cryptography.
+</div>
+
+</main>
+
+
 <script>
-const correctOrder=[
-{id:'keys',stage:"Bob",text:"Bob has a mathematically related public key and private key."},
-{id:'private',stage:"Bob",text:"Bob keeps his private key secret and secure."},
-{id:'public',stage:"Bob → Alice",text:"Bob makes his public key available to Alice."},
-{id:'message',stage:"Alice",text:"Alice prepares the confidential message that she wants to send to Bob."},
-{id:'encrypt',stage:"Alice",text:"Alice encrypts the message using Bob's public key."},
-{id:'cipher',stage:"Alice → Bob",text:"The encrypted message (ciphertext) is transmitted across the network."},
-{id:'receive',stage:"Bob",text:"Bob receives the encrypted message."},
-{id:'decrypt',stage:"Bob",text:"Bob uses his corresponding private key to decrypt the message."},
-{id:'read',stage:"Bob",text:"Bob can now read the original plaintext message."}
+
+/* ----------------------------------
+   CORRECT ORDER
+---------------------------------- */
+
+const correctOrder = [
+
+  {
+    id: "keys",
+    stage: "Bob",
+    text: "Bob has a mathematically related public key and private key."
+  },
+
+  {
+    id: "private",
+    stage: "Bob",
+    text: "Bob keeps his private key secret and secure."
+  },
+
+  {
+    id: "public",
+    stage: "Bob → Alice",
+    text: "Bob makes his public key available to Alice."
+  },
+
+  {
+    id: "message",
+    stage: "Alice",
+    text: "Alice prepares the confidential message that she wants to send to Bob."
+  },
+
+  {
+    id: "encrypt",
+    stage: "Alice",
+    text: "Alice encrypts the message using Bob's public key."
+  },
+
+  {
+    id: "cipher",
+    stage: "Alice → Bob",
+    text: "The encrypted message (ciphertext) is transmitted across the network."
+  },
+
+  {
+    id: "receive",
+    stage: "Bob",
+    text: "Bob receives the encrypted message."
+  },
+
+  {
+    id: "decrypt",
+    stage: "Bob",
+    text: "Bob uses his corresponding private key to decrypt the message."
+  },
+
+  {
+    id: "read",
+    stage: "Bob",
+    text: "Bob can now read the original plaintext message."
+  }
+
 ];
-let items=[];let checked=false;
-function shuffle(a){let x=[...a];for(let i=x.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}return x}
-function restart(){do{items=shuffle(correctOrder)}while(items.every((x,i)=>x.id===correctOrder[i].id));checked=false;render();hideFeedback()}
-function move(i,d){let j=i+d;if(j<0||j>=items.length)return;[items[i],items[j]]=[items[j],items[i]];checked=false;render();hideFeedback()}
-function render(){let list=document.getElementById('list');list.innerHTML='';items.forEach((x,i)=>{let ok=checked&&x.id===correctOrder[i].id;let div=document.createElement('div');div.className='item'+(!checked?'':ok?' correct':' incorrect');div.innerHTML=`<div class="num">${i+1}</div><div><div class="stage">${x.stage}</div><div class="text">${x.text}</div></div><div class="arrows"><button class="arrow up" ${i===0?'disabled':''} aria-label="Move action ${i+1} up">▲</button><button class="arrow down" ${i===items.length-1?'disabled':''} aria-label="Move action ${i+1} down">▼</button></div>`;div.querySelector('.up').onclick=()=>move(i,-1);div.querySelector('.down').onclick=()=>move(i,1);list.appendChild(div)})}
-function verify(){checked=true;render();let score=items.filter((x,i)=>x.id===correctOrder[i].id).length;let f=document.getElementById('feedback');f.classList.remove('hidden','success');if(score===correctOrder.length){f.classList.add('success');f.innerHTML='<h2>✓ Excellent! The sequence is correct.</h2><p>Alice encrypts with Bob\'s public key. Only the corresponding private key, which Bob keeps secret, can decrypt the message in this confidentiality scenario.</p>'}else{f.innerHTML=`<h2>${score} of ${correctOrder.length} actions are in the correct position.</h2><p>Green actions are correctly positioned. Move the red actions and verify again. Think carefully about which key Bob shares and which key he must keep secret.</p>`}}
-function hideFeedback(){document.getElementById('feedback').classList.add('hidden')}
-document.getElementById('verify').onclick=verify;document.getElementById('reset').onclick=restart;restart();
-</script></body></html>
+
+
+/* ----------------------------------
+   VARIABLES
+---------------------------------- */
+
+let items = [];
+
+let checked = false;
+
+let draggedIndex = null;
+
+
+/* ----------------------------------
+   SHUFFLE
+---------------------------------- */
+
+function shuffle(array){
+
+  const copy = [...array];
+
+  for(let i = copy.length - 1; i > 0; i--){
+
+    const j =
+      Math.floor(Math.random() * (i + 1));
+
+    const temp = copy[i];
+
+    copy[i] = copy[j];
+    copy[j] = temp;
+
+  }
+
+  return copy;
+}
+
+
+/* ----------------------------------
+   START / RESET
+---------------------------------- */
+
+function restart(){
+
+  do{
+
+    items = shuffle(correctOrder);
+
+  } while (
+
+    items.every(function(item,index){
+
+      return item.id === correctOrder[index].id;
+
+    })
+
+  );
+
+  checked = false;
+
+  render();
+
+  hideFeedback();
+}
+
+
+/* ----------------------------------
+   RENDER ITEMS
+---------------------------------- */
+
+function render(){
+
+  const list =
+    document.getElementById("list");
+
+  list.innerHTML = "";
+
+
+  items.forEach(function(item,index){
+
+    const correct =
+      checked &&
+      item.id === correctOrder[index].id;
+
+
+    const card =
+      document.createElement("div");
+
+
+    card.className = "item";
+
+
+    if(checked){
+
+      if(correct){
+
+        card.classList.add("correct");
+
+      }else{
+
+        card.classList.add("incorrect");
+
+      }
+
+    }
+
+
+    card.setAttribute("draggable","true");
+
+    card.setAttribute(
+      "data-index",
+      index
+    );
+
+
+    /* Create number */
+
+    const number =
+      document.createElement("div");
+
+    number.className = "num";
+
+    number.textContent = index + 1;
+
+
+    /* Create text section */
+
+    const content =
+      document.createElement("div");
+
+    const stage =
+      document.createElement("div");
+
+    stage.className = "stage";
+
+    stage.textContent = item.stage;
+
+
+    const text =
+      document.createElement("div");
+
+    text.className = "text";
+
+    text.textContent = item.text;
+
+
+    content.appendChild(stage);
+
+    content.appendChild(text);
+
+
+    /* Create drag icon */
+
+    const handle =
+      document.createElement("div");
+
+    handle.className = "drag-handle";
+
+    handle.textContent = "☰";
+
+    handle.title =
+      "Click and drag to move this action";
+
+
+    /* Put card together */
+
+    card.appendChild(number);
+
+    card.appendChild(content);
+
+    card.appendChild(handle);
+
+
+    /* --------------------------
+       DRAG START
+    -------------------------- */
+
+    card.addEventListener(
+      "dragstart",
+      function(event){
+
+        draggedIndex =
+          Number(
+            card.getAttribute("data-index")
+          );
+
+        card.classList.add("dragging");
+
+
+        /*
+        Firefox requires data to be
+        attached to the drag event.
+        */
+
+        event.dataTransfer.setData(
+          "text/plain",
+          String(draggedIndex)
+        );
+
+        event.dataTransfer.effectAllowed =
+          "move";
+
+      }
+    );
+
+
+    /* --------------------------
+       DRAG OVER
+    -------------------------- */
+
+    card.addEventListener(
+      "dragover",
+      function(event){
+
+        event.preventDefault();
+
+        card.classList.add("drag-over");
+
+        event.dataTransfer.dropEffect =
+          "move";
+
+      }
+    );
+
+
+    /* --------------------------
+       DRAG LEAVE
+    -------------------------- */
+
+    card.addEventListener(
+      "dragleave",
+      function(){
+
+        card.classList.remove(
+          "drag-over"
+        );
+
+      }
+    );
+
+
+    /* --------------------------
+       DROP
+    -------------------------- */
+
+    card.addEventListener(
+      "drop",
+      function(event){
+
+        event.preventDefault();
+
+        card.classList.remove(
+          "drag-over"
+        );
+
+
+        const targetIndex =
+          Number(
+            card.getAttribute("data-index")
+          );
+
+
+        /*
+        Get source index.
+
+        We use dataTransfer as a fallback
+        because some browsers handle the
+        global variable differently.
+        */
+
+        let sourceIndex =
+          draggedIndex;
+
+
+        const storedIndex =
+          event.dataTransfer.getData(
+            "text/plain"
+          );
+
+
+        if(storedIndex !== ""){
+
+          sourceIndex =
+            Number(storedIndex);
+
+        }
+
+
+        if(
+          sourceIndex === null ||
+          sourceIndex === targetIndex
+        ){
+
+          return;
+
+        }
+
+
+        /*
+        Remove dragged item from its
+        old position.
+        */
+
+        const movedItem =
+          items.splice(
+            sourceIndex,
+            1
+          )[0];
+
+
+        /*
+        Insert it into its new position.
+
+        If the item came from above,
+        removing it shifts the destination
+        index by one.
+        */
+
+        let insertIndex =
+          targetIndex;
+
+
+        if(sourceIndex < targetIndex){
+
+          insertIndex =
+            targetIndex;
+
+        }
+
+
+        items.splice(
+          insertIndex,
+          0,
+          movedItem
+        );
+
+
+        checked = false;
+
+        draggedIndex = null;
+
+        render();
+
+        hideFeedback();
+
+      }
+    );
+
+
+    /* --------------------------
+       DRAG END
+    -------------------------- */
+
+    card.addEventListener(
+      "dragend",
+      function(){
+
+        draggedIndex = null;
+
+        document
+          .querySelectorAll(".item")
+          .forEach(function(element){
+
+            element.classList.remove(
+              "dragging"
+            );
+
+            element.classList.remove(
+              "drag-over"
+            );
+
+          });
+
+      }
+    );
+
+
+    list.appendChild(card);
+
+  });
+
+}
+
+
+/* ----------------------------------
+   VERIFY
+---------------------------------- */
+
+function verify(){
+
+  checked = true;
+
+  render();
+
+
+  const score =
+    items.filter(
+      function(item,index){
+
+        return (
+          item.id ===
+          correctOrder[index].id
+        );
+
+      }
+    ).length;
+
+
+  const feedback =
+    document.getElementById(
+      "feedback"
+    );
+
+
+  feedback.classList.remove(
+    "hidden"
+  );
+
+  feedback.classList.remove(
+    "success"
+  );
+
+
+  if(score === correctOrder.length){
+
+    feedback.classList.add(
+      "success"
+    );
+
+
+    feedback.innerHTML =
+      "<h2>✓ Excellent! The sequence is correct.</h2>" +
+      "<p>Alice encrypts with Bob's public key. " +
+      "Only the corresponding private key, which Bob keeps secret, " +
+      "can decrypt the message in this confidentiality scenario.</p>";
+
+  }
+
+  else{
+
+    feedback.innerHTML =
+      "<h2>" +
+      score +
+      " of " +
+      correctOrder.length +
+      " actions are in the correct position.</h2>" +
+
+      "<p>Green actions are correctly positioned. " +
+      "Drag the red actions to different positions and verify again. " +
+      "Think carefully about which key Bob shares and which key he must keep secret.</p>";
+
+  }
+
+}
+
+
+/* ----------------------------------
+   HIDE FEEDBACK
+---------------------------------- */
+
+function hideFeedback(){
+
+  document
+    .getElementById("feedback")
+    .classList
+    .add("hidden");
+
+}
+
+
+/* ----------------------------------
+   BUTTON EVENTS
+---------------------------------- */
+
+document
+  .getElementById("verify")
+  .addEventListener(
+    "click",
+    verify
+  );
+
+
+document
+  .getElementById("reset")
+  .addEventListener(
+    "click",
+    restart
+  );
+
+
+/* ----------------------------------
+   START GAME
+---------------------------------- */
+
+restart();
+
+</script>
+
+</body>
+</html>
