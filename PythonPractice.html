@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Python Lab · Coding practice</title>
+<style>
+:root{font-family:Inter,ui-sans-serif,system-ui,sans-serif;color:#182d35;background:#f3f5f1;font-synthesis:none}*{box-sizing:border-box}body{margin:0;line-height:1.6}button,input,select,textarea{font:inherit}button{cursor:pointer;border:1px solid #ccd7d4;border-radius:8px;background:white;color:#233c43;padding:10px 15px;font-size:13px;font-weight:650}button:hover:not(:disabled){background:#e9f2ec}button:disabled{opacity:.45;cursor:not-allowed}button.primary{background:#176e58;border-color:#176e58;color:white}button.primary:hover:not(:disabled){background:#125643}button:focus-visible,a:focus-visible,textarea:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #db9c32;outline-offset:4px}a{color:#176e58}[hidden]{display:none!important}.site-nav{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 5%;background:#fcfdfb;border-bottom:1px solid #dce3de}.site-nav a{display:flex;align-items:center;gap:10px;text-decoration:none;font-size:15px;font-weight:750;color:#182d35}.site-nav .back{font-size:13px;color:#176e58}.mark{display:grid;place-items:center;background:#16735c;color:white;width:32px;height:32px;border-radius:7px;font-size:18px}.tag,.eyebrow{font-size:11px;letter-spacing:1.7px;color:#617572;font-weight:750;text-transform:uppercase}main{max-width:1380px;margin:auto;padding:36px 28px 50px}h1{font-size:clamp(30px,4vw,44px);line-height:1.15;letter-spacing:-1.5px;margin:10px 0}h2{font-size:21px;line-height:1.3;margin:7px 0 12px}h3{font-size:14px;margin:0 0 10px}p{margin:7px 0 14px}.intro p{color:#61716f;font-size:14px}.runtime-note{display:flex;justify-content:space-between;align-items:center;gap:18px;font-size:12px;color:#61716f;background:#e9f2ec;border:1px solid #d1e3d7;padding:13px 16px;border-radius:10px;margin:22px 0}.runtime-note strong{color:#176e58;flex-shrink:0}.layout{display:grid;grid-template-columns:235px minmax(0,1fr);gap:22px;align-items:start}.exercise-nav{background:white;border:1px solid #dbe3df;border-radius:14px;padding:18px 12px}.exercise-nav h2{font-size:13px;margin:0 8px 14px}.exercise-nav ol{list-style:none;padding:0;margin:0;display:grid;gap:5px}.exercise-nav button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border-color:transparent;font-weight:500;padding:11px 9px}.exercise-nav button[aria-current=true]{background:#e9f2ec;color:#176e58;border-color:#d1e3d7;font-weight:700}.exercise-number{font-size:11px;color:#617572;min-width:20px}.exercise-nav small{display:block;font-size:10px;color:#61716f;line-height:1.5;margin-top:2px}.progress{font-size:11px;color:#61716f;padding:14px 8px 0}.workspace{min-width:0}.brief{background:white;border:1px solid #dbe3df;border-radius:14px;padding:23px;margin-bottom:18px}.brief-text{font-size:14px;max-width:790px}.brief-text code{background:#e9f2ec;padding:2px 5px;border-radius:4px}.example{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}.example div{border:1px solid #dbe3df;border-radius:8px;overflow:hidden}.example h3{font-size:10px;letter-spacing:1.3px;text-transform:uppercase;color:#617572;background:#fcfdfb;border-bottom:1px solid #e5ebe7;padding:9px 12px;margin:0}.example pre{margin:0;padding:12px;font-size:13px;overflow:auto;min-height:44px}.brief details{font-size:12px;color:#61716f;margin-top:15px}.brief summary{cursor:pointer;font-weight:650;color:#176e58}.brief details p{margin:8px 0 0}.editor-panel{background:white;border:1px solid #dbe3df;border-radius:14px;overflow:hidden}.editor-top{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:12px 18px;border-bottom:1px solid #dbe3df;font-size:12px;font-weight:650}.editor-top small{font-size:11px;color:#61716f;font-weight:400}.editor-wrap{display:flex;background:#172d35;min-height:295px}.line-numbers{padding:17px 10px 17px 15px;color:#90aaa1;text-align:right;font:13px/1.8 ui-monospace,monospace;overflow:hidden;width:49px;flex-shrink:0;user-select:none;max-height:420px;white-space:pre}#editor{display:block;flex:1;min-width:0;width:100%;height:320px;min-height:220px;max-height:700px;resize:vertical;border:0;border-radius:0;background:#172d35;color:#f0f5ef;outline-offset:-4px;padding:17px 18px 17px 8px;tab-size:4;font:13px/1.8 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre;overflow:auto}.editor-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:13px 16px}.run-actions,.draft-actions{display:flex;gap:8px;flex-wrap:wrap}.editor-help{font-size:11px;color:#61716f;margin:0;padding:0 17px 14px}.io-grid{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1fr);gap:18px;margin-top:18px}.io-card{background:white;border:1px solid #dbe3df;border-radius:14px;padding:19px;min-width:0}.io-card label{font-size:13px;font-weight:700;display:block}.io-card p{font-size:11px;color:#61716f;margin:6px 0 12px}#stdin{display:block;width:100%;min-height:120px;border:1px solid #ccd7d4;border-radius:8px;background:#fcfdfb;padding:10px;color:#182d35;font:13px/1.6 ui-monospace,monospace;resize:vertical}#output{font:13px/1.7 ui-monospace,monospace;white-space:pre-wrap;overflow-wrap:anywhere;max-height:300px;overflow:auto;margin:0;min-height:110px}#run-status{font-size:12px;color:#61716f;margin:0 0 12px;min-height:20px}.error{color:#a12e35!important}.feedback{margin-top:18px;background:white;border:1px solid #dbe3df;border-radius:14px;padding:20px}.feedback-title{font-size:16px;margin:0 0 6px}.feedback-description{font-size:12px;color:#61716f;margin:0 0 14px}.test-list{display:grid;gap:10px}.test-case{border:1px solid #dbe3df;border-radius:8px;padding:12px 14px;font-size:12px}.test-case.pass{border-left:4px solid #176e58}.test-case.fail{border-left:4px solid #c55a42}.test-case summary{cursor:pointer;font-weight:650}.test-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}.test-grid small{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#617572}.test-grid pre{font:12px/1.6 ui-monospace,monospace;margin:5px 0;white-space:pre-wrap;overflow-wrap:anywhere}.success{color:#176e58}.page-note{font-size:12px;color:#61716f;margin-top:24px}.page-note summary{cursor:pointer;font-weight:650;color:#233c43}.page-note p{max-width:900px}footer{font-size:11px;color:#798782;margin-top:24px}#draft-status{font-size:11px;color:#61716f;padding:0 17px 12px}
+@media(max-width:1000px){.layout{grid-template-columns:205px minmax(0,1fr)}.io-grid{grid-template-columns:1fr}}@media(max-width:740px){main{padding:26px 15px 40px}.layout{grid-template-columns:1fr}.exercise-nav ol{grid-template-columns:1fr 1fr}.exercise-nav button{height:100%}.runtime-note{align-items:flex-start;flex-direction:column;gap:7px}.tag{display:none}.test-grid{grid-template-columns:1fr}.site-nav{padding:15px}.site-nav a{font-size:13px}.brief{padding:19px}.editor-top{align-items:flex-start}.editor-top small{max-width:160px;text-align:right}}@media(max-width:420px){.example{grid-template-columns:1fr}.draft-actions{width:100%}.run-actions button{padding:10px 12px}.exercise-nav{padding:14px 8px}.exercise-nav button{font-size:12px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+.line-numbers{height:320px;max-height:none}</style></head><body>
+<nav class="site-nav" aria-label="Activity navigation"><a href="index.html"><span class="mark" aria-hidden="true">&gt;_</span>Python Lab<span class="tag"> / Computer Science</span></a><a class="back" href="index.html">← All activities</a></nav>
+<main><section class="intro"><div class="eyebrow">Learn by writing code</div><h1>Think it through. Run it. Refine it.</h1><p>Choose an exercise, write Python, and check your program against a set of test cases.</p></section>
+<div class="runtime-note"><span>Python runs on your device. An internet connection is required to download the Python runtime when it loads. Browser caching may reduce later downloads; offline use is not guaranteed.</span><strong id="runtime-status" role="status">Python loads on first run</strong></div>
+<div class="layout"><aside class="exercise-nav"><h2>Choose an exercise</h2><ol id="exercise-list"></ol><div class="progress" id="progress"></div></aside>
+<div class="workspace"><section class="brief" aria-labelledby="exercise-title"><div class="eyebrow" id="exercise-topic"></div><h2 id="exercise-title"></h2><p class="brief-text" id="exercise-instructions"></p><div class="example"><div><h3>Example input</h3><pre id="example-input"></pre></div><div><h3>Expected output</h3><pre id="example-output"></pre></div></div><details><summary>Need a hint?</summary><p id="exercise-hint"></p></details></section>
+<section class="editor-panel" aria-label="Python editor"><div class="editor-top"><label for="editor">Your program · main.py</label><small>Python 3 · Tab = 4 spaces<br>Ctrl / Cmd + Enter = Run</small></div><div class="editor-wrap"><div class="line-numbers" id="line-numbers" aria-hidden="true">1</div><textarea id="editor" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off" aria-describedby="editor-help"></textarea></div><div class="editor-actions"><div class="run-actions"><button class="primary" id="run-code" type="button">▶ Run code</button><button id="check-code" type="button">Check all tests</button><button id="stop-code" type="button" disabled>Stop</button></div><div class="draft-actions"><button id="reset-code" type="button">Reset starter</button><button id="undo-reset" type="button" hidden>Undo reset</button><button id="download-code" type="button">Download .py</button></div></div><p class="editor-help" id="editor-help">Use print() for output. For exercises with input, use input() without a prompt; each call reads the next input line. Only printed output is checked.</p><div id="draft-status" role="status"></div></section>
+<div class="io-grid"><section class="io-card"><label for="stdin">Input for “Run code”</label><p>Edit these lines to try your own values. “Check all tests” uses the exercise’s fixed test inputs instead.</p><textarea id="stdin" spellcheck="false" aria-label="Input lines for your program"></textarea></section><section class="io-card" aria-labelledby="output-title"><h3 id="output-title">Your output</h3><div id="run-status" role="status" aria-live="polite">Write your program, then select Run code.</div><pre id="output" tabindex="0" aria-label="Program output"></pre></section></div>
+<section class="feedback" id="feedback" aria-labelledby="feedback-title" hidden><h3 class="feedback-title" id="feedback-title"></h3><p class="feedback-description" id="feedback-description"></p><div class="test-list" id="test-list"></div></section>
+</div></div>
+<details class="page-note"><summary>How running and checking work</summary><p>The page uses <a href="https://pyodide.org/en/0.27.7/" target="_blank" rel="noopener noreferrer">Pyodide</a>, which downloads Python from jsDelivr and runs it in a browser worker. No Python installation or execution server is needed. This page does not upload your code or inputs. The runtime download makes a normal request to the CDN.</p><p>The editor, exercises, and checking code are embedded in this HTML file. The Python runtime is an external dependency. Programs are limited to 10 seconds per test and 20,000 output characters. Stop ends the worker, including an infinite loop. A new worker loads on the next run.</p><p>Checks compare printed output, including capitalisation, spaces, and line order. Windows line endings are normalised, and a single final newline is ignored. Input prompts count as output, so use input() without a prompt. Passing the tests checks results, not the algorithm or coding style. Tests and expected answers are visible in the page source; this is a practice tool.</p><p>Drafts and passed-exercise markers are stored in this browser on this device when browser storage is available. Nothing is saved to a class account. Only the Python standard library is intended for these exercises; graphical desktop apps and additional package installation are not included.</p></details>
+<footer>Made for curiosity. Keep a downloaded copy of any code you want to retain.</footer>
+</main>
+<script id="python-worker" type="text/plain">
+import { loadPyodide } from 'https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.mjs';
+let pyodide;
+const runner = `
+import io as _io, sys as _sys, json as _json, traceback as _traceback
+class _BoundedOutput(_io.StringIO):
+    def write(self, text):
+        if self.tell() + len(text) > 20000:
+            raise RuntimeError("Output limit reached (20,000 characters). Check your loop or print statements.")
+        return super().write(text)
+def _run_student(code, input_text):
+    out, err = _BoundedOutput(), _BoundedOutput()
+    old_in, old_out, old_err = _sys.stdin, _sys.stdout, _sys.stderr
+    error = None
+    try:
+        _sys.stdin = _io.StringIO(input_text)
+        _sys.stdout, _sys.stderr = out, err
+        namespace = {"__name__": "__main__"}
+        exec(compile(code, "main.py", "exec"), namespace, namespace)
+    except BaseException:
+        error = _traceback.format_exc()
+    finally:
+        _sys.stdin, _sys.stdout, _sys.stderr = old_in, old_out, old_err
+    return _json.dumps({"stdout": out.getvalue(), "stderr": err.getvalue(), "error": error})
+`;
+try {
+ pyodide = await loadPyodide({indexURL:'https://cdn.jsdelivr.net/pyodide/v0.27.7/full/'});
+ pyodide.runPython(runner);
+ self.postMessage({type:'ready'});
+} catch(error) {self.postMessage({type:'load-error',error:String(error.message||error)});}
+self.onmessage = async event => {
+ const {id,code,cases} = event.data;
+ if (!pyodide) return;
+ for (let index=0; index<cases.length; index++) {
+  self.postMessage({type:'case-start',id,index});
+  try {
+   pyodide.globals.set('_student_code',code);
+   pyodide.globals.set('_student_input',cases[index]);
+   const result=JSON.parse(await pyodide.runPythonAsync('_run_student(_student_code, _student_input)'));
+   self.postMessage({type:'result',id,index,result});
+  } catch(error) {self.postMessage({type:'result',id,index,result:{stdout:'',stderr:'',error:String(error.message||error)}});}
+ }
+ self.postMessage({type:'done',id});
+};
+</script>
+<script>
+'use strict';
+// Add exercises here. All test inputs and expected outputs are plain strings.
+const EXERCISES = [
+ {id:'hello',title:'Say hello',topic:'01 / Output',instructions:'Print exactly Hello, world! on one line. Use the same capital letters, comma, space and exclamation mark.',hint:'Put the text inside quotes and pass it to print().',starter:'# Print the greeting below.\n',tests:[{input:'',expected:'Hello, world!\n'}]},
+ {id:'sum',title:'Add two numbers',topic:'02 / Input and arithmetic',instructions:'Read two whole numbers using two calls to input(). Print their sum as a whole number, without a label.',hint:'input() gives you text. Convert each value with int() before adding.',starter:'first = int(input())\nsecond = int(input())\n# Print their sum.\n',tests:[{input:'7\n5\n',expected:'12\n'},{input:'-4\n9\n',expected:'5\n'},{input:'0\n0\n',expected:'0\n'},{input:'-3\n-8\n',expected:'-11\n'}]},
+ {id:'even',title:'Odd or even?',topic:'03 / Selection',instructions:'Read one whole number. Print Even if it is divisible by 2; otherwise print Odd. Capitalise the first letter only.',hint:'The remainder operator % can help: a number is even when number % 2 == 0.',starter:'number = int(input())\n# Decide whether to print Even or Odd.\n',tests:[{input:'8\n',expected:'Even\n'},{input:'7\n',expected:'Odd\n'},{input:'0\n',expected:'Even\n'},{input:'-3\n',expected:'Odd\n'}]},
+ {id:'table',title:'Multiples from 1 to 10',topic:'04 / Count-controlled loops',instructions:'Read one whole number. Print its first ten multiples, from 1 times the number to 10 times the number. Put each result on a separate line, without labels.',hint:'Use range(1, 11) to get the multipliers 1 through 10.',starter:'number = int(input())\n# Use a loop to print ten multiples.\n',tests:[{input:'3\n',expected:'3\n6\n9\n12\n15\n18\n21\n24\n27\n30\n'},{input:'0\n',expected:'0\n0\n0\n0\n0\n0\n0\n0\n0\n0\n'},{input:'-2\n',expected:'-2\n-4\n-6\n-8\n-10\n-12\n-14\n-16\n-18\n-20\n'}]},
+ {id:'total',title:'A running total',topic:'05 / Accumulation',instructions:'Read a non-negative whole number n. Print the sum of the whole numbers from 1 to n, inclusive. When n is 0, print 0. Try using a loop and a running total.',hint:'Start total at 0. Add each number from range(1, n + 1), then print total after the loop.',starter:'n = int(input())\ntotal = 0\n# Add the numbers from 1 to n, then print total.\n',tests:[{input:'5\n',expected:'15\n'},{input:'0\n',expected:'0\n'},{input:'1\n',expected:'1\n'},{input:'20\n',expected:'210\n'}]},
+ {id:'vowels',title:'Count the vowels',topic:'06 / Strings and loops',instructions:'Read one line of text. Count the letters a, e, i, o and u, including uppercase versions. Print the count as a whole number. Do not count y as a vowel.',hint:'Convert the text to lowercase, then check whether each character is in "aeiou".',starter:'text = input()\ncount = 0\n# Count vowels, then print the count.\n',tests:[{input:'Hello World\n',expected:'3\n'},{input:'AEIOU\n',expected:'5\n'},{input:'rhythm\n',expected:'0\n'},{input:'\n',expected:'0\n'}]},
+ {id:'largest',title:'Find the largest',topic:'07 / Comparing values',instructions:'Read three whole numbers, one per input line. Print the largest number. Your program should also work when numbers are equal or negative.',hint:'Keep track of the largest value so far, or use Python’s max() function.',starter:'first = int(input())\nsecond = int(input())\nthird = int(input())\n# Print the largest number.\n',tests:[{input:'8\n12\n5\n',expected:'12\n'},{input:'-8\n-2\n-5\n',expected:'-2\n'},{input:'4\n4\n1\n',expected:'4\n'},{input:'9\n2\n3\n',expected:'9\n'},{input:'1\n2\n10\n',expected:'10\n'}]},
+ {id:'reverse',title:'Reverse a string',topic:'08 / String manipulation',instructions:'Read one line of text and print its characters in reverse order. Keep spaces and capital letters exactly as they are.',hint:'A slice with a step of -1 reverses a string. You can also build a reversed string in a loop.',starter:'text = input()\n# Print the text in reverse.\n',tests:[{input:'Computer\n',expected:'retupmoC\n'},{input:'A B\n',expected:'B A\n'},{input:'x\n',expected:'x\n'},{input:'\n',expected:'\n'}]}
+];
+const $=id=>document.getElementById(id);
+const STORAGE_KEY='computer-science-python-lab-v1';
+let saved={drafts:{},passed:{}};
+try {const data=JSON.parse(localStorage.getItem(STORAGE_KEY));if(data&&typeof data==='object'){if(data.drafts&&typeof data.drafts==='object') saved.drafts=data.drafts;if(data.passed&&typeof data.passed==='object') saved.passed=data.passed;}} catch{}
+let current=EXERCISES[0], worker=null, workerReady=false, activeJob=null, serial=0, timer=null, undoDraft=null;
+function normaliseOutput(text){return text.replace(/\r\n/g,'\n').replace(/\n$/,'');}
+function outputsMatch(actual,expected){return normaliseOutput(actual)===normaliseOutput(expected);}
+function saveDraft(){
+ saved.drafts[current.id]=$('editor').value;
+ try {localStorage.setItem(STORAGE_KEY,JSON.stringify(saved));$('draft-status').textContent='Draft saved in this browser on this device.';} catch{$('draft-status').textContent='Browser storage unavailable. Draft kept for this open page; download your code to retain it.';}
+}
+function updateLines(){const count=$('editor').value.split('\n').length;$('line-numbers').textContent=Array.from({length:count},(_,i)=>i+1).join('\n');$('line-numbers').scrollTop=$('editor').scrollTop;}
+function renderExerciseList(){
+ $('exercise-list').replaceChildren();
+ EXERCISES.forEach((exercise,index)=>{const li=document.createElement('li'),button=document.createElement('button'),number=document.createElement('span'),text=document.createElement('span'),small=document.createElement('small');button.type='button';button.setAttribute('aria-current',String(exercise.id===current.id));number.className='exercise-number';number.textContent=String(index+1).padStart(2,'0');text.textContent=exercise.title;small.textContent=saved.passed[exercise.id]?'✓ Previously passed':'Practice exercise';text.append(small);button.append(number,text);button.disabled=Boolean(activeJob);button.addEventListener('click',()=>selectExercise(exercise.id));li.append(button);$('exercise-list').append(li);});
+ $('progress').textContent=EXERCISES.filter(e=>saved.passed[e.id]).length+' / '+EXERCISES.length+' exercises passed at least once';
+}
+function selectExercise(id){
+ if(activeJob)return;saveDraft();current=EXERCISES.find(e=>e.id===id)||EXERCISES[0];
+ $('exercise-title').textContent=current.title;$('exercise-topic').textContent=current.topic;$('exercise-instructions').textContent=current.instructions;$('exercise-hint').textContent=current.hint;
+ $('example-input').textContent=current.tests[0].input||'(no input)';$('example-output').textContent=current.tests[0].expected;
+ $('editor').value=typeof saved.drafts[current.id]==='string'?saved.drafts[current.id]:current.starter;
+ $('stdin').value=current.tests[0].input;$('output').textContent='';$('run-status').textContent='Write your program, then select Run code.';$('run-status').classList.remove('error');$('feedback').hidden=true;undoDraft=null;$('undo-reset').hidden=true;updateLines();saveDraft();renderExerciseList();
+}
+function setBusy(busy){
+ for(const id of ['run-code','check-code','reset-code','undo-reset'])$(id).disabled=busy;
+ $('stop-code').disabled=!busy;$('editor').readOnly=busy;$('stdin').disabled=busy;renderExerciseList();
+}
+function terminateWorker(){if(worker)worker.terminate();worker=null;workerReady=false;}
+function endJob(message,error=false){clearTimeout(timer);timer=null;activeJob=null;setBusy(false);$('run-status').textContent=message;$('run-status').classList.toggle('error',error);}
+function stopJob(message='Stopped. You can edit your code and run again.'){
+ if(!activeJob)return;terminateWorker();$('runtime-status').textContent='Python reloads on next run';if(activeJob.kind==='check'){$('feedback-title').textContent='Checking stopped';$('feedback-description').textContent='The test run did not finish. Remaining tests were not checked.';}endJob(message,true);
+}
+function workerFailure(message){terminateWorker();$('runtime-status').textContent='Python could not load';if(activeJob){if(activeJob.kind==='check'){$('feedback-title').textContent='Tests could not finish';$('feedback-description').textContent=message;}endJob(message,true);}}
+function dispatchJob(){
+ if(!worker||!workerReady||!activeJob)return;
+ clearTimeout(timer);activeJob.phase='running';$('runtime-status').textContent='Python ready · runs locally';$('run-status').textContent=activeJob.kind==='check'?'Checking test cases…':'Running your program…';
+ worker.postMessage({id:activeJob.id,code:activeJob.code,cases:activeJob.cases.map(test=>test.input)});
+ timer=setTimeout(()=>stopJob('Stopped after 10 seconds. Check for an infinite loop or a very long calculation.'),10000);
+}
+function createWorker(){
+ try{
+ const url=URL.createObjectURL(new Blob([$('python-worker').textContent],{type:'text/javascript'}));
+ try{worker=new Worker(url,{type:'module'});}finally{URL.revokeObjectURL(url);}
+ const instance=worker;
+ worker.onmessage=event=>{
+  if(worker!==instance)return;const message=event.data;
+  if(message.type==='ready'){workerReady=true;dispatchJob();return;}
+  if(message.type==='load-error'){workerFailure('Python could not load. Check your internet connection and whether your school allows cdn.jsdelivr.net, then try Run code again.');return;}
+  if(!activeJob||message.id!==activeJob.id)return;
+  if(message.type==='case-start'){clearTimeout(timer);timer=setTimeout(()=>stopJob('Stopped after 10 seconds on a test. Check your loop conditions.'),10000);return;}
+  if(message.type==='result')handleResult(message);
+  if(message.type==='done')completeJob();
+ };
+ worker.onerror=event=>{event.preventDefault();if(worker===instance)workerFailure('Python could not start or the worker failed. Check your connection and use a current browser. If opening the file is blocked by your browser, serve this page from your school website.');};
+ }catch(error){workerFailure('This browser could not start Python. Use a current browser with WebAssembly and web worker support.');}
+}
+function startJob(kind){
+ if(activeJob)return;if(!$('editor').value.trim()){$('run-status').textContent='Write some Python code first.';return;}
+ saveDraft();$('output').textContent='';$('run-status').classList.remove('error');$('feedback').hidden=kind!=='check';$('test-list').replaceChildren();
+ activeJob={id:++serial,kind,exerciseId:current.id,code:$('editor').value,cases:kind==='check'?current.tests:[{input:$('stdin').value}],results:[],phase:'loading'};
+ if(kind==='check'){$('feedback-title').textContent='Checking your program…';$('feedback-description').textContent='Each case runs with fresh Python variables and the input shown below.';}
+ setBusy(true);
+ if(workerReady){dispatchJob();return;}
+ $('runtime-status').textContent='Downloading Python…';$('run-status').textContent='Loading Python. The first download can take a little while. You can cancel with Stop.';
+ timer=setTimeout(()=>stopJob('Python took too long to load. Check your connection and try again.'),90000);
+ createWorker();
+}
+function appendPre(parent,label,value){const box=document.createElement('div'),small=document.createElement('small'),pre=document.createElement('pre');small.textContent=label;pre.textContent=value===''?'(no output)':value;box.append(small,pre);parent.append(box);}
+function handleResult(message){
+ const result=message.result,test=activeJob.cases[message.index];
+ const passed=!result.error&&!result.stderr&&outputsMatch(result.stdout,test.expected===undefined?'':test.expected);
+ activeJob.results.push({passed,result});
+ if(activeJob.kind==='run'){$('output').textContent=result.stdout+(result.stderr?'\n'+result.stderr:'')+(result.error?'\n'+result.error:'');if(!$('output').textContent)$('output').textContent='(no printed output)';return;}
+ const details=document.createElement('details'),summary=document.createElement('summary'),grid=document.createElement('div');details.className='test-case '+(passed?'pass':'fail');details.open=!passed;summary.textContent='Test '+(message.index+1)+' · '+(passed?'Passed':result.error?'Python error':'Output differs');grid.className='test-grid';appendPre(grid,'Input',test.input||'(no input)');appendPre(grid,'Expected',test.expected);appendPre(grid,'Your output',result.stdout);details.append(summary,grid);
+ if(result.error||result.stderr){const error=document.createElement('pre');error.className='error';error.style.whiteSpace='pre-wrap';error.style.overflowWrap='anywhere';error.textContent=result.error||result.stderr;details.append(error);}
+ $('test-list').append(details);
+}
+function completeJob(){
+ const job=activeJob;if(!job)return;
+ if(job.kind==='check'){
+  const passed=job.results.filter(r=>r.passed).length,all=passed===job.cases.length&&job.results.length===job.cases.length;
+  $('feedback-title').textContent=passed+' / '+job.cases.length+' tests passed'+(all?' · Well done!':'');
+  $('feedback-description').textContent=all?'Your printed output matches every test. These checks assess output, not your chosen method.':'Open a test below to compare its input, expected output and your actual output. Check spaces, capitals and extra prompts.';
+  if(all){saved.passed[job.exerciseId]=true;saveDraft();}
+  endJob(all?'All tests passed.':'Checking complete. Review the test results below.');
+ }else{const result=job.results[0]?.result;endJob(result?.error?'Python reported an error. Read the message in Your output.':'Run complete. Use Check all tests to assess this exercise.',Boolean(result?.error));}
+}
+$('run-code').addEventListener('click',()=>startJob('run'));$('check-code').addEventListener('click',()=>startJob('check'));$('stop-code').addEventListener('click',()=>stopJob());
+$('editor').addEventListener('input',()=>{updateLines();saveDraft();$('feedback').hidden=true;});
+$('editor').addEventListener('scroll',()=>{$('line-numbers').scrollTop=$('editor').scrollTop;});
+$('editor').addEventListener('keydown',event=>{
+ if((event.ctrlKey||event.metaKey)&&event.key==='Enter'){event.preventDefault();startJob('run');return;}
+ if(event.key==='Tab'&&!event.shiftKey&&!$('editor').readOnly){event.preventDefault();const editor=$('editor');editor.setRangeText('    ',editor.selectionStart,editor.selectionEnd,'end');updateLines();saveDraft();}
+});
+$('reset-code').addEventListener('click',()=>{undoDraft=$('editor').value;$('editor').value=current.starter;$('undo-reset').hidden=false;$('feedback').hidden=true;updateLines();saveDraft();});
+$('undo-reset').addEventListener('click',()=>{if(undoDraft!==null){$('editor').value=undoDraft;undoDraft=null;$('undo-reset').hidden=true;updateLines();saveDraft();}});
+$('download-code').addEventListener('click',()=>{const url=URL.createObjectURL(new Blob([$('editor').value],{type:'text/x-python'})),a=document.createElement('a');a.href=url;a.download=current.id+'.py';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+// Initialise without overwriting any stored draft for the first exercise.
+$('editor').value=typeof saved.drafts[current.id]==='string'?saved.drafts[current.id]:current.starter;
+selectExercise(current.id);
+if(typeof ResizeObserver!=='undefined')new ResizeObserver(()=>{$('line-numbers').style.height=$('editor').clientHeight+'px';}).observe($('editor'));
+</script>
+</body></html>
