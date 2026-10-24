@@ -1,0 +1,55 @@
+COMPUTER SCIENCE ACTIVITIES
+
+TRUTH TABLE UPDATE
+- Seven operator checkboxes, with XNOR off by default for IGCSE.
+- Choose exactly 1 to 5 operator occurrences, including unary NOT.
+- Generate an expression using only the selected operator pool. Operators may
+  repeat; not all selected operators must appear. NOT-only selections work.
+- Complete initially blank output choices, then check answers with inline
+  scoring and feedback. Only variables present in the expression are listed.
+- Tested all 127 nonempty operator selections and each supported count, plus
+  all seven truth functions and form/checking behavior using a DOM test double.
+- This update replaces the original TruthTables.html generation and checking
+  logic. Browser rendering remains unverified in this environment.
+
+Open index.html after extracting the complete folder.
+
+WHAT CHANGED
+- A new index with the original IGCSE and IB sections, topic cards, curriculum
+  shortcuts, and activity search. All 38 original index links are preserved.
+- All 41 pages other than ImageLab.html now use its off-white, slate, and green
+  visual theme and system font stack. ImageLab.html is completely unchanged.
+- Each HTML page contains its own CSS and JavaScript. The binary demonstrations
+  now use embedded JavaScript and accessible toggle buttons, with bit-level
+  navigation and layouts that fit narrow screens.
+- Existing activity logic, content, feedback colours and image assets are
+  preserved. Sound Lab's decorative waveform colours match the new theme.
+- An obsolete captured Cloudflare challenge snippet was removed from Bit Lab.
+
+INDEPENDENT PAGES
+There is no shared CSS or JavaScript dependency. Original auxiliary CSS and JS
+files remain in binary/ for completeness, but no HTML page loads them.
+Binary card and bulb pages still use the local PNG assets. Keep these images
+alongside their pages when copying the activities.
+Inter is used when installed, with the same system sans-serif fallbacks as
+ImageLab. There are no remote font downloads.
+
+ORIGINAL MISSING DESTINATIONS
+These four coming-soon links were already present in the original index, but
+the ZIP did not include their target pages. The links are retained unchanged:
+- igcse-software.html
+- igcse-automated-emerging.html
+- ib-databases.html
+- ib-machine-learning.html
+
+VALIDATION
+- All 42 HTML pages checked for retained original links, embedded code,
+  duplicate IDs, and valid local image references.
+- Original activity IDs and application logic verified as preserved, apart
+  from the documented binary demonstration rewrite and cosmetic Sound Lab
+  colours.
+- All 43 embedded scripts passed JavaScript syntax checks.
+- ImageLab.html verified byte-for-byte identical to the original.
+- Browser rendering and full interactive browser tests could not be completed
+  because local preview access was blocked in this environment. Responsive
+  styles are included, but a final browser review is recommended before upload.

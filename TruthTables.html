@@ -6,9 +6,9 @@
 
 <style>
 body {
-    font-family: "Segoe UI", sans-serif;
-    background: #0f172a;
-    color: #e2e8f0;
+    font-family:Inter, ui-sans-serif, system-ui, sans-serif;
+    background: #f3f5f1;
+    color: #182d35;
     text-align: center;
 }
 
@@ -25,22 +25,22 @@ h1 {
 table {
     margin: auto;
     border-collapse: collapse;
-    background: #1e293b;
+    background: #ffffff;
     border-radius: 10px;
     overflow: hidden;
 }
 
 td, th {
     padding: 10px;
-    border: 1px solid #334155;
+    border: 1px solid #dbe3df;
 }
 
 select {
     padding: 5px;
     border-radius: 5px;
-    background: #0f172a;
-    color: #e2e8f0;
-    border: 1px solid #475569;
+    background: #f3f5f1;
+    color: #182d35;
+    border: 1px solid #61716f;
 }
 
 .correct {
@@ -56,230 +56,186 @@ button {
     padding: 10px 20px;
     border-radius: 8px;
     border: none;
-    background: #6366f1;
-    color: white;
+    background: #176e58;
+    color:#233c43;
     cursor: pointer;
 }
 </style>
-</head>
+<meta name="viewport" content="width=device-width,initial-scale=1"><style>
+/* Image Lab theme. Embedded so this activity has no shared stylesheet dependency. */
+:root{font-family:Inter,ui-sans-serif,system-ui,sans-serif;color:#182d35;background:#f3f5f1;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0;padding:0;max-width:none;min-height:100vh;display:block;background:#f3f5f1;color:#182d35;font-family:Inter,ui-sans-serif,system-ui,sans-serif;line-height:1.6}
+button,input,select,textarea{font-family:inherit}button,select,input:not([type=range]):not([type=checkbox]):not([type=radio]):not([type=color]):not([type=file]),textarea{border-radius:8px}button{font-weight:600;box-shadow:none}button:not(:disabled){cursor:pointer}button:disabled{cursor:not-allowed}
+a{color:#176e58}a:hover{color:#125643}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid #db9c32;outline-offset:4px}
+input[type=range],input[type=checkbox],input[type=radio],progress{accent-color:#19745c}
+h1{font-size:clamp(28px,4vw,44px);letter-spacing:-1.5px;line-height:1.15;font-weight:750}h2,h3{line-height:1.3}p{line-height:1.6}
+.hero{background:#fcfdfb;color:#182d35;border:1px solid #dbe3df;border-radius:14px;box-shadow:none}.hero p{color:#61716f}.hero .tag{color:#617572}
+.card,.panel,.question-card,.app,.category,.platform,.plan-card{box-shadow:none;border-radius:14px}
+.activity-shell{width:min(1200px,100%);margin:0 auto;padding:32px 28px 56px}.activity-shell>h1:first-child,.activity-shell>h2:first-child{margin-top:8px}.activity-shell>.container{width:100%;max-width:100%;margin-left:auto;margin-right:auto}
+nav.site-nav{display:flex;justify-content:space-between;align-items:center;gap:20px;background:#fcfdfb;border-bottom:1px solid #dce3de;padding:18px 5%;text-align:left;line-height:1.3}
+.site-nav a{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-size:15px;font-weight:750;color:#182d35}.site-nav .site-mark{display:inline-grid;place-items:center;background:#16735c;color:white;border-radius:7px;width:32px;height:32px;font-size:19px}.site-nav .site-back{font-size:13px;font-weight:600;color:#176e58}.site-nav .site-sub{font-size:10px;letter-spacing:1.7px;text-transform:uppercase;color:#617572}
+@media(max-width:640px){.activity-shell{padding:24px 15px 40px}.site-nav .site-sub{display:none}nav.site-nav{padding:15px}.site-nav a{font-size:13px}.row,.question,.task{flex-wrap:wrap;gap:10px}.row select,.question select,.task select{width:100%;min-width:0}.row div:first-child{width:100%!important}.controls{flex-wrap:wrap}h1{letter-spacing:-1px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{transition:none!important;animation:none!important}}
+@media print{.site-nav{display:none!important}body{background:white}}
+button{background:#176e58;color:white;border:1px solid #176e58;padding:10px 16px}button:hover{background:#125643;box-shadow:none}select,input{background:white;color:#182d35;border:1px solid #ccd7d4;padding:9px}.correct{color:#14532d}.wrong,.incorrect{color:#991b1b}</style><style>
+.activity-shell{max-width:1000px;text-align:left}.intro-copy{color:#61716f;margin-bottom:26px}
+.settings-card,.exercise-card{background:white;border:1px solid #dbe3df;border-radius:14px;padding:25px;margin-top:20px}
+fieldset{border:0;margin:0;padding:0;min-width:0}legend{font-weight:700;font-size:16px;margin-bottom:16px;padding:0}
+.operator-options{display:flex;flex-wrap:wrap;gap:10px}.operator-options label{display:flex;align-items:center;gap:8px;border:1px solid #ccd7d4;border-radius:8px;padding:10px 12px;cursor:pointer;font-size:14px;font-weight:600}.operator-options label:has(input:checked){background:#e9f2ec;border-color:#176e58}.operator-options input{margin:0;width:17px;height:17px;accent-color:#19745c}.operator-options small{color:#61716f;font-weight:400;font-size:11px}
+.settings-help{font-size:13px;color:#61716f;line-height:1.6}.generate-controls{display:flex;align-items:end;gap:18px;flex-wrap:wrap;margin-top:22px}.generate-controls label{font-size:14px;font-weight:650;display:flex;flex-direction:column;gap:9px}.generate-controls select{min-width:130px}.generate-controls button{margin:0}.settings-status{font-size:14px;color:#876224;margin:14px 0 0}.settings-status:empty{display:none}
+.exercise-card h2{margin:0;font-size:20px}#expression{font:650 clamp(18px,3vw,24px)/1.7 ui-monospace,monospace;overflow-wrap:anywhere;background:#e9f2ec;border-radius:8px;margin:16px 0;padding:14px 18px;color:#182d35}.table-scroll{overflow:auto}table{width:100%;text-align:center;min-width:350px}caption{text-align:left;font-size:12px;color:#61716f;padding:0 0 12px}th{background:#fcfdfb;font-size:13px}td{font-size:14px}.row-feedback{font-size:12px}#answer-status{font-weight:600;font-size:14px}[hidden]{display:none!important}@media(max-width:540px){.settings-card,.exercise-card{padding:20px 14px}.operator-options{gap:7px}.generate-controls{align-items:stretch;flex-direction:column}.generate-controls button{width:100%}td,th{padding:9px 6px}}
+</style></head>
 
-<body>
+<body><nav class="site-nav" aria-label="Activity navigation"><a href="index.html"><span class="site-mark" aria-hidden="true">▦</span>Computer Science<span class="site-sub"> / Activity lab</span></a><a class="site-back" href="index.html">← All activities</a></nav><main class="activity-shell">
 
 <h1>Boolean Logic Truth Table</h1>
-
-<div id="expression"></div>
-
-<table id="table"></table>
-
-<button onclick="checkAnswers()">Check</button>
-<button onclick="generate()">New Expression</button>
-
+<p class="intro-copy">Choose your operators, generate an expression, and complete its truth table.</p>
+<form id="settings" class="settings-card">
+  <fieldset>
+    <legend>1. Choose the operators to practise</legend>
+    <div class="operator-options">
+      <label><input type="checkbox" name="operator" value="NOT" checked> NOT</label>
+      <label><input type="checkbox" name="operator" value="AND" checked> AND</label>
+      <label><input type="checkbox" name="operator" value="OR" checked> OR</label>
+      <label><input type="checkbox" name="operator" value="XOR" checked> XOR</label>
+      <label><input type="checkbox" name="operator" value="NAND" checked> NAND</label>
+      <label><input type="checkbox" name="operator" value="NOR" checked> NOR</label>
+      <label><input type="checkbox" name="operator" value="XNOR"> XNOR <small>IB only</small></label>
+    </div>
+    <p class="settings-help">XNOR is off by default for IGCSE. IB students can include it. Expressions use only selected operators; operators may repeat, and not every selected operator will appear.</p>
+  </fieldset>
+  <div class="generate-controls">
+    <label for="operator-count">2. Number of operators
+      <select id="operator-count" aria-describedby="count-help">
+        <option value="1">1</option><option value="2" selected>2</option>
+        <option value="3">3</option><option value="4">4</option><option value="5">5</option>
+      </select>
+    </label>
+    <button type="submit">Generate expression</button>
+  </div>
+  <p class="settings-help" id="count-help">Each NOT counts as one operator, just like AND or OR. New settings apply when you generate an expression.</p>
+  <p id="settings-status" class="settings-status" role="status" aria-live="polite"></p>
+</form>
+<section id="exercise" class="exercise-card" aria-labelledby="exercise-title" hidden>
+  <h2 id="exercise-title">Complete the truth table</h2>
+  <p id="expression-meta" class="settings-help"></p>
+  <div id="expression"></div>
+  <p class="settings-help">Brackets show the order of operations. Choose TRUE or FALSE for every output, then check your answers.</p>
+  <div class="table-scroll"><table id="table"><caption>Input combinations and your output answers</caption></table></div>
+  <button type="button" id="check-answers">Check answers</button>
+  <p id="answer-status" role="status" aria-live="polite"></p>
+</section>
 <script>
+'use strict';
+const ALL_OPERATORS = ['NOT', 'AND', 'OR', 'XOR', 'NAND', 'NOR', 'XNOR'];
+let currentExercise = null;
 
-// Operators
-const operators = ["AND", "OR", "XOR", "NAND", "NOR", "XNOR"];
-const variables = ["A", "B", "C"];
-
-// Generate expression
-/*function generateExpression() {
-    let numVars = Math.floor(Math.random() * 2) + 2; // 2 or 3 vars
-    let vars = variables.slice(0, numVars);
-
-    let expr = vars[Math.floor(Math.random() * vars.length)];
-
-    let numOps = Math.floor(Math.random() * 3) + 2; // 2–4 ops
-
-    for (let i = 0; i < numOps; i++) {
-        let op = operators[Math.floor(Math.random() * operators.length)];
-        let next = vars[Math.floor(Math.random() * vars.length)];
-
-        if (Math.random() < 0.3) next = "NOT " + next;
-
-        expr = "(" + expr + " " + op + " " + next + ")";
+// Build a tree with an exact operator budget, including unary NOT nodes.
+function generateExpression(selected, count) {
+    if (!selected.length || selected.some(op => !ALL_OPERATORS.includes(op))) {
+        throw new Error('Select at least one operator.');
     }
-
-    return {expr, vars};
-}*/
-
-function generateExpression() {
-
-    const operators = ["AND", "OR", "XOR", "NAND", "NOR", "XNOR"];
-    const variables = ["A", "B", "C"];
-
-    let numVars = Math.floor(Math.random() * 2) + 2; // 2 or 3 vars
-    let vars = variables.slice(0, numVars);
-
-    function randomVar() {
-        let v = vars[Math.floor(Math.random() * vars.length)];
-        if (Math.random() < 0.3) {
-            return "(NOT " + v + ")";
-        }
-        return v;
+    if (!Number.isInteger(count) || count < 1 || count > 5) {
+        throw new Error('Choose between 1 and 5 operators.');
     }
-
-    function build(depth) {
-
-        // Base case: return a variable
-        if (depth === 0) {
-            return randomVar();
-        }
-
-        let op = operators[Math.floor(Math.random() * operators.length)];
-
-        // Randomly decide structure
-        let leftDepth = Math.floor(Math.random() * depth);
-        let rightDepth = depth - 1 - leftDepth;
-
-        let left = build(leftDepth);
-        let right = build(rightDepth);
-
-        return "(" + left + " " + op + " " + right + ")";
+    const variablePool = ['A', 'B', 'C'];
+    for (let i = variablePool.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [variablePool[i], variablePool[j]] = [variablePool[j], variablePool[i]];
     }
-
-    let depth = Math.floor(Math.random() * 2) + 2; // depth 2–3
-
-    let expr = build(depth);
-
-    return { expr, vars };
+    let leafCount = 0;
+    function build(budget) {
+        if (budget === 0) return { variable: variablePool[leafCount++ % variablePool.length] };
+        const op = selected[Math.floor(Math.random() * selected.length)];
+        if (op === 'NOT') return { op, child: build(budget - 1) };
+        const leftBudget = Math.floor(Math.random() * budget);
+        return { op, left: build(leftBudget), right: build(budget - 1 - leftBudget) };
+    }
+    const tree = build(count);
+    const vars = variablePool.slice(0, Math.min(leafCount, variablePool.length)).sort();
+    return { tree, expr: formatExpression(tree), vars, count };
 }
 
-// Evaluate expression
-function evalExpr(expr, values) {
-
-    // Tokenize
-    let tokens = expr
-        .replace(/\(/g, " ( ")
-        .replace(/\)/g, " ) ")
-        .split(/\s+/)
-        .filter(t => t.length > 0);
-
-    // Replace variables
-    tokens = tokens.map(t => {
-        if (values[t]) return values[t] === "TRUE";
-        return t;
-    });
-
-    function apply(op, a, b) {
-        if (op === "AND") return a && b;
-        if (op === "OR") return a || b;
-        if (op === "XOR") return a !== b;
-        if (op === "NAND") return !(a && b);
-        if (op === "NOR") return !(a || b);
-        if (op === "XNOR") return a === b;
-    }
-
-    function evaluate(tokens) {
-
-        // Resolve parentheses first
-        while (tokens.includes("(")) {
-            let close = tokens.indexOf(")");
-            let open = tokens.lastIndexOf("(", close);
-
-            let sub = tokens.slice(open + 1, close);
-            let value = evaluate(sub);
-
-            tokens.splice(open, close - open + 1, value);
-        }
-
-        // Resolve NOT
-        for (let i = 0; i < tokens.length; i++) {
-            if (tokens[i] === "NOT") {
-                tokens.splice(i, 2, !tokens[i + 1]);
-                i--;
-            }
-        }
-
-        // Resolve binary ops left → right (safe because brackets handled)
-        while (tokens.length > 1) {
-            let a = tokens[0];
-            let op = tokens[1];
-            let b = tokens[2];
-
-            tokens.splice(0, 3, apply(op, a, b));
-        }
-
-        return tokens[0];
-    }
-
-    return evaluate(tokens);
+function formatExpression(node) {
+    if (node.variable) return node.variable;
+    if (node.op === 'NOT') return '(NOT ' + formatExpression(node.child) + ')';
+    return '(' + formatExpression(node.left) + ' ' + node.op + ' ' + formatExpression(node.right) + ')';
 }
 
-// Generate truth table
-let correctOutputs = [];
-
-function generate() {
-
-    const {expr, vars} = generateExpression();
-
-    document.getElementById("expression").innerText = expr;
-
-    let table = document.getElementById("table");
-    table.innerHTML = "";
-
-    // Header
-    let header = "<tr>";
-    vars.forEach(v => header += `<th>${v}</th>`);
-    header += "<th>Output</th></tr>";
-    table.innerHTML += header;
-
-    let rows = Math.pow(2, vars.length);
-    correctOutputs = [];
-
-    for (let i = 0; i < rows; i++) {
-
-        let values = {};
-        let rowHTML = "<tr>";
-
-        vars.forEach((v, index) => {
-            let val = (i >> (vars.length - index - 1)) & 1;
-            values[v] = val ? "TRUE" : "FALSE";
-            rowHTML += `<td>${values[v]}</td>`;
-        });
-
-        let result = evalExpr(expr, values);
-        correctOutputs.push(result);
-
-        rowHTML += `
-        <td>
-            <select>
-                <option value="TRUE">TRUE</option>
-                <option value="FALSE">FALSE</option>
-            </select>
-        </td>`;
-
-        rowHTML += "</tr>";
-        table.innerHTML += rowHTML;
+function evaluateExpression(node, values) {
+    if (node.variable) return values[node.variable];
+    if (node.op === 'NOT') return !evaluateExpression(node.child, values);
+    const a = evaluateExpression(node.left, values);
+    const b = evaluateExpression(node.right, values);
+    switch (node.op) {
+        case 'AND': return a && b;
+        case 'OR': return a || b;
+        case 'XOR': return a !== b;
+        case 'NAND': return !(a && b);
+        case 'NOR': return !(a || b);
+        case 'XNOR': return a === b;
+        default: throw new Error('Unknown operator.');
     }
 }
 
-// Check answers
+function generate(event) {
+    if (event) event.preventDefault();
+    const selected = Array.from(document.querySelectorAll('input[name="operator"]:checked'), input => input.value);
+    const count = Number(document.getElementById('operator-count').value);
+    const status = document.getElementById('settings-status');
+    let next;
+    try {
+        next = generateExpression(selected, count);
+    } catch (error) {
+        status.textContent = error.message;
+        return;
+    }
+    currentExercise = next;
+    currentExercise.outputs = [];
+    document.getElementById('expression').textContent = next.expr;
+    document.getElementById('expression-meta').textContent = count + ' operator' + (count === 1 ? '' : 's') + ' · ' + next.vars.length + ' input variable' + (next.vars.length === 1 ? '' : 's');
+    const table = document.getElementById('table');
+    table.innerHTML = '<caption>Input combinations and your output answers</caption><thead><tr>' + next.vars.map(v => '<th scope="col">' + v + '</th>').join('') + '<th scope="col">Output</th><th scope="col">Feedback</th></tr></thead><tbody></tbody>';
+    const tbody = table.querySelector('tbody');
+    for (let i = 0; i < 2 ** next.vars.length; i++) {
+        const values = {};
+        next.vars.forEach((v, index) => { values[v] = Boolean((i >> (next.vars.length - index - 1)) & 1); });
+        currentExercise.outputs.push(evaluateExpression(next.tree, values));
+        const row = document.createElement('tr');
+        const assignment = next.vars.map(v => v + ' ' + (values[v] ? 'TRUE' : 'FALSE')).join(', ');
+        row.innerHTML = next.vars.map(v => '<td>' + (values[v] ? 'TRUE' : 'FALSE') + '</td>').join('') + '<td><select aria-label="Output when ' + assignment + '"><option value="">Choose…</option><option value="TRUE">TRUE</option><option value="FALSE">FALSE</option></select></td><td class="row-feedback"></td>';
+        tbody.appendChild(row);
+    }
+    document.getElementById('exercise').hidden = false;
+    document.getElementById('answer-status').textContent = '';
+    status.textContent = 'New expression ready. Complete the table below.';
+}
+
 function checkAnswers() {
-
-    let rows = document.querySelectorAll("#table tr");
-    let score = 0;
-
-    for (let i = 1; i < rows.length; i++) {
-        let select = rows[i].querySelector("select");
-        let user = select.value === "TRUE";
-        let correct = correctOutputs[i - 1];
-
-        rows[i].classList.remove("correct", "incorrect");
-
-        if (user === correct) {
-            rows[i].classList.add("correct");
-            score++;
-        } else {
-            rows[i].classList.add("incorrect");
-        }
-    }
-
-    alert("Score: " + score + " / " + correctOutputs.length);
+    if (!currentExercise) return;
+    let score = 0, unanswered = 0;
+    document.querySelectorAll('#table tbody tr').forEach((row, index) => {
+        const select = row.querySelector('select');
+        const blank = select.value === '';
+        const correct = !blank && (select.value === 'TRUE') === currentExercise.outputs[index];
+        row.classList.toggle('correct', correct);
+        row.classList.toggle('incorrect', !correct && !blank);
+        row.querySelector('.row-feedback').textContent = blank ? 'Choose an output' : correct ? 'Correct' : 'Try again';
+        if (correct) score++;
+        if (blank) unanswered++;
+    });
+    document.getElementById('answer-status').textContent = 'Score: ' + score + ' / ' + currentExercise.outputs.length + (unanswered ? '. ' + unanswered + ' unanswered.' : score === currentExercise.outputs.length ? '. All correct!' : '. Review the highlighted rows and try again.');
 }
 
-// init
-generate();
-
+document.getElementById('settings').addEventListener('submit', generate);
+document.getElementById('check-answers').addEventListener('click', checkAnswers);
+document.getElementById('table').addEventListener('change', event => {
+    const row = event.target.closest('tbody tr');
+    if (!row) return;
+    row.classList.remove('correct', 'incorrect');
+    row.querySelector('.row-feedback').textContent = '';
+    document.getElementById('answer-status').textContent = 'Answer updated. Check again when you are ready.';
+});
 </script>
-
-</body>
+</main></body>
 </html>

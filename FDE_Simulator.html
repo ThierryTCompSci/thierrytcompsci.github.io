@@ -1,307 +1,202 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>CPU Simulator</title>
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fetch–Decode–Execute Simulator</title>
 <style>
-body {
-    font-family: "Segoe UI", sans-serif;
-    background: #0f172a;
-    color: #e2e8f0;
-    text-align: center;
-}
-
-.container {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
-}
-
-/* RAM */
-#ram {
-    background: #1e293b;
-    padding: 10px;
-    border-radius: 10px;
-    width: 250px;
-}
-
-.ram-cell {
-    display: flex;
-    justify-content: space-between;
-    padding: 5px;
-    border-bottom: 1px solid #334155;
-}
-
-/* CPU */
-#cpu {
-    background: #1e293b;
-    padding: 15px;
-    border-radius: 10px;
-    width: 300px;
-}
-
-.register {
-    margin: 5px 0;
-}
-
-/* Controls */
-.controls {
-    margin-top: 20px;
-}
-
-button {
-    padding: 10px 20px;
-    margin: 5px;
-    border-radius: 8px;
-    border: none;
-    background: #6366f1;
-    color: white;
-    cursor: pointer;
-}
-
-select, input {
-    padding: 5px;
-    margin: 3px;
-}
+:root{font-family:Inter,ui-sans-serif,system-ui,sans-serif;color:#182d35;background:#f3f5f1;font-synthesis:none}*{box-sizing:border-box}body{margin:0;line-height:1.6}button,input,select{font:inherit}button{cursor:pointer;background:#176e58;color:white;border:1px solid #176e58;border-radius:8px;padding:10px 16px;font-weight:650}button:hover:not(:disabled){background:#125643}button.secondary{background:white;color:#233c43;border-color:#ccd7d4}button.secondary:hover:not(:disabled){background:#e9f2ec}button:disabled{opacity:.45;cursor:not-allowed}a{color:#176e58}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #db9c32;outline-offset:4px}input,select{background:white;color:#182d35;border:1px solid #ccd7d4;border-radius:8px;padding:11px 12px;width:100%;min-width:0}input[type=radio]{width:17px;height:17px;margin:0;accent-color:#19745c}[hidden]{display:none!important}
+.site-nav{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:18px 5%;background:#fcfdfb;border-bottom:1px solid #dce3de}.site-nav a{display:flex;gap:10px;align-items:center;text-decoration:none;font-weight:750;font-size:15px;color:#182d35}.site-nav .site-back{font-size:13px;color:#176e58;font-weight:600}.site-mark{display:grid;place-items:center;width:32px;height:32px;border-radius:7px;background:#16735c;color:white;font-size:19px}.site-sub,.eyebrow{font-size:11px;letter-spacing:1.7px;text-transform:uppercase;color:#617572;font-weight:750}
+main{max-width:1200px;margin:auto;padding:36px 28px 56px}h1{font-size:clamp(30px,4vw,44px);line-height:1.15;letter-spacing:-1.5px;margin:10px 0 16px}h2{font-size:20px;line-height:1.3;margin:0}h3{font-size:15px;margin:0 0 10px}p{margin:8px 0 16px}.intro{max-width:780px;color:#61716f}.builder,.panel{background:white;border:1px solid #dbe3df;border-radius:14px}.builder{padding:24px;margin:26px 0 24px}.section-heading{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:20px}.section-heading p{font-size:13px;color:#61716f;margin:5px 0 0}.section-number{font-size:11px;color:#188165;letter-spacing:1px;display:block;margin-bottom:6px}.mode-options{border:0;margin:0 0 22px;padding:0;min-width:0}.mode-options legend{font-size:13px;font-weight:700;margin-bottom:10px}.modes{display:flex;flex-wrap:wrap;gap:10px}.modes label{display:flex;gap:9px;align-items:center;cursor:pointer;padding:10px 14px;background:#fcfdfb;border:1px solid #ccd7d4;border-radius:8px;font-size:14px;font-weight:600}.modes label:has(input:checked){background:#e9f2ec;border-color:#176e58;color:#176e58}
+.builder-fields{display:grid;grid-template-columns:1fr 1.35fr 1.1fr;gap:22px}.field label{display:block;font-size:14px;font-weight:700;margin-bottom:8px}.field small{display:block;color:#61716f;font-size:12px;line-height:1.6;margin-top:8px}.field .field-number{color:#188165;margin-right:5px;font-size:11px}.operation-note{padding:12px 15px;background:#f3f5f1;border-radius:8px;margin:18px 0 0;font-size:13px;color:#233c43}.preview{display:flex;justify-content:space-between;align-items:center;gap:20px;background:#e9f2ec;border:1px solid #d1e3d7;border-radius:10px;padding:17px 18px;margin-top:22px}.preview-label{font-size:10px;font-weight:750;letter-spacing:1.5px;text-transform:uppercase;color:#617572}.preview code{display:block;font-size:20px;font-weight:700;color:#176e58;margin:3px 0}.preview p{margin:0;font-size:13px;color:#233c43}.preview button{flex-shrink:0}.status{font-size:13px;min-height:21px;color:#176e58;margin:12px 0 0}.status.error{color:#9b3030}.builder-foot{font-size:12px;color:#61716f;margin:10px 0 0}
+.workspace{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:22px;align-items:start}.panel{padding:22px}.memory-key{display:flex;gap:14px;flex-wrap:wrap;color:#61716f;font-size:11px;margin:14px 0}.memory-key span:before{content:'';display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;background:#e9f2ec;border:1px solid #176e58}.memory-key span:last-child:before{background:#fff1d6;border-color:#c79132}.table-scroll{overflow:auto;max-height:585px}table{border-collapse:collapse;width:100%;text-align:left;font-size:13px}caption{text-align:left;font-size:12px;color:#61716f;padding-bottom:10px}th{color:#61716f;background:#fcfdfb;font-size:11px;letter-spacing:.5px;text-transform:uppercase;position:sticky;top:0}td,th{padding:9px 10px;border-bottom:1px solid #e5ebe7}td code{font-size:14px}.ram-row.next-instruction{background:#e9f2ec}.ram-row.selected-address{box-shadow:inset 3px 0 #db9c32}.ram-row.last-write{background:#fff1d6}.memory-type{font-size:11px;color:#61716f}.empty{color:#798782}.ram-address{font-variant-numeric:tabular-nums;font-weight:650}
+.cpu-top{display:flex;justify-content:space-between;gap:16px;align-items:center}.stage-badge{padding:5px 10px;border-radius:30px;color:#176e58;background:#e9f2ec;font-size:11px;font-weight:750}.cycle{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:18px 0}.cycle span{text-align:center;font-size:12px;color:#61716f;background:#f3f5f1;border:1px solid #e4eae6;padding:7px;border-radius:7px}.cycle .active{color:#176e58;background:#e9f2ec;border-color:#176e58;font-weight:700}.stage-explanation{padding:17px;background:#172d35;border-radius:10px;color:#dce9e3;min-height:125px}.stage-explanation strong{color:white;display:block;font-size:16px;margin-bottom:7px}.stage-explanation p{font-size:13px;margin:0}.registers{margin-top:20px;display:grid;gap:0}.register{display:grid;grid-template-columns:54px 1fr minmax(40px,auto);align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid #e5ebe7}.register dt{font-weight:750;font-size:13px;color:#176e58}.register dd{margin:0;font-size:12px;color:#61716f}.register output{font:650 15px ui-monospace,monospace;overflow-wrap:anywhere;max-width:130px}.step-controls{display:flex;gap:9px;flex-wrap:wrap;margin-top:22px}.step-controls button{margin:0}.example-note{background:#e9f2ec;border:1px solid #d1e3d7;border-radius:10px;padding:16px;margin-top:20px}.example-note p{font-size:12px;color:#233c43;margin:7px 0 0}.tips{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:30px}.tips article{border-top:2px solid #d4dfd7;padding-top:16px}.tips p{font-size:12px;color:#61716f}details{font-size:13px;color:#61716f;margin-top:24px}summary{cursor:pointer;font-weight:650;color:#233c43}.clear-ram{margin-top:18px}.clear-ram button{font-size:12px}footer{font-size:11px;color:#798782;margin-top:28px}
+@media(max-width:850px){.builder-fields{grid-template-columns:1fr 1fr}.field:first-child{grid-column:1/-1}.workspace{grid-template-columns:1fr}.table-scroll{max-height:430px}.tips{gap:16px}}@media(max-width:540px){main{padding:24px 15px 40px}.site-nav{padding:15px}.site-sub{display:none}.site-nav a{font-size:13px}.builder,.panel{padding:19px 15px}.builder-fields,.tips{grid-template-columns:1fr}.preview{align-items:stretch;flex-direction:column}.preview button{width:100%}.section-heading{align-items:flex-start;flex-direction:column;gap:12px}.register{grid-template-columns:45px 1fr 70px}.register output{font-size:13px}.cpu-top{align-items:start}.step-controls button{flex:1}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}@media print{.site-nav,button{display:none}.table-scroll{max-height:none}.workspace{grid-template-columns:1fr 1fr}}
 </style>
 </head>
-
 <body>
-
-<h1>Fetch–Decode–Execute Simulator</h1>
-
-<div class="controls">
-    Opcode:
-    <select id="opcode">
-        <option value="LDA">LDA</option>
-        <option value="STA">STA</option>
-        <option value="ADD">ADD</option>
-        <option value="SUB">SUB</option>
-        <option value="CMP">CMP</option>
-        <option value="JZ">JZ</option>
-        <option value="JNZ">JNZ</option>
-        <option value="JMP">JMP</option>
-        <option value="HLT">HLT</option>
-    </select>
-    
-    Mode:
-    <select id="mode">
-        <option value="instruction">Instruction</option>
-        <option value="data">Data</option>
-    </select>
-
-    Operand:
-    <input type="number" id="operand" min="0" max="19">
-
-    Address:
-    <input type="number" id="address" min="0" max="19">
-
-    <button onclick="insertInstruction()">Insert</button>
+<nav class="site-nav" aria-label="Activity navigation"><a href="index.html"><span class="site-mark" aria-hidden="true">▦</span>Computer Science<span class="site-sub"> / Activity lab</span></a><a class="site-back" href="index.html">← All activities</a></nav>
+<main>
+<div class="eyebrow">Hardware / How a CPU runs a program</div>
+<h1>Fetch. Decode. Execute.</h1>
+<p class="intro">Build a small program in memory, then follow each instruction through the CPU. Start with the sample, or write your own instructions and data.</p>
+<form id="builder" class="builder" novalidate>
+  <div class="section-heading"><div><span class="section-number">01 / BUILD</span><h2>Write to memory</h2><p>Choose what to store and where to put it.</p></div><button type="button" class="secondary" id="load-example">Load sample program</button></div>
+  <fieldset class="mode-options"><legend>What do you want to store?</legend><div class="modes"><label><input type="radio" name="mode" value="instruction" checked> An instruction</label><label><input type="radio" name="mode" value="data"> A data value</label></div></fieldset>
+  <div class="builder-fields">
+    <div class="field"><label for="address"><span class="field-number">1</span>Store at RAM address</label><input type="number" id="address" min="0" max="19" step="1" value="0" required aria-describedby="address-help"><small id="address-help">The location where this instruction or number will be saved. RAM has addresses 0–19.</small></div>
+    <div class="field" id="opcode-field"><label for="opcode"><span class="field-number">2</span>Operation (opcode)</label><select id="opcode" aria-describedby="opcode-help"><option value="LDA">LDA · Load into ACC</option><option value="STA">STA · Store from ACC</option><option value="ADD">ADD · Add to ACC</option><option value="SUB">SUB · Subtract from ACC</option><option value="CMP">CMP · Compare with ACC</option><option value="JZ">JZ · Jump if equal</option><option value="JNZ">JNZ · Jump if not equal</option><option value="JMP">JMP · Jump to an instruction</option><option value="HLT">HLT · Halt the program</option></select><small id="opcode-help">The action the CPU will perform when it executes this instruction.</small></div>
+    <div class="field" id="operand-field"><label for="operand" id="operand-label"><span class="field-number">3</span>Use data at RAM address</label><input type="number" id="operand" min="0" max="19" step="1" value="16" required aria-describedby="operand-help"><small id="operand-help">The address of the data to load. This is a location, not the data value itself.</small></div>
+  </div>
+  <p class="operation-note" id="operation-note"></p>
+  <div class="preview"><div><span class="preview-label">What will be stored</span><code id="preview-code"></code><p id="preview-text"></p></div><button type="submit" id="write-memory">Write to RAM</button></div>
+  <p class="status" id="builder-status" role="status" aria-live="polite"></p>
+  <p class="builder-foot">Writing to an occupied address replaces its contents. The sample button replaces RAM with a four-instruction example. Finish the current instruction or reset the CPU before editing RAM.</p>
+</form>
+<div class="workspace">
+<section class="panel" aria-labelledby="ram-title"><span class="section-number">02 / INSPECT</span><h2 id="ram-title">RAM · 20 locations</h2><div class="memory-key"><span>PC points to the next instruction</span><span>Most recent write</span></div><div class="table-scroll"><table><caption>Instructions and data share the same memory. The gold edge marks the address selected in the builder.</caption><thead><tr><th scope="col">Address</th><th scope="col">Contents</th><th scope="col">Type</th></tr></thead><tbody id="ram"></tbody></table></div><div class="clear-ram"><button type="button" class="secondary" id="clear-memory">Clear RAM &amp; reset CPU</button></div></section>
+<section class="panel" id="cpu" aria-labelledby="cpu-title"><div class="cpu-top"><div><span class="section-number">03 / RUN</span><h2 id="cpu-title">Inside the CPU</h2></div><span class="stage-badge" id="stage">Ready</span></div><div class="cycle" aria-label="Instruction cycle"><span id="fetch-stage">Fetch</span><span id="decode-stage">Decode</span><span id="execute-stage">Execute</span></div><div class="stage-explanation" role="status" aria-live="polite"><strong id="step-title">Ready to explore</strong><p id="step-description">Load the sample program, or put an instruction at address 0. Then select Next step.</p></div>
+<dl class="registers"><div class="register"><dt>PC</dt><dd>Program counter<br>Address of the next instruction</dd><dd><output id="pc">0</output></dd></div><div class="register"><dt>MAR</dt><dd>Memory address register<br>Address being accessed</dd><dd><output id="mar">–</output></dd></div><div class="register"><dt>MDR</dt><dd>Memory data register<br>Contents read from / written to RAM</dd><dd><output id="mdr">–</output></dd></div><div class="register"><dt>IR</dt><dd>Instruction register<br>Current instruction</dd><dd><output id="ir">–</output></dd></div><div class="register"><dt>ACC</dt><dd>Accumulator<br>Working value for calculations</dd><dd><output id="acc">0</output></dd></div><div class="register"><dt>ZF</dt><dd>Comparison flag<br>1 = equal, 0 = not equal (after CMP)</dd><dd><output id="zf">0</output></dd></div></dl>
+<div class="step-controls"><button type="button" id="next-step">Next step · Fetch address</button><button type="button" class="secondary" id="reset-cpu">Reset CPU</button></div><p class="settings-help" style="font-size:12px;color:#61716f;margin-top:12px">Reset CPU returns the PC and registers to their starting values. RAM is kept.</p>
+<div class="example-note" id="example-note" hidden><h3>Sample challenge: 7 + 5</h3><p>0: LDA 16 → 1: ADD 17 → 2: STA 18 → 3: HLT<br>Data: RAM[16] = 7 and RAM[17] = 5.<br>Predict the result. Step through the program and look for the answer in ACC and RAM[18].</p></div>
+</section>
 </div>
-
-<div class="container">
-
-<!-- RAM -->
-<div id="ram"></div>
-
-<!-- CPU -->
-<div id="cpu">
-    <h3>CPU Registers</h3>
-    <div class="register">PC: <span id="pc">0</span></div>
-    <div class="register">IR: <span id="ir">-</span></div>
-    <div class="register">MAR: <span id="mar">-</span></div>
-    <div class="register">MDR: <span id="mdr">-</span></div>
-    <div class="register">ACC: <span id="acc">0</span></div>
-
-    <h3 id="stage">Stage: Idle</h3>
-
-    <button onclick="step()">Next Step</button>
-</div>
-
-</div>
-
-<div class="controls">
-    <button onclick="resetCPU()">Reset CPU</button>
-    <button onclick="clearAll()">Reset CPU + Clear RAM</button>
-</div>
-
+<section class="tips" aria-label="Key ideas"><article><h3><span class="section-number">01 / TWO ADDRESSES</span>Where to store vs. where to look</h3><p>Storing <code>LDA 16</code> at address 0 means the instruction lives at RAM[0]. Its operand, 16, tells the CPU to read the data at RAM[16].</p></article><article><h3><span class="section-number">02 / INSTRUCTIONS AND DATA</span>A number is not an instruction</h3><p>Use “A data value” to place a number such as 7 in RAM. Use “An instruction” to tell the CPU what to do with a number. A program usually begins at address 0.</p></article><article><h3><span class="section-number">03 / CONTROL FLOW</span>Stop or choose the next instruction</h3><p>The PC advances during fetch. JMP changes it to another address. CMP sets ZF; JZ jumps when ZF is 1 and JNZ when it is 0. HLT stops the program.</p></article></section>
+<details><summary>About this simplified simulator</summary><p>This is an assembly-style teaching model, not a particular processor. LDA, STA, ADD, SUB and CMP use direct addressing: their operand is a RAM address. Jump operands are instruction addresses. Data can be positive or negative whole numbers within JavaScript’s safe integer range. CMP alone updates the comparison flag here. Four clicks show two fetch actions, then decode and execute. Real hardware may use more micro-operations; a data access during execute is grouped into that step. MDR shows memory transfers; IR retains the current instruction.</p></details>
+<footer>Works locally in your browser. Your program is not uploaded or saved between page reloads.</footer>
+</main>
 <script>
-
-// RAM (10 cells)
-let memory = Array(19).fill("000");
-
-// Registers
-let PC = 0;
-let IR = "";
-let MAR = "";
-let MDR = "";
-let ACC = 0;
-let ZF = 0; // Zero Flag
-
-let stage = 0;
-
+'use strict';
+const RAM_SIZE = 20;
+const $ = id => document.getElementById(id);
+const OPERATIONS = {
+ LDA: {label:'Use data at RAM address',help:'The address of the data to load. This is a location, not the data value itself.',describe:a=>'Load the number at RAM['+a+'] into the accumulator (ACC).'},
+ STA: {label:'Store ACC at RAM address',help:'The destination for the accumulator’s value when this instruction runs.',describe:a=>'Copy the accumulator (ACC) into RAM['+a+'].'},
+ ADD: {label:'Add data from RAM address',help:'The address holding the number to add to the accumulator.',describe:a=>'Add the number at RAM['+a+'] to the accumulator (ACC).'},
+ SUB: {label:'Subtract data from RAM address',help:'The address holding the number to subtract from the accumulator.',describe:a=>'Subtract the number at RAM['+a+'] from the accumulator (ACC).'},
+ CMP: {label:'Compare with RAM address',help:'Compare ACC with the number stored here. CMP sets the flag; it does not change ACC.',describe:a=>'Compare ACC with RAM['+a+']. Set ZF to 1 if equal, otherwise 0.'},
+ JZ: {label:'Jump to instruction at address',help:'After CMP, jump here if the values were equal (ZF = 1).',describe:a=>'If ZF is 1, set PC to '+a+'. Otherwise continue to the next instruction.'},
+ JNZ: {label:'Jump to instruction at address',help:'After CMP, jump here if the values were different (ZF = 0).',describe:a=>'If ZF is 0, set PC to '+a+'. Otherwise continue to the next instruction.'},
+ JMP: {label:'Jump to instruction at address',help:'The address of the next instruction to fetch, not a data value.',describe:a=>'Set PC to '+a+' so the next fetch starts there.'},
+ HLT: {describe:()=>'Stop the program. HLT does not need an operand.'}
+};
+let memory = Array(RAM_SIZE).fill(null);
+let PC=0, IR='', MAR=null, MDR='', ACC=0, ZF=0, stage=0, halted=false, lastWrite=null;
+let mode='instruction', dataDraft='7', operandDraft='16';
+function validAddress(value) { return Number.isInteger(value) && value>=0 && value<RAM_SIZE; }
+function integerInput(raw) { return raw.trim()!=='' && Number.isSafeInteger(Number(raw)); }
+function readBuilder() {
+ const addressRaw=$('address').value, operandRaw=$('operand').value, op=$('opcode').value;
+ if (!integerInput(addressRaw) || !validAddress(Number(addressRaw))) return {error:'Enter a whole RAM address from 0 to 19 for “Store at RAM address”.'};
+ const address=Number(addressRaw);
+ if (mode==='data') {
+  if (!integerInput(operandRaw)) return {error:'Enter a data value as a whole number within the safe integer range.'};
+  return {address,content:String(Number(operandRaw)),data:true};
+ }
+ if (!Object.hasOwn(OPERATIONS,op)) return {error:'Choose an operation.'};
+ if (op==='HLT') return {address,content:'HLT',op};
+ if (!integerInput(operandRaw) || !validAddress(Number(operandRaw))) return {error:'Enter an operand address from 0 to 19.'};
+ return {address,content:op+' '+Number(operandRaw),op,operand:Number(operandRaw)};
+}
+function builderFeedback(message,error=false) { $('builder-status').textContent=message; $('builder-status').classList.toggle('error',error); }
+function updateBuilder() {
+ const data=mode==='data', op=$('opcode').value, halt=op==='HLT' && !data;
+ $('opcode-field').hidden=data; $('opcode').disabled=data;
+ $('operand-field').hidden=halt; $('operand').disabled=halt;
+ $('operand').required=!halt;
+ $('operand-label').textContent=data?'2. Data value (a whole number)':'3. '+(OPERATIONS[op].label||'Operand');
+ $('operand-help').textContent=data?'The actual number to save, such as 7 or −3. This is data, not an address.':(OPERATIONS[op].help||'No operand is needed.');
+ if (data) { $('operand').removeAttribute('min'); $('operand').removeAttribute('max'); } else { $('operand').min='0'; $('operand').max=String(RAM_SIZE-1); }
+ const value=readBuilder();
+ $('preview-code').textContent=value.error?'Complete the fields above':'RAM['+value.address+'] ← '+value.content;
+ $('preview-text').textContent=value.error?value.error: value.data?'Store the number '+value.content+' at address '+value.address+'.': 'Store the instruction '+value.content+' at address '+value.address+'.';
+ $('operation-note').textContent=data?'Data mode stores a number directly in RAM. The opcode is not used.':OPERATIONS[op].describe(value.operand===undefined?'…':value.operand);
+ $('write-memory').disabled=stage!==0;
+ $('write-memory').textContent=stage!==0?'Finish instruction to edit':'Write to RAM';
+ renderRAM();
+}
+function changeMode(nextMode) {
+ if (nextMode===mode) return;
+ if (mode==='data') dataDraft=$('operand').value; else operandDraft=$('operand').value;
+ mode=nextMode; $('operand').value=mode==='data'?dataDraft:operandDraft;
+ builderFeedback(''); updateBuilder();
+}
 function renderRAM() {
-    const ramDiv = document.getElementById("ram");
-    ramDiv.innerHTML = "<h3>RAM</h3>";
-
-    memory.forEach((val, i) => {
-        ramDiv.innerHTML += `<div class="ram-cell">
-            <span>${i}</span>
-            <span>${val}</span>
-        </div>`;
-    });
+ const selected=integerInput($('address').value)?Number($('address').value):-1;
+ $('ram').innerHTML=memory.map((value,i)=>{
+  const instruction=typeof value==='string' && Object.hasOwn(OPERATIONS,value.split(' ')[0]);
+  const classes=['ram-row',i===PC?'next-instruction':'',i===selected?'selected-address':'',i===lastWrite?'last-write':''].filter(Boolean).join(' ');
+  return '<tr class="'+classes+'"><td class="ram-address">'+i+(i===PC?' · PC':'')+'</td><td'+(value===null?' class="empty"':'')+'><code>'+(value===null?'Empty':value)+'</code></td><td class="memory-type">'+(value===null?'–':instruction?'Instruction':'Data')+'</td></tr>';
+ }).join('');
 }
-
 function updateCPU() {
-    document.getElementById("pc").innerText = PC;
-    document.getElementById("ir").innerText = IR;
-    document.getElementById("mar").innerText = MAR;
-    document.getElementById("mdr").innerText = MDR;
-    document.getElementById("acc").innerText = ACC;
-
-    // Add Zero Flag display if not present
-    if (!document.getElementById("zf")) {
-        let zfDiv = document.createElement("div");
-        zfDiv.className = "register";
-        zfDiv.innerHTML = 'ZF: <span id="zf">0</span>';
-        document.getElementById("cpu").appendChild(zfDiv);
-    }
-    document.getElementById("zf").innerText = ZF;
+ for (const [id,value] of Object.entries({pc:PC,ir:IR||'–',mar:MAR===null?'–':MAR,mdr:MDR===''?'–':MDR,acc:ACC,zf:ZF})) $(id).textContent=value;
+ $('next-step').disabled=halted;
+ $('next-step').textContent=halted?'Program stopped':['Next step · Fetch address','Next step · Fetch instruction','Next step · Decode','Next step · Execute'][stage];
+ $('write-memory').disabled=stage!==0;
+ $('write-memory').textContent=stage!==0?'Finish instruction to edit':'Write to RAM';
+ renderRAM();
 }
-
-function insertInstruction() {
-
-    let mode = document.getElementById("mode").value;
-    let addr = document.getElementById("address").value;
-
-    if (addr === "") return;
-    
-    if (addr < 0 || addr >= memory.length) {
-        alert("Invalid memory address");
-        return;
-    }
-
-    if (mode === "instruction") {
-        let op = document.getElementById("opcode").value;
-        let operand = document.getElementById("operand").value || "0";
-        memory[addr] = op + " " + operand;
-    } 
-    
-    else if (mode === "data") {
-        let value = document.getElementById("operand").value;
-
-        if (value === "") {
-            alert("Enter a value for data");
-            return;
-        }
-
-        memory[addr] = value; // pure number
-    }
-
-    renderRAM();
-} 
-
+function explain(label,title,text) {
+ $('stage').textContent=label; $('step-title').textContent=title; $('step-description').textContent=text;
+ for (const name of ['fetch','decode','execute']) $(name+'-stage').classList.toggle('active',label.toLowerCase()===name);
+}
+function insertInstruction(event) {
+ if (event) event.preventDefault();
+ if (stage!==0) { builderFeedback('Finish the current instruction or reset the CPU before editing RAM.',true);return false; }
+ const value=readBuilder();
+ if (value.error) {builderFeedback(value.error,true);return false;}
+ const previous=memory[value.address]; memory[value.address]=value.content; lastWrite=value.address;
+ $('example-note').hidden=true;
+ builderFeedback('Saved '+value.content+' at RAM['+value.address+'].'+(previous!==null?' Replaced '+previous+'.':'')+(halted?' Reset the CPU to run again.':''));
+ renderRAM();return true;
+}
+function parseInstruction(text) {
+ if (typeof text!=='string') throw Error('This address is empty. Store an instruction here, or reset and load the sample.');
+ const match=/^(LDA|STA|ADD|SUB|CMP|JZ|JNZ|JMP) (\d+)$/.exec(text);
+ if (text==='HLT') return {op:'HLT'};
+ if (!match || !validAddress(Number(match[2]))) throw Error('“'+text+'” is not an instruction. The CPU has reached data. Check your program addresses and end it with HLT.');
+ return {op:match[1],address:Number(match[2])};
+}
+function dataAt(address) {
+ const content=memory[address];
+ if (content===null || !integerInput(content)) throw Error('RAM['+address+'] does not contain a data number. Add data there or correct the instruction’s operand.');
+ return Number(content);
+}
+function stopWithError(error) {halted=true;stage=0;explain('Stopped','Program needs attention',error.message+' Reset CPU to start again.');updateCPU();}
 function step() {
-
-    switch(stage) {
-
-        case 0: // FETCH 1
-            document.getElementById("stage").innerText = "Stage: Fetch (PC → MAR)";
-            MAR = PC;
-            stage++;
-            break;
-
-        case 1: // FETCH 2
-            document.getElementById("stage").innerText = "Stage: Fetch (Memory → MDR → IR)";
-            MDR = memory[MAR];
-            IR = MDR;
-            PC++;
-            stage++;
-            break;
-
-        case 2: // DECODE
-            document.getElementById("stage").innerText = "Stage: Decode";
-            stage++;
-            break;
-
-        case 3: // EXECUTE
-            document.getElementById("stage").innerText = "Stage: Execute";
-
-            let parts = IR.split(" ");
-            let op = parts[0];
-            let addr = parseInt(parts[1]);
-
-            let value = parseInt(memory[addr]) || 0;
-
-            if (op === "LDA") ACC = value;
-            else if (op === "ADD") ACC += value;
-            else if (op === "SUB") ACC -= value;
-            else if (op === "STA") memory[addr] = ACC.toString();
-
-            else if (op === "CMP") {
-                ZF = (ACC === value) ? 1 : 0;
-            }
-            else if (op === "CMP") {
-				ZF = (ACC === value) ? 1 : 0;
-			}
-			
-			else if (op === "JZ") {
-				if (ZF === 1) {
-					PC = addr;
-				}
-			}
-			
-			else if (op === "JNZ") {
-				if (ZF === 0) {
-					PC = addr;
-				}
-			}
-
-            else if (op === "JMP") {
-                PC = addr;
-            }
-
-            else if (op === "HLT") {
-                alert("Program Halted");
-                return;
-            }
-
-            stage = 0;
-            renderRAM();
-            break;
+ if (halted) return;
+ try {
+  if (stage===0) {
+   if (!validAddress(PC)) throw Error('The PC has moved outside RAM (0–19). End your program with HLT or jump to a valid instruction.');
+   MAR=PC;explain('Fetch','1. Select the instruction address','Copy PC ('+PC+') into MAR. MAR now identifies the memory location to read.');stage=1;
+  } else if (stage===1) {
+   MDR=memory[MAR]===null?'Empty':memory[MAR]; IR=MDR; PC++;
+   explain('Fetch','2. Fetch the instruction','Read RAM['+MAR+'] into MDR, then copy it to IR: '+IR+'. Increment PC to '+PC+'.');stage=2;
+  } else if (stage===2) {
+   const instruction=parseInstruction(IR);
+   explain('Decode','3. Understand the instruction',instruction.op==='HLT'?OPERATIONS.HLT.describe():instruction.op+' has operand '+instruction.address+'. '+OPERATIONS[instruction.op].describe(instruction.address));stage=3;
+  } else {
+   const {op,address}=parseInstruction(IR);let narration='';
+   if (['LDA','ADD','SUB','CMP'].includes(op)) {
+    const value=dataAt(address); MAR=address;MDR=memory[address];
+    if (op==='LDA') {ACC=value;narration='Load '+value+' from RAM['+address+'] into ACC.';}
+    if (op==='ADD' || op==='SUB') {
+     const before=ACC,result=op==='ADD'?ACC+value:ACC-value;
+     if (!Number.isSafeInteger(result)) throw Error('This calculation exceeds the safe integer range. Use smaller numbers.');
+     ACC=result;narration='ACC: '+before+(op==='ADD'?' + ':' − ')+value+' = '+ACC+'.';
     }
-
-    updateCPU();
+    if (op==='CMP') {ZF=ACC===value?1:0;narration='Compare ACC ('+ACC+') with '+value+' at RAM['+address+']. '+(ZF?'Equal: ZF = 1.':'Different: ZF = 0.')+' ACC is unchanged.';}
+   } else if (op==='STA') {MAR=address;MDR=String(ACC);memory[address]=MDR;lastWrite=address;narration='Copy ACC ('+ACC+') through MDR into RAM['+address+'].';}
+   else if (['JMP','JZ','JNZ'].includes(op)) {
+    const jump=op==='JMP'||(op==='JZ'&&ZF===1)||(op==='JNZ'&&ZF===0);
+    if (jump) {PC=address;narration='Jump taken. Set PC to '+address+'.';} else narration='Jump not taken (ZF = '+ZF+'). Continue at address '+PC+'.';
+   } else if (op==='HLT') {halted=true;narration='HLT stops the program. ACC is '+ACC+'. Inspect RAM for any stored results. Reset CPU to run again.';}
+   stage=0;explain(halted?'Halted':'Execute','4. '+(halted?'Program complete':'Execute '+op),narration);
+  }
+  updateCPU();
+ } catch(error) {stopWithError(error);}
 }
-
 function resetCPU() {
-    PC = 0;
-    IR = "";
-    MAR = "";
-    MDR = "";
-    ACC = 0;
-    ZF = 0;
-    stage = 0;
-
-    document.getElementById("stage").innerText = "Stage: Idle";
-    updateCPU();
+ PC=0;IR='';MAR=null;MDR='';ACC=0;ZF=0;stage=0;halted=false;
+ explain('Ready','CPU reset. RAM is kept.','The next fetch starts at address 0. Select Next step to begin.');updateCPU();builderFeedback('CPU reset. You can edit RAM or run the program again.');
 }
-
 function clearAll() {
-    resetCPU();
-
-    // Clear memory
-    memory = Array(20).fill("000");
-
-    renderRAM();
+ memory=Array(RAM_SIZE).fill(null);lastWrite=null;resetCPU();$('example-note').hidden=true;
+ explain('Ready','Memory cleared','Store an instruction at address 0, or load the sample program.');builderFeedback('All 20 RAM locations are empty. CPU reset.');renderRAM();
 }
-
-// init
-renderRAM();
-updateCPU();
-
+function loadExample() {
+ memory=Array(RAM_SIZE).fill(null);
+ memory[0]='LDA 16';memory[1]='ADD 17';memory[2]='STA 18';memory[3]='HLT';memory[16]='7';memory[17]='5';
+ lastWrite=null;resetCPU();$('example-note').hidden=false;
+ explain('Ready','Sample loaded: calculate 7 + 5','Predict the result, then select Next step. Watch ACC change and find where STA stores the answer.');
+ builderFeedback('Sample loaded. Previous RAM contents were replaced.');
+}
+$('builder').addEventListener('submit',insertInstruction);
+document.querySelectorAll('input[name="mode"]').forEach(input=>input.addEventListener('change',()=>changeMode(input.value)));
+for (const id of ['address','opcode','operand']) $(id).addEventListener(id==='opcode'?'change':'input',()=>{builderFeedback('');updateBuilder();});
+$('next-step').addEventListener('click',step);$('reset-cpu').addEventListener('click',resetCPU);$('clear-memory').addEventListener('click',clearAll);$('load-example').addEventListener('click',loadExample);
+updateBuilder();updateCPU();
 </script>
-
 </body>
 </html>
