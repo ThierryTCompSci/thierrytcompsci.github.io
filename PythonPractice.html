@@ -3,18 +3,18 @@
 <style>
 :root{font-family:Inter,ui-sans-serif,system-ui,sans-serif;color:#182d35;background:#f3f5f1;font-synthesis:none}*{box-sizing:border-box}body{margin:0;line-height:1.6}button,input,select,textarea{font:inherit}button{cursor:pointer;border:1px solid #ccd7d4;border-radius:8px;background:white;color:#233c43;padding:10px 15px;font-size:13px;font-weight:650}button:hover:not(:disabled){background:#e9f2ec}button:disabled{opacity:.45;cursor:not-allowed}button.primary{background:#176e58;border-color:#176e58;color:white}button.primary:hover:not(:disabled){background:#125643}button:focus-visible,a:focus-visible,textarea:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #db9c32;outline-offset:4px}a{color:#176e58}[hidden]{display:none!important}.site-nav{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 5%;background:#fcfdfb;border-bottom:1px solid #dce3de}.site-nav a{display:flex;align-items:center;gap:10px;text-decoration:none;font-size:15px;font-weight:750;color:#182d35}.site-nav .back{font-size:13px;color:#176e58}.mark{display:grid;place-items:center;background:#16735c;color:white;width:32px;height:32px;border-radius:7px;font-size:18px}.tag,.eyebrow{font-size:11px;letter-spacing:1.7px;color:#617572;font-weight:750;text-transform:uppercase}main{max-width:1380px;margin:auto;padding:36px 28px 50px}h1{font-size:clamp(30px,4vw,44px);line-height:1.15;letter-spacing:-1.5px;margin:10px 0}h2{font-size:21px;line-height:1.3;margin:7px 0 12px}h3{font-size:14px;margin:0 0 10px}p{margin:7px 0 14px}.intro p{color:#61716f;font-size:14px}.runtime-note{display:flex;justify-content:space-between;align-items:center;gap:18px;font-size:12px;color:#61716f;background:#e9f2ec;border:1px solid #d1e3d7;padding:13px 16px;border-radius:10px;margin:22px 0}.runtime-note strong{color:#176e58;flex-shrink:0}.layout{display:grid;grid-template-columns:235px minmax(0,1fr);gap:22px;align-items:start}.exercise-nav{background:white;border:1px solid #dbe3df;border-radius:14px;padding:18px 12px}.exercise-nav h2{font-size:13px;margin:0 8px 14px}.exercise-nav ol{list-style:none;padding:0;margin:0;display:grid;gap:5px}.exercise-nav button{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border-color:transparent;font-weight:500;padding:11px 9px}.exercise-nav button[aria-current=true]{background:#e9f2ec;color:#176e58;border-color:#d1e3d7;font-weight:700}.exercise-number{font-size:11px;color:#617572;min-width:20px}.exercise-nav small{display:block;font-size:10px;color:#61716f;line-height:1.5;margin-top:2px}.progress{font-size:11px;color:#61716f;padding:14px 8px 0}.workspace{min-width:0}.brief{background:white;border:1px solid #dbe3df;border-radius:14px;padding:23px;margin-bottom:18px}.brief-text{font-size:14px;max-width:790px}.brief-text code{background:#e9f2ec;padding:2px 5px;border-radius:4px}.example{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}.example div{border:1px solid #dbe3df;border-radius:8px;overflow:hidden}.example h3{font-size:10px;letter-spacing:1.3px;text-transform:uppercase;color:#617572;background:#fcfdfb;border-bottom:1px solid #e5ebe7;padding:9px 12px;margin:0}.example pre{margin:0;padding:12px;font-size:13px;overflow:auto;min-height:44px}.brief details{font-size:12px;color:#61716f;margin-top:15px}.brief summary{cursor:pointer;font-weight:650;color:#176e58}.brief details p{margin:8px 0 0}.editor-panel{background:white;border:1px solid #dbe3df;border-radius:14px;overflow:hidden}.editor-top{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:12px 18px;border-bottom:1px solid #dbe3df;font-size:12px;font-weight:650}.editor-top small{font-size:11px;color:#61716f;font-weight:400}.editor-wrap{display:flex;background:#172d35;min-height:295px}.line-numbers{padding:17px 10px 17px 15px;color:#90aaa1;text-align:right;font:13px/1.8 ui-monospace,monospace;overflow:hidden;width:49px;flex-shrink:0;user-select:none;max-height:420px;white-space:pre}#editor{display:block;flex:1;min-width:0;width:100%;height:320px;min-height:220px;max-height:700px;resize:vertical;border:0;border-radius:0;background:#172d35;color:#f0f5ef;outline-offset:-4px;padding:17px 18px 17px 8px;tab-size:4;font:13px/1.8 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre;overflow:auto}.editor-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:13px 16px}.run-actions,.draft-actions{display:flex;gap:8px;flex-wrap:wrap}.editor-help{font-size:11px;color:#61716f;margin:0;padding:0 17px 14px}.io-grid{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1fr);gap:18px;margin-top:18px}.io-card{background:white;border:1px solid #dbe3df;border-radius:14px;padding:19px;min-width:0}.io-card label{font-size:13px;font-weight:700;display:block}.io-card p{font-size:11px;color:#61716f;margin:6px 0 12px}#stdin{display:block;width:100%;min-height:120px;border:1px solid #ccd7d4;border-radius:8px;background:#fcfdfb;padding:10px;color:#182d35;font:13px/1.6 ui-monospace,monospace;resize:vertical}#output{font:13px/1.7 ui-monospace,monospace;white-space:pre-wrap;overflow-wrap:anywhere;max-height:300px;overflow:auto;margin:0;min-height:110px}#run-status{font-size:12px;color:#61716f;margin:0 0 12px;min-height:20px}.error{color:#a12e35!important}.feedback{margin-top:18px;background:white;border:1px solid #dbe3df;border-radius:14px;padding:20px}.feedback-title{font-size:16px;margin:0 0 6px}.feedback-description{font-size:12px;color:#61716f;margin:0 0 14px}.test-list{display:grid;gap:10px}.test-case{border:1px solid #dbe3df;border-radius:8px;padding:12px 14px;font-size:12px}.test-case.pass{border-left:4px solid #176e58}.test-case.fail{border-left:4px solid #c55a42}.test-case summary{cursor:pointer;font-weight:650}.test-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}.test-grid small{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#617572}.test-grid pre{font:12px/1.6 ui-monospace,monospace;margin:5px 0;white-space:pre-wrap;overflow-wrap:anywhere}.success{color:#176e58}.page-note{font-size:12px;color:#61716f;margin-top:24px}.page-note summary{cursor:pointer;font-weight:650;color:#233c43}.page-note p{max-width:900px}footer{font-size:11px;color:#798782;margin-top:24px}#draft-status{font-size:11px;color:#61716f;padding:0 17px 12px}
 @media(max-width:1000px){.layout{grid-template-columns:205px minmax(0,1fr)}.io-grid{grid-template-columns:1fr}}@media(max-width:740px){main{padding:26px 15px 40px}.layout{grid-template-columns:1fr}.exercise-nav ol{grid-template-columns:1fr 1fr}.exercise-nav button{height:100%}.runtime-note{align-items:flex-start;flex-direction:column;gap:7px}.tag{display:none}.test-grid{grid-template-columns:1fr}.site-nav{padding:15px}.site-nav a{font-size:13px}.brief{padding:19px}.editor-top{align-items:flex-start}.editor-top small{max-width:160px;text-align:right}}@media(max-width:420px){.example{grid-template-columns:1fr}.draft-actions{width:100%}.run-actions button{padding:10px 12px}.exercise-nav{padding:14px 8px}.exercise-nav button{font-size:12px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
-.line-numbers{height:320px;max-height:none}</style></head><body>
+.line-numbers{height:320px;max-height:none}.completion-card{background:#fcfdfb;border:1px solid #dbe3df;border-radius:12px;padding:16px 18px;margin:0 0 16px}.completion-card.is-complete{background:#e9f2ec;border-color:#a6cdbb}#completion-status{font-size:13px;font-weight:650;color:#233c43}.is-complete #completion-status{color:#176e58}.completion-help{font-size:11px;line-height:1.6;color:#61716f;margin:8px 0 0}.completion-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.completion-actions:has(button:not([hidden])){margin-top:12px}.completion-actions button{font-size:12px}.completion-actions:has(button:not([hidden]))~p{margin-top:8px}</style></head><body>
 <nav class="site-nav" aria-label="Activity navigation"><a href="index.html"><span class="mark" aria-hidden="true">&gt;_</span>Python Lab<span class="tag"> / Computer Science</span></a><a class="back" href="index.html">← All activities</a></nav>
 <main><section class="intro"><div class="eyebrow">Learn by writing code</div><h1>Think it through. Run it. Refine it.</h1><p>Choose an exercise, write Python, and check your program against a set of test cases.</p></section>
 <div class="runtime-note"><span>Python runs on your device. An internet connection is required to download the Python runtime when it loads. Browser caching may reduce later downloads; offline use is not guaranteed.</span><strong id="runtime-status" role="status">Python loads on first run</strong></div>
 <div class="layout"><aside class="exercise-nav"><h2>Choose an exercise</h2><ol id="exercise-list"></ol><div class="progress" id="progress"></div></aside>
 <div class="workspace"><section class="brief" aria-labelledby="exercise-title"><div class="eyebrow" id="exercise-topic"></div><h2 id="exercise-title"></h2><p class="brief-text" id="exercise-instructions"></p><div class="example"><div><h3>Example input</h3><pre id="example-input"></pre></div><div><h3>Expected output</h3><pre id="example-output"></pre></div></div><details><summary>Need a hint?</summary><p id="exercise-hint"></p></details></section>
-<section class="editor-panel" aria-label="Python editor"><div class="editor-top"><label for="editor">Your program · main.py</label><small>Python 3 · Tab = 4 spaces<br>Ctrl / Cmd + Enter = Run</small></div><div class="editor-wrap"><div class="line-numbers" id="line-numbers" aria-hidden="true">1</div><textarea id="editor" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off" aria-describedby="editor-help"></textarea></div><div class="editor-actions"><div class="run-actions"><button class="primary" id="run-code" type="button">▶ Run code</button><button id="check-code" type="button">Check all tests</button><button id="stop-code" type="button" disabled>Stop</button></div><div class="draft-actions"><button id="reset-code" type="button">Reset starter</button><button id="undo-reset" type="button" hidden>Undo reset</button><button id="download-code" type="button">Download .py</button></div></div><p class="editor-help" id="editor-help">Use print() for output. For exercises with input, use input() without a prompt; each call reads the next input line. Only printed output is checked.</p><div id="draft-status" role="status"></div></section>
+<section class="completion-card" id="completion-card" aria-label="Saved task progress"><div id="completion-status" role="status" aria-live="polite"></div><p class="completion-help">Progress stays in this browser on this computer. It does not sync to another computer or browser. Clearing browser or site data deletes your saved code and progress. Return using the same page address.</p><div class="completion-actions"><button id="restore-successful" type="button" hidden>Restore successful code</button><button id="restore-draft" type="button" hidden>Restore latest draft</button></div></section><section class="editor-panel" aria-label="Python editor"><div class="editor-top"><label for="editor">Your program · main.py</label><small>Python 3 · Tab = 4 spaces<br>Ctrl / Cmd + Enter = Run</small></div><div class="editor-wrap"><div class="line-numbers" id="line-numbers" aria-hidden="true">1</div><textarea id="editor" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off" aria-describedby="editor-help"></textarea></div><div class="editor-actions"><div class="run-actions"><button class="primary" id="run-code" type="button">▶ Run code</button><button id="check-code" type="button">Check all tests</button><button id="stop-code" type="button" disabled>Stop</button></div><div class="draft-actions"><button id="reset-code" type="button">Reset starter</button><button id="undo-reset" type="button" hidden>Undo reset</button><button id="download-code" type="button">Download .py</button></div></div><p class="editor-help" id="editor-help">Use print() for output. For exercises with input, use input() without a prompt; each call reads the next input line. Only printed output is checked.</p><div id="draft-status" role="status"></div></section>
 <div class="io-grid"><section class="io-card"><label for="stdin">Input for “Run code”</label><p>Edit these lines to try your own values. “Check all tests” uses the exercise’s fixed test inputs instead.</p><textarea id="stdin" spellcheck="false" aria-label="Input lines for your program"></textarea></section><section class="io-card" aria-labelledby="output-title"><h3 id="output-title">Your output</h3><div id="run-status" role="status" aria-live="polite">Write your program, then select Run code.</div><pre id="output" tabindex="0" aria-label="Program output"></pre></section></div>
 <section class="feedback" id="feedback" aria-labelledby="feedback-title" hidden><h3 class="feedback-title" id="feedback-title"></h3><p class="feedback-description" id="feedback-description"></p><div class="test-list" id="test-list"></div></section>
 </div></div>
 <details class="page-note"><summary>How running and checking work</summary><p>The page uses <a href="https://pyodide.org/en/0.27.7/" target="_blank" rel="noopener noreferrer">Pyodide</a>, which downloads Python from jsDelivr and runs it in a browser worker. No Python installation or execution server is needed. This page does not upload your code or inputs. The runtime download makes a normal request to the CDN.</p><p>The editor, exercises, and checking code are embedded in this HTML file. The Python runtime is an external dependency. Programs are limited to 10 seconds per test and 20,000 output characters. Stop ends the worker, including an infinite loop. A new worker loads on the next run.</p><p>Checks compare printed output, including capitalisation, spaces, and line order. Windows line endings are normalised, and a single final newline is ignored. Input prompts count as output, so use input() without a prompt. Passing the tests checks results, not the algorithm or coding style. Tests and expected answers are visible in the page source; this is a practice tool.</p><p>Drafts and passed-exercise markers are stored in this browser on this device when browser storage is available. Nothing is saved to a class account. Only the Python standard library is intended for these exercises; graphical desktop apps and additional package installation are not included.</p></details>
-<footer>Made for curiosity. Keep a downloaded copy of any code you want to retain.</footer>
+<p>Successful solutions are saved only after every test passes. Returning to a task after reopening this page restores its successful code; later drafts are kept separately and can be restored with Restore latest draft. A failed or stopped check does not replace the successful solution. Earlier pass markers without a verified code copy are retained; recheck once to save the successful code. Storage depends on the browser profile and website address. Clearing browser data removes progress; private browsing or disabled/full storage may prevent it being retained. For reliable persistence, use a consistent website address; storage for locally opened files can vary between browsers.</p><footer>Made for curiosity. Keep a downloaded copy of any code you want to retain.</footer>
 </main>
 <script id="python-worker" type="text/plain">
 import { loadPyodide } from 'https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.mjs';
@@ -76,31 +76,87 @@ const EXERCISES = [
 ];
 const $=id=>document.getElementById(id);
 const STORAGE_KEY='computer-science-python-lab-v1';
-let saved={drafts:{},passed:{}};
-try {const data=JSON.parse(localStorage.getItem(STORAGE_KEY));if(data&&typeof data==='object'){if(data.drafts&&typeof data.drafts==='object') saved.drafts=data.drafts;if(data.passed&&typeof data.passed==='object') saved.passed=data.passed;}} catch{}
+let saved={drafts:{},passed:{},completions:{}};
+try {const data=JSON.parse(localStorage.getItem(STORAGE_KEY));if(data&&typeof data==='object'){if(data.drafts&&typeof data.drafts==='object') saved.drafts=data.drafts;if(data.passed&&typeof data.passed==='object') saved.passed=data.passed;if(data.completions&&typeof data.completions==='object')saved.completions=data.completions;}} catch{}
 let current=EXERCISES[0], worker=null, workerReady=false, activeJob=null, serial=0, timer=null, undoDraft=null;
 function normaliseOutput(text){return text.replace(/\r\n/g,'\n').replace(/\n$/,'');}
 function outputsMatch(actual,expected){return normaliseOutput(actual)===normaliseOutput(expected);}
-function saveDraft(){
- saved.drafts[current.id]=$('editor').value;
- try {localStorage.setItem(STORAGE_KEY,JSON.stringify(saved));$('draft-status').textContent='Draft saved in this browser on this device.';} catch{$('draft-status').textContent='Browser storage unavailable. Draft kept for this open page; download your code to retain it.';}
+// Keep verified successful code separate from editable drafts.
+let storageAvailable=true,displayTaskId=null,loadedEditorCode='';
+const sessionCode=new Map();
+function progressMap(value){return value&&typeof value==='object'&&!Array.isArray(value)?value:{};}
+saved.drafts=progressMap(saved.drafts);saved.passed=progressMap(saved.passed);saved.completions=progressMap(saved.completions);
+function completedSolution(task){
+ const record=saved.completions[task.id];
+ return record&&record.passed===true&&typeof record.code==='string'&&record.testCount===task.tests.length&&record.testSignature===JSON.stringify(task.tests)?record:null;
 }
+function completionLabel(task,fallback){return completedSolution(task)?'✓ Completed':saved.passed[task.id]?'✓ Passed before · Recheck to save code':fallback;}
+function codeForTask(task){
+ if(sessionCode.has(task.id))return sessionCode.get(task.id);
+ const record=completedSolution(task);
+ if(record)return record.code;
+ return typeof saved.drafts[task.id]==='string'?saved.drafts[task.id]:task.starter;
+}
+function loadTaskCode(task){
+ $('editor').value=codeForTask(task);displayTaskId=task.id;loadedEditorCode=$('editor').value;sessionCode.set(task.id,loadedEditorCode);
+}
+function persistProgress(){
+ try{localStorage.setItem(STORAGE_KEY,JSON.stringify(saved));storageAvailable=true;$('draft-status').textContent='Progress is saved in this browser on this computer. Successful code is kept separately from drafts.';return true;}
+ catch{storageAvailable=false;$('draft-status').textContent='Browser storage is unavailable or full. Progress is kept only for this open page; download your code before leaving.';return false;}
+}
+function renderCompletion(){
+ const record=completedSolution(current),same=record&&$('editor').value===record.code;
+ const status=$('completion-status');
+ if(record){status.textContent='✓ Completed · All '+record.testCount+' tests passed. '+(same?'Showing the successful code.':'The editor contains a different draft; your successful code is still kept separately.')+(!storageAvailable?' Browser storage is unavailable, so new changes may not survive closing the page.':'');}
+ else if(saved.passed[current.id])status.textContent='A previous pass is recorded. Run all tests once to save a verified copy of your successful code.';
+ else status.textContent='Not completed yet. Pass every test to save a successful solution for this task.';
+ $('completion-card').classList.toggle('is-complete',Boolean(record));
+ $('restore-successful').hidden=!record;$('restore-successful').disabled=Boolean(activeJob)||!record||Boolean(same);
+ const draft=saved.drafts[current.id];$('restore-draft').hidden=typeof draft!=='string'||draft===$('editor').value;$('restore-draft').disabled=Boolean(activeJob);
+}
+function saveDraft(){
+ // Selecting a restored solution must not erase a different, later saved draft.
+ const code=$('editor').value;
+ if(displayTaskId===current.id){
+  sessionCode.set(current.id,code);
+  if(code!==loadedEditorCode){saved.drafts[current.id]=code;loadedEditorCode=code;}
+ }
+ persistProgress();renderCompletion();
+}
+function recordSuccessfulSolution(job){
+ if(!job||job.kind!=='check')return false;
+ const task=EXERCISES.find(item=>item.id===job.exerciseId);
+ if(!task||!task.tests.length||!Array.isArray(job.results)||job.results.length!==task.tests.length||!job.results.every(result=>result.passed===true)||typeof job.code!=='string')return false;
+ saved.completions[task.id]={passed:true,code:job.code,testCount:task.tests.length,testSignature:JSON.stringify(task.tests),completedAt:new Date().toISOString()};
+ saved.passed[task.id]=true;
+ persistProgress();renderCompletion();return true;
+}
+function restoreProgressCode(successful){
+ if(activeJob)return;
+ const record=completedSolution(current),code=successful?(record&&record.code):saved.drafts[current.id];
+ if(typeof code!=='string')return;
+ saveDraft();undoDraft=$('editor').value;$('editor').value=code;loadedEditorCode=code;displayTaskId=current.id;sessionCode.set(current.id,code);
+ $('undo-reset').hidden=false;$('feedback').hidden=true;updateLines();renderCompletion();
+}
+$('restore-successful').addEventListener('click',()=>restoreProgressCode(true));
+$('restore-draft').addEventListener('click',()=>restoreProgressCode(false));
+
 function updateLines(){const count=$('editor').value.split('\n').length;$('line-numbers').textContent=Array.from({length:count},(_,i)=>i+1).join('\n');$('line-numbers').scrollTop=$('editor').scrollTop;}
 function renderExerciseList(){
  $('exercise-list').replaceChildren();
- EXERCISES.forEach((exercise,index)=>{const li=document.createElement('li'),button=document.createElement('button'),number=document.createElement('span'),text=document.createElement('span'),small=document.createElement('small');button.type='button';button.setAttribute('aria-current',String(exercise.id===current.id));number.className='exercise-number';number.textContent=String(index+1).padStart(2,'0');text.textContent=exercise.title;small.textContent=saved.passed[exercise.id]?'✓ Previously passed':'Practice exercise';text.append(small);button.append(number,text);button.disabled=Boolean(activeJob);button.addEventListener('click',()=>selectExercise(exercise.id));li.append(button);$('exercise-list').append(li);});
+ EXERCISES.forEach((exercise,index)=>{const li=document.createElement('li'),button=document.createElement('button'),number=document.createElement('span'),text=document.createElement('span'),small=document.createElement('small');button.type='button';button.setAttribute('aria-current',String(exercise.id===current.id));number.className='exercise-number';number.textContent=String(index+1).padStart(2,'0');text.textContent=exercise.title;small.textContent=completionLabel(exercise,'Practice exercise');text.append(small);button.append(number,text);button.disabled=Boolean(activeJob);button.addEventListener('click',()=>selectExercise(exercise.id));li.append(button);$('exercise-list').append(li);});
  $('progress').textContent=EXERCISES.filter(e=>saved.passed[e.id]).length+' / '+EXERCISES.length+' exercises passed at least once';
 }
 function selectExercise(id){
  if(activeJob)return;saveDraft();current=EXERCISES.find(e=>e.id===id)||EXERCISES[0];
  $('exercise-title').textContent=current.title;$('exercise-topic').textContent=current.topic;$('exercise-instructions').textContent=current.instructions;$('exercise-hint').textContent=current.hint;
  $('example-input').textContent=current.tests[0].input||'(no input)';$('example-output').textContent=current.tests[0].expected;
- $('editor').value=typeof saved.drafts[current.id]==='string'?saved.drafts[current.id]:current.starter;
- $('stdin').value=current.tests[0].input;$('output').textContent='';$('run-status').textContent='Write your program, then select Run code.';$('run-status').classList.remove('error');$('feedback').hidden=true;undoDraft=null;$('undo-reset').hidden=true;updateLines();saveDraft();renderExerciseList();
+ loadTaskCode(current);
+ $('stdin').value=current.tests[0].input;$('output').textContent='';$('run-status').textContent='Write your program, then select Run code.';$('run-status').classList.remove('error');$('feedback').hidden=true;undoDraft=null;$('undo-reset').hidden=true;updateLines();saveDraft();renderExerciseList();renderCompletion();
 }
 function setBusy(busy){
  for(const id of ['run-code','check-code','reset-code','undo-reset'])$(id).disabled=busy;
- $('stop-code').disabled=!busy;$('editor').readOnly=busy;$('stdin').disabled=busy;renderExerciseList();
+ $('stop-code').disabled=!busy;$('editor').readOnly=busy;$('stdin').disabled=busy;renderExerciseList();renderCompletion();
 }
 function terminateWorker(){if(worker)worker.terminate();worker=null;workerReady=false;}
 function endJob(message,error=false){clearTimeout(timer);timer=null;activeJob=null;setBusy(false);$('run-status').textContent=message;$('run-status').classList.toggle('error',error);}
@@ -158,7 +214,7 @@ function completeJob(){
   const passed=job.results.filter(r=>r.passed).length,all=passed===job.cases.length&&job.results.length===job.cases.length;
   $('feedback-title').textContent=passed+' / '+job.cases.length+' tests passed'+(all?' · Well done!':'');
   $('feedback-description').textContent=all?'Your printed output matches every test. These checks assess output, not your chosen method.':'Open a test below to compare its input, expected output and your actual output. Check spaces, capitals and extra prompts.';
-  if(all){saved.passed[job.exerciseId]=true;saveDraft();}
+  if(all){recordSuccessfulSolution(job);saveDraft();}
   endJob(all?'All tests passed.':'Checking complete. Review the test results below.');
  }else{const result=job.results[0]?.result;endJob(result?.error?'Python reported an error. Read the message in Your output.':'Run complete. Use Check all tests to assess this exercise.',Boolean(result?.error));}
 }
@@ -173,7 +229,7 @@ $('reset-code').addEventListener('click',()=>{undoDraft=$('editor').value;$('edi
 $('undo-reset').addEventListener('click',()=>{if(undoDraft!==null){$('editor').value=undoDraft;undoDraft=null;$('undo-reset').hidden=true;updateLines();saveDraft();}});
 $('download-code').addEventListener('click',()=>{const url=URL.createObjectURL(new Blob([$('editor').value],{type:'text/x-python'})),a=document.createElement('a');a.href=url;a.download=current.id+'.py';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
 // Initialise without overwriting any stored draft for the first exercise.
-$('editor').value=typeof saved.drafts[current.id]==='string'?saved.drafts[current.id]:current.starter;
+$('editor').value='';
 selectExercise(current.id);
 if(typeof ResizeObserver!=='undefined')new ResizeObserver(()=>{$('line-numbers').style.height=$('editor').clientHeight+'px';}).observe($('editor'));
 </script>
