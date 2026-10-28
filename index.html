@@ -21,7 +21,20 @@ nav.site-nav{display:flex;justify-content:space-between;align-items:center;gap:2
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{transition:none!important;animation:none!important}}
 @media print{.site-nav{display:none!important}body{background:white}}
 html{scroll-behavior:smooth}.site-nav .site-sub{display:inline}main.home{max-width:1250px;margin:auto;padding:46px 28px 64px}.home-intro{display:flex;justify-content:space-between;align-items:end;gap:32px;margin-bottom:32px}.home-intro h1{margin:12px 0;font-size:clamp(36px,5vw,56px);letter-spacing:-2px;max-width:700px}.home-intro p{color:#61716f;margin:0;max-width:600px}.eyebrow{font-size:11px;letter-spacing:1.7px;font-weight:750;text-transform:uppercase;color:#617572}.home-note{flex-shrink:0;color:#61716f;font-size:12px;border-left:2px solid #d1e3d7;padding-left:16px;line-height:1.8}.home-note strong{display:block;color:#176e58;font-size:24px}.browse-bar{display:flex;gap:20px;align-items:center;justify-content:space-between;padding:18px 20px;background:white;border:1px solid #dbe3df;border-radius:14px;margin-bottom:40px}.curriculum-nav{display:flex;gap:8px}.curriculum-nav a{padding:10px 16px;background:#e9f2ec;color:#176e58;text-decoration:none;border-radius:8px;font-weight:650;font-size:14px}.curriculum-nav a:hover{background:#d1e3d7}.search-wrap{display:flex;align-items:center;gap:12px;flex:1;max-width:430px}.search-wrap label{font-size:12px;font-weight:650;color:#61716f}.search-wrap input{width:100%;min-width:0;border:1px solid #ccd7d4;background:#fcfdfb;padding:11px 13px;font:inherit;font-size:14px;color:#182d35}.curriculum{margin-top:38px;scroll-margin-top:24px}.curriculum-heading{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:22px}.curriculum-heading h2{font-size:28px;letter-spacing:-1px;margin:7px 0 0}.section-count{font-size:12px;color:#61716f}.topics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;align-items:start}.topic{background:white;border:1px solid #dbe3df;border-radius:14px;overflow:hidden}.topic-header{display:flex;align-items:center;gap:12px;padding:20px;border-bottom:1px solid #e4eae6;background:#fcfdfb}.topic-header h3{font-size:16px;margin:0}.topic-number{display:grid;place-items:center;flex-shrink:0;width:32px;height:32px;border-radius:7px;background:#e9f2ec;font-size:11px;font-weight:750;color:#176e58}.activity-list{padding:6px 16px}.activity-link{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:14px 4px;color:#233c43;text-decoration:none;line-height:1.5;font-size:14px;border-bottom:1px solid #e5ebe7}.activity-link:last-child{border:0}.activity-link:hover{background:#e9f2ec;color:#125643}.arrow{color:#188165;flex-shrink:0}.home-footer{margin-top:44px;padding-top:22px;border-top:1px solid #dbe3df;font-size:12px;color:#61716f}.filter-status{font-size:13px;color:#61716f;margin-top:-23px;margin-bottom:24px}.filter-status:empty{display:none}[hidden]{display:none!important}.no-results{padding:28px;background:#e9f2ec;border-radius:14px;color:#233c43}@media(max-width:950px){.topics{grid-template-columns:repeat(2,minmax(0,1fr))}.home-note{display:none}}@media(max-width:640px){main.home{padding:30px 15px 40px}.topics{grid-template-columns:1fr}.browse-bar{align-items:stretch;flex-direction:column;gap:16px}.search-wrap{max-width:none}.home-intro h1{font-size:36px;letter-spacing:-1.5px}.curriculum-heading h2{font-size:24px}.site-nav .site-sub{display:none}.curriculum-nav a{flex:1;text-align:center}}
-		</style>
+		
+/* Native topic disclosures: collapsed initially, independently expandable. */
+.topic-header{list-style:none;justify-content:space-between;cursor:pointer;user-select:none;border-bottom:0}
+.topic-header::-webkit-details-marker{display:none}
+.topic-header::marker{content:""}
+.topic-header h3{display:flex;align-items:center;gap:12px;flex:1;min-width:0}
+.topic-header .topic-number{width:auto;min-width:32px;padding:0 6px}
+.topic-title{min-width:0}
+.topic-header::after{content:"";width:8px;height:8px;border-right:2px solid #176e58;border-bottom:2px solid #176e58;transform:rotate(-45deg);flex-shrink:0;margin:0 3px 0 5px}
+.topic[open]>.topic-header{border-bottom:1px solid #e4eae6}
+.topic[open]>.topic-header::after{transform:rotate(45deg)}
+.topic-header:hover{background:#e9f2ec}
+.topic-header:focus-visible{outline:3px solid #db9c32;outline-offset:-3px;border-radius:13px}
+</style>
 	</head>
 	<body>
 		<nav class="site-nav" aria-label="Home">
@@ -36,7 +49,7 @@ html{scroll-behavior:smooth}.site-nav .site-sub{display:inline}main.home{max-wid
 				<div>
 					<span class="eyebrow">A space to experiment</span>
 					<h1>Explore. Practise.<br>Make it click.</h1>
-					<p>Interactive activities for IGCSE and IB Computer Science. Choose a topic, try an experiment, and put your understanding to work.</p>
+					<p>Interactive activities for IGCSE and IB Computer Science. Click a topic to show or hide its activities, try an experiment, and put your understanding to work.</p>
 				</div>
 				<div class="home-note">
 					<strong>Two pathways.</strong>One place to build your understanding.
@@ -63,11 +76,8 @@ html{scroll-behavior:smooth}.site-nav .site-sub{display:inline}main.home{max-wid
 						<span class="section-count">17 links</span>
 					</div>
 					<div class="topics">
-						<article class="topic">
-							<div class="topic-header">
-								<span class="topic-number">01</span>
-								<h3>Data Representation</h3>
-							</div>
+						<details class="topic">
+							<summary class="topic-header"><h3><span class="topic-number">01</span><span class="topic-title">Data Representation</span></h3></summary>
 							<div class="activity-list">
 								<a class="activity-link" href="binary/Cards1.html" >
 									<span>Binary Representation using cards</span>
@@ -106,12 +116,9 @@ html{scroll-behavior:smooth}.site-nav .site-sub{display:inline}main.home{max-wid
 									<span class="arrow" aria-hidden="true">→</span>
 								</a>
 							</div>
-						</article>
-						<article class="topic">
-							<div class="topic-header">
-								<span class="topic-number">02</span>
-								<h3>Data Transmission</h3>
-							</div>
+						</details>
+						<details class="topic">
+							<summary class="topic-header"><h3><span class="topic-number">02</span><span class="topic-title">Data Transmission</span></h3></summary>
 							<div class="activity-list">
 								<a class="activity-link" href="serial-parallel-bit-lab.html" >
 									<span>Serial vs Parallel Lab</span>
@@ -126,12 +133,9 @@ html{scroll-behavior:smooth}.site-nav .site-sub{display:inline}main.home{max-wid
 									<span class="arrow" aria-hidden="true">→</span>
 								</a>
 							</div>
-						</article>
-						<article class="topic">
-							<div class="topic-header">
-								<span class="topic-number">03</span>
-								<h3>Hardware</h3>
-							</div>
+						</details>
+						<details class="topic">
+							<summary class="topic-header"><h3><span class="topic-number">03</span><span class="topic-title">Hardware</span></h3></summary>
 							<div class="activity-list">
 								<a class="activity-link" href="CpuPartsDefinitions.html" >
 									<span>CPU Parts Definitions</span>
@@ -150,48 +154,36 @@ html{scroll-behavior:smooth}.site-nav .site-sub{display:inline}main.home{max-wid
 									<span class="arrow" aria-hidden="true">→</span>
 								</a>
 							</div>
-						</article>
-						<article class="topic">
-							<div class="topic-header">
-								<span class="topic-number">04</span>
-								<h3>Software</h3>
-							</div>
+						</details>
+						<details class="topic">
+							<summary class="topic-header"><h3><span class="topic-number">04</span><span class="topic-title">Software</span></h3></summary>
 							<div class="activity-list">
 								<a class="activity-link" href="igcse-software.html" >
 									<span>Activities coming soon...</span>
 									<span class="arrow" aria-hidden="true">→</span>
 								</a>
 							</div>
-						</article>
-						<article class="topic">
-							<div class="topic-header">
-								<span class="topic-number">05</span>
-								<h3>The Internet and its uses</h3>
-							</div>
+						</details>
+						<details class="topic">
+							<summary class="topic-header"><h3><span class="topic-number">05</span><span class="topic-title">The Internet and its uses</span></h3></summary>
 							<div class="activity-list">
 								<a class="activity-link" href="cybersecuritythreats.html" >
 									<span>Cyber Security Threats Game</span>
 									<span class="arrow" aria-hidden="true">→</span>
 								</a>
 							</div>
-						</article>
-						<article class="topic">
-							<div class="topic-header">
-								<span class="topic-number">06</span>
-								<h3>Automated and Emerging Technologies</h3>
-							</div>
+						</details>
+						<details class="topic">
+							<summary class="topic-header"><h3><span class="topic-number">06</span><span class="topic-title">Automated and Emerging Technologies</span></h3></summary>
 							<div class="activity-list">
 								<a class="activity-link" href="AutomatedSystemsComponents.html" >
 									<span>How Automated Systems Work</span>
 									<span class="arrow" aria-hidden="true">→</span>
 								</a>
 							</div>
-						</article>
-						<article class="topic">
-							<div class="topic-header">
-								<span class="topic-number">08</span>
-								<h3>Python Programming</h3>
-							</div>
+						</details>
+						<details class="topic">
+							<summary class="topic-header"><h3><span class="topic-number">08</span><span class="topic-title">Python Programming</span></h3></summary>
 							<div class="activity-list">
 								<a class="activity-link" href="igcsepythontasks1.html" >
 									<span>Input/Output/Decision-Making</span>
@@ -234,7 +226,7 @@ html{scroll-behavior:smooth}.site-nav .site-sub{display:inline}main.home{max-wid
 									<span class="arrow" aria-hidden="true">→</span>
 								</a>
 							</div>
-						</article>
+						</details>
 					</div>
 				</section>
 				<section class="curriculum" id="ib">
@@ -245,11 +237,8 @@ html{scroll-behavior:smooth}.site-nav .site-sub{display:inline}main.home{max-wid
 						<span class="section-count">26 links</span>
 					</div>
 					<div class="topics">
-						<article class="topic">
-							<div class="topic-header">
-								<span class="topic-number">01</span>
-								<h3>Computer Fundamentals</h3>
-							</div>
+						<details class="topic">
+							<summary class="topic-header"><h3><span class="topic-number">01</span><span class="topic-title">Computer Fundamentals</span></h3></summary>
 							<div class="activity-list">
 								<a class="activity-link" href="CpuPartsDefinitionsIB.html" >
 									<span>CPU Parts Definitions</span>
@@ -292,12 +281,9 @@ html{scroll-behavior:smooth}.site-nav .site-sub{display:inline}main.home{max-wid
 									<span class="arrow" aria-hidden="true">→</span>
 								</a>
 							</div>
-						</article>
-						<article class="topic">
-							<div class="topic-header">
-								<span class="topic-number">02</span>
-								<h3>Networks</h3>
-							</div>
+						</details>
+						<details class="topic">
+							<summary class="topic-header"><h3><span class="topic-number">02</span><span class="topic-title">Networks</span></h3></summary>
 							<div class="activity-list">
 								<a class="activity-link" href="server-matching-game.html" >
 									<span>Server Matching Game</span>
@@ -352,12 +338,9 @@ html{scroll-behavior:smooth}.site-nav .site-sub{display:inline}main.home{max-wid
 									<span class="arrow" aria-hidden="true">→</span>
 								</a>
 							</div>
-						</article>
-						<article class="topic">
-							<div class="topic-header">
-								<span class="topic-number">03</span>
-								<h3>Databases</h3>
-							</div>
+						</details>
+						<details class="topic">
+							<summary class="topic-header"><h3><span class="topic-number">03</span><span class="topic-title">Databases</span></h3></summary>
 							<div class="activity-list">
 								<a class="activity-link" href="SQLPractice.html" >
 									<span>SQL Queries Practice - SL</span>
@@ -368,12 +351,9 @@ html{scroll-behavior:smooth}.site-nav .site-sub{display:inline}main.home{max-wid
 									<span class="arrow" aria-hidden="true">→</span>
 								</a>
 							</div>
-						</article>
-						<article class="topic">
-							<div class="topic-header">
-								<span class="topic-number">04</span>
-								<h3>Machine Learning</h3>
-							</div>
+						</details>
+						<details class="topic">
+							<summary class="topic-header"><h3><span class="topic-number">04</span><span class="topic-title">Machine Learning</span></h3></summary>
 							<div class="activity-list">
 								<a class="activity-link" href="MachineLearningApproaches.html" >
 									<span>Machines Learning Approaches</span>
@@ -392,12 +372,9 @@ html{scroll-behavior:smooth}.site-nav .site-sub{display:inline}main.home{max-wid
 									<span class="arrow" aria-hidden="true">→</span>
 								</a>
 							</div>
-						</article>
-						<article class="topic">
-							<div class="topic-header">
-								<span class="topic-number">Theme B</span>
-								<h3>Algorithmic Thinking and Problem-Solving</h3>
-							</div>
+						</details>
+						<details class="topic">
+							<summary class="topic-header"><h3><span class="topic-number">Theme B</span><span class="topic-title">Algorithmic Thinking and Problem-Solving</span></h3></summary>
 							<div class="activity-list">
 								<a class="activity-link" href="PythonEditor.html" >
 									<span>Python Editor</span>
@@ -434,13 +411,44 @@ html{scroll-behavior:smooth}.site-nav .site-sub{display:inline}main.home{max-wid
 									<span class="arrow" aria-hidden="true">→</span>
 								</a>
 							</div>
-						</article>
+						</details>
 					</div>
 				</section>
 			</div>
 			<p class="no-results" id="no-results" hidden>No matching activities. Try a different topic or clear the search.</p>
 			<footer class="home-footer">Made for curiosity. Choose an activity and learn at your own pace.</footer>
 		</main>
-		<script>const search=document.getElementById('activity-search');search.addEventListener('input',()=>{const query=search.value.trim().toLowerCase();let count=0;document.querySelectorAll('.topic').forEach(topic=>{const title=topic.querySelector('h3').textContent.toLowerCase(),curriculum=topic.closest('.curriculum').querySelector('h2').textContent.toLowerCase();let visible=0;topic.querySelectorAll('.activity-link').forEach(link=>{const matches=(link.textContent+' '+title+' '+curriculum).toLowerCase().includes(query);link.hidden=!matches;if(matches){visible++;count++}});topic.hidden=visible===0});document.querySelectorAll('.curriculum').forEach(section=>section.hidden=![...section.querySelectorAll('.topic')].some(t=>!t.hidden));document.getElementById('filter-status').textContent=query?count+' matching '+(count===1?'activity':'activities'):'';document.getElementById('no-results').hidden=count!==0});document.querySelectorAll('.curriculum-nav a').forEach(a=>a.addEventListener('click',()=>{if(search.value){search.value='';search.dispatchEvent(new Event('input'))}}));</script>
+		<script>
+const search=document.getElementById('activity-search');
+const topics=[...document.querySelectorAll('details.topic')];
+let beforeSearch=null;
+function filterActivities(){
+ const query=search.value.trim().toLowerCase();
+ if(query&&beforeSearch===null)beforeSearch=new Map(topics.map(topic=>[topic,topic.open]));
+ let count=0;
+ topics.forEach(topic=>{
+  const title=topic.querySelector('.topic-title').textContent.toLowerCase();
+  const curriculum=topic.closest('.curriculum').querySelector('h2').textContent.toLowerCase();
+  let visible=0;
+  topic.querySelectorAll('.activity-link').forEach(link=>{
+   const matches=(link.textContent+' '+title+' '+curriculum).toLowerCase().includes(query);
+   link.hidden=!matches;if(matches){visible++;count++;}
+  });
+  topic.querySelectorAll('.activity-list').forEach(list=>{list.hidden=![...list.querySelectorAll('.activity-link')].some(link=>!link.hidden);});
+  topic.hidden=visible===0;
+  if(query)topic.open=visible>0;
+  else if(beforeSearch)topic.open=beforeSearch.get(topic)||false;
+ });
+ document.querySelectorAll('.curriculum').forEach(section=>{section.hidden=![...section.querySelectorAll('details.topic')].some(topic=>!topic.hidden);});
+ document.getElementById('filter-status').textContent=query?count+' matching '+(count===1?'activity':'activities'):'';
+ document.getElementById('no-results').hidden=count!==0;
+ if(!query)beforeSearch=null;
+}
+search.addEventListener('input',filterActivities);
+document.querySelectorAll('.curriculum-nav a').forEach(link=>link.addEventListener('click',()=>{
+ if(search.value){search.value='';filterActivities();}
+}));
+
+		</script>
 	</body>
 </html>
