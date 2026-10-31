@@ -73,7 +73,7 @@ html{scroll-behavior:smooth}.site-nav .site-sub{display:inline}main.home{max-wid
 							<span class="eyebrow">Build your foundations</span>
 							<h2>IGCSE Computer Science</h2>
 						</div>
-						<span class="section-count">34 links</span>
+						<span class="section-count"></span>
 					</div>
 					<div class="topics">
 						<details class="topic">
@@ -317,7 +317,7 @@ html{scroll-behavior:smooth}.site-nav .site-sub{display:inline}main.home{max-wid
 						<div>
 							<span class="eyebrow">Explore further</span><h2>IB Computer Science</h2>
 						</div>
-						<span class="section-count">34 links</span>
+						<span class="section-count"></span>
 					</div>
 					<div class="topics">
 						<details class="topic">
@@ -544,6 +544,11 @@ html{scroll-behavior:smooth}.site-nav .site-sub{display:inline}main.home{max-wid
 		<script>
 const search=document.getElementById('activity-search');
 const topics=[...document.querySelectorAll('details.topic')];
+document.querySelectorAll('.curriculum').forEach(section=>{
+ const count=section.querySelectorAll('.activity-link').length;
+ const label=section.querySelector('.section-count');
+ if(label)label.textContent=count+' '+(count===1?'link':'links');
+});
 let beforeSearch=null;
 function filterActivities(){
  const query=search.value.trim().toLowerCase();
