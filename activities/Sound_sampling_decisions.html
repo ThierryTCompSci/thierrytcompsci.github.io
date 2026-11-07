@@ -667,6 +667,50 @@
           display: none !important;
         }
       }
+
+      .choice-buttons {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+      .choice-button {
+        min-height: 54px;
+        padding: 12px 16px;
+        border: 2px solid #a8beb1;
+        background: #fff;
+        color: #182d35;
+        text-align: left;
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.6;
+        white-space: normal;
+        cursor: pointer;
+      }
+      .choice-button:hover {
+        background: #edf5ef;
+        border-color: #176e58;
+      }
+      .choice-button[aria-pressed='true'] {
+        background: #182d35;
+        color: white;
+        border-color: #182d35;
+      }
+      .field.correct .choice-button[aria-pressed='true'] {
+        background: #176e58;
+        border-color: #176e58;
+        color: white;
+      }
+      .field.wrong .choice-button[aria-pressed='true'] {
+        background: #a72e43;
+        border-color: #a72e43;
+        color: white;
+      }
+      @media (max-width: 600px) {
+        .choice-buttons {
+          grid-template-columns: 1fr;
+          gap: 9px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -711,9 +755,10 @@
           increasing either setting increases uncompressed size.
         </p>
         <p class="muted">
-          Complete every answer. After checking, you can reveal an explanation
-          for each question. Ordering cards can be dragged or moved with their ↑
-          and ↓ buttons. Your answers are kept only while this page is open.
+          Choose one answer button below each statement. Selecting another
+          answer replaces the previous choice. Use Check my answers at the
+          bottom when ready. After checking, you can reveal an explanation for
+          each question. Your answers are kept only while this page is open.
         </p>
       </section>
       <div id="questions"></div>
@@ -741,9 +786,8 @@
         <div>
           <strong>Ready for another round?</strong>
           <p class="muted">
-            New Questions clears your answers and creates a fresh round.
-            Numerical values change in calculation activities; concept
-            activities shuffle their questions and answer choices.
+            New Questions clears your selections and reshuffles the statements
+            and answer buttons.
           </p>
         </div>
         <button
@@ -1622,17 +1666,31 @@
         label.htmlFor = id;
         host.append(label);
         if (f.type === 'choice') {
-          const select = el('select');
-          select.id = id;
-          const opt = el('option', 'Choose an answer');
-          opt.value = '';
-          select.append(opt);
-          shuffle(f.options).forEach((o, i) => {
-            const option = el('option', typeof o === 'string' ? o : o.label);
-            option.value = typeof o === 'string' ? o : o.value;
-            select.append(option);
+          const group = el('div', undefined, 'choice-buttons');
+          group.id = id;
+          group.dataset.value = '';
+          group.setAttribute('role', 'group');
+          label.id = 'choice-label-' + qid + '-' + fid;
+          label.removeAttribute('for');
+          group.setAttribute('aria-labelledby', label.id);
+          shuffle(f.options).forEach((option) => {
+            const value = typeof option === 'string' ? option : option.value;
+            if (!String(value ?? '').trim()) return;
+            const button = el(
+              'button',
+              typeof option === 'string' ? option : option.label,
+              'choice-button'
+            );
+            button.type = 'button';
+            button.dataset.choiceValue = value;
+            button.setAttribute('aria-pressed', 'false');
+            button.setAttribute(
+              'aria-describedby',
+              'feedback-' + qid + '-' + fid
+            );
+            group.append(button);
           });
-          host.append(select);
+          host.append(group);
         } else if (f.type === 'multi') {
           const group = el('fieldset');
           group.id = id;
@@ -1756,6 +1814,7 @@
       function valueFor(i, j) {
         const f = questions[i].fields[j],
           node = $(`answer-${i}-${j}`);
+        if (f.type === 'choice') return node.dataset.value || '';
         if (f.type === 'bits')
           return [...node.querySelectorAll('input')]
             .map((x) => x.value)
@@ -1946,6 +2005,19 @@
         invalidate(e.target.closest('.field'))
       );
       $('questions').addEventListener('click', (e) => {
+        const choice = e.target.closest('[data-choice-value]');
+        if (choice) {
+          const group = choice.closest('.choice-buttons');
+          if (group.dataset.value === choice.dataset.choiceValue) return;
+          group.dataset.value = choice.dataset.choiceValue;
+          group
+            .querySelectorAll('button')
+            .forEach((button) =>
+              button.setAttribute('aria-pressed', String(button === choice))
+            );
+          invalidate(group.closest('.field'));
+          return;
+        }
         const move = e.target.closest('[data-move]');
         if (move) {
           const li = move.closest('li'),
