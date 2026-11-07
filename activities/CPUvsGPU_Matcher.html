@@ -1,170 +1,1048 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>CPU vs GPU Challenge</title>
-
-<style>
-body {
-  font-family:Inter, ui-sans-serif, system-ui, sans-serif;
-  background: #f3f5f1;
-  color:#233c43;
-  text-align: center;
-}
-
-h1 {
-  margin-bottom: 5px;
-}
-
-.container {
-  width: 80%;
-  margin: auto;
-}
-
-.task {
-  background: #ffffff;
-  border: 2px solid #176e58;
-  padding: 10px;
-  margin: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-select {
-  padding: 5px;
-  font-size: 14px;
-}
-
-.correct {
-  background: #16a34a !important;
-}
-
-.wrong {
-  background: #dc2626 !important;
-}
-
-button {
-  margin-top: 15px;
-  padding: 10px 20px;
-  background: #176e58;
-  border: none;
-  cursor: pointer;
-}
-
-#score {
-  margin-top: 15px;
-  font-size: 20px;
-}
-
-</style>
-<meta name="viewport" content="width=device-width,initial-scale=1"><style>
-/* Image Lab theme. Embedded so this activity has no shared stylesheet dependency. */
-:root{font-family:Inter,ui-sans-serif,system-ui,sans-serif;color:#182d35;background:#f3f5f1;font-synthesis:none}
-*{box-sizing:border-box}body{margin:0;padding:0;max-width:none;min-height:100vh;display:block;background:#f3f5f1;color:#182d35;font-family:Inter,ui-sans-serif,system-ui,sans-serif;line-height:1.6}
-button,input,select,textarea{font-family:inherit}button,select,input:not([type=range]):not([type=checkbox]):not([type=radio]):not([type=color]):not([type=file]),textarea{border-radius:8px}button{font-weight:600;box-shadow:none}button:not(:disabled){cursor:pointer}button:disabled{cursor:not-allowed}
-a{color:#176e58}a:hover{color:#125643}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid #db9c32;outline-offset:4px}
-input[type=range],input[type=checkbox],input[type=radio],progress{accent-color:#19745c}
-h1{font-size:clamp(28px,4vw,44px);letter-spacing:-1.5px;line-height:1.15;font-weight:750}h2,h3{line-height:1.3}p{line-height:1.6}
-.hero{background:#fcfdfb;color:#182d35;border:1px solid #dbe3df;border-radius:14px;box-shadow:none}.hero p{color:#61716f}.hero .tag{color:#617572}
-.card,.panel,.question-card,.app,.category,.platform,.plan-card{box-shadow:none;border-radius:14px}
-.activity-shell{width:min(1200px,100%);margin:0 auto;padding:32px 28px 56px}.activity-shell>h1:first-child,.activity-shell>h2:first-child{margin-top:8px}.activity-shell>.container{width:100%;max-width:100%;margin-left:auto;margin-right:auto}
-nav.site-nav{display:flex;justify-content:space-between;align-items:center;gap:20px;background:#fcfdfb;border-bottom:1px solid #dce3de;padding:18px 5%;text-align:left;line-height:1.3}
-.site-nav a{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-size:15px;font-weight:750;color:#182d35}.site-nav .site-mark{display:inline-grid;place-items:center;background:#16735c;color:white;border-radius:7px;width:32px;height:32px;font-size:19px}.site-nav .site-back{font-size:13px;font-weight:600;color:#176e58}.site-nav .site-sub{font-size:10px;letter-spacing:1.7px;text-transform:uppercase;color:#617572}
-@media(max-width:640px){.activity-shell{padding:24px 15px 40px}.site-nav .site-sub{display:none}nav.site-nav{padding:15px}.site-nav a{font-size:13px}.row,.question,.task{flex-wrap:wrap;gap:10px}.row select,.question select,.task select{width:100%;min-width:0}.row div:first-child{width:100%!important}.controls{flex-wrap:wrap}h1{letter-spacing:-1px}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{transition:none!important;animation:none!important}}
-@media print{.site-nav{display:none!important}body{background:white}}
-button{background:#176e58;color:white;border:1px solid #176e58;padding:10px 16px}button:hover{background:#125643;box-shadow:none}select,input{background:white;color:#182d35;border:1px solid #ccd7d4;padding:9px}.correct{color:#14532d}.wrong,.incorrect{color:#991b1b}.task{border:1px solid #dbe3df;border-radius:14px;padding:18px;margin:12px 0;text-align:left}.correct{background:#e9f2ec!important}.wrong{background:#fee2e2!important}</style></head>
-<body><nav class="site-nav" aria-label="Activity navigation"><a href="../index.html"><span class="site-mark" aria-hidden="true">▦</span>Computer Science<span class="site-sub"> / Activity lab - Designed by Thierry Taberna</span></a><a class="site-back" href="../index.html">← All activities</a></nav><main class="activity-shell">
-
-<h1>CPU vs GPU Challenge</h1>
-<p>Select whether each task is best handled by the CPU or GPU</p>
-
-<div class="container">
-
-  <div class="task" data-answer="GPU">
-    Rendering graphics in a video game
-    <select>
-      <option value="">Choose</option>
-      <option value="CPU">CPU</option>
-      <option value="GPU">GPU</option>
-    </select>
-  </div>
-
-  <div class="task" data-answer="CPU">
-    Running the operating system
-    <select>
-      <option value="">Choose</option>
-      <option value="CPU">CPU</option>
-      <option value="GPU">GPU</option>
-    </select>
-  </div>
-
-  <div class="task" data-answer="GPU">
-    Training a machine learning model
-    <select>
-      <option value="">Choose</option>
-      <option value="CPU">CPU</option>
-      <option value="GPU">GPU</option>
-    </select>
-  </div>
-
-  <div class="task" data-answer="GPU">
-    Running large-scale physics simulations
-    <select>
-      <option value="">Choose</option>
-      <option value="CPU">CPU</option>
-      <option value="GPU">GPU</option>
-    </select>
-  </div>
-
-  <div class="task" data-answer="CPU">
-    Managing input/output devices
-    <select>
-      <option value="">Choose</option>
-      <option value="CPU">CPU</option>
-      <option value="GPU">GPU</option>
-    </select>
-  </div>
-
-  <div class="task" data-answer="CPU">
-    Executing program instructions sequentially
-    <select>
-      <option value="">Choose</option>
-      <option value="CPU">CPU</option>
-      <option value="GPU">GPU</option>
-    </select>
-  </div>
-
-</div>
-
-<button onclick="checkAnswers()">Check Answers</button>
-
-<h2 id="score"></h2>
-
-<script>
-function checkAnswers() {
-  let tasks = document.querySelectorAll('.task');
-  let score = 0;
-
-  tasks.forEach(task => {
-    let select = task.querySelector('select');
-    let answer = task.dataset.answer;
-
-    task.classList.remove('correct', 'wrong');
-
-    if (select.value === answer) {
-      task.classList.add('correct');
-      score++;
-    } else {
-      task.classList.add('wrong');
-    }
-  });
-
-  document.getElementById("score").textContent =
-    "Score: " + score + " / " + tasks.length;
-}
-</script>
-
-</main></body>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1" />
+    <meta
+      name="color-scheme"
+      content="light" />
+    <title>CPU vs GPU Challenge</title>
+    <style>
+      /* Image Lab theme. Embedded so this activity has no shared stylesheet dependency. */
+      :root {
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+        color: #182d35;
+        background: #f3f5f1;
+        font-synthesis: none;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        max-width: none;
+        min-height: 100vh;
+        display: block;
+        background: #f3f5f1;
+        color: #182d35;
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+        line-height: 1.6;
+      }
+      button,
+      input,
+      select,
+      textarea {
+        font-family: inherit;
+      }
+      button,
+      select,
+      input:not([type='range']):not([type='checkbox']):not([type='radio']):not(
+          [type='color']
+        ):not([type='file']),
+      textarea {
+        border-radius: 8px;
+      }
+      button {
+        font-weight: 600;
+        box-shadow: none;
+      }
+      button:not(:disabled) {
+        cursor: pointer;
+      }
+      button:disabled {
+        cursor: not-allowed;
+      }
+      a {
+        color: #176e58;
+      }
+      a:hover {
+        color: #125643;
+      }
+      button:focus-visible,
+      a:focus-visible,
+      input:focus-visible,
+      select:focus-visible,
+      textarea:focus-visible,
+      [tabindex]:focus-visible {
+        outline: 3px solid #db9c32;
+        outline-offset: 4px;
+      }
+      input[type='range'],
+      input[type='checkbox'],
+      input[type='radio'],
+      progress {
+        accent-color: #19745c;
+      }
+      h1 {
+        font-size: clamp(28px, 4vw, 44px);
+        letter-spacing: -1.5px;
+        line-height: 1.15;
+        font-weight: 750;
+      }
+      h2,
+      h3 {
+        line-height: 1.3;
+      }
+      p {
+        line-height: 1.6;
+      }
+      .hero {
+        background: #fcfdfb;
+        color: #182d35;
+        border: 1px solid #dbe3df;
+        border-radius: 14px;
+        box-shadow: none;
+      }
+      .hero p {
+        color: #61716f;
+      }
+      .hero .tag {
+        color: #617572;
+      }
+      .card,
+      .panel,
+      .question-card,
+      .app,
+      .category,
+      .platform,
+      .plan-card {
+        box-shadow: none;
+        border-radius: 14px;
+      }
+      .activity-shell {
+        width: min(1200px, 100%);
+        margin: 0 auto;
+        padding: 32px 28px 56px;
+      }
+      .activity-shell > h1:first-child,
+      .activity-shell > h2:first-child {
+        margin-top: 8px;
+      }
+      .activity-shell > .container {
+        width: 100%;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      nav.site-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        background: #fcfdfb;
+        border-bottom: 1px solid #dce3de;
+        padding: 18px 5%;
+        text-align: left;
+        line-height: 1.3;
+      }
+      .site-nav a {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: 750;
+        color: #182d35;
+      }
+      .site-nav .site-mark {
+        display: inline-grid;
+        place-items: center;
+        background: #16735c;
+        color: white;
+        border-radius: 7px;
+        width: 32px;
+        height: 32px;
+        font-size: 19px;
+      }
+      .site-nav .site-back {
+        font-size: 13px;
+        font-weight: 600;
+        color: #176e58;
+      }
+      .site-nav .site-sub {
+        font-size: 10px;
+        letter-spacing: 1.7px;
+        text-transform: uppercase;
+        color: #617572;
+      }
+      @media (max-width: 640px) {
+        .activity-shell {
+          padding: 24px 15px 40px;
+        }
+        .site-nav .site-sub {
+          display: none;
+        }
+        nav.site-nav {
+          padding: 15px;
+        }
+        .site-nav a {
+          font-size: 13px;
+        }
+        .row,
+        .question,
+        .task {
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+        .row select,
+        .question select,
+        .task select {
+          width: 100%;
+          min-width: 0;
+        }
+        .row div:first-child {
+          width: 100% !important;
+        }
+        .controls {
+          flex-wrap: wrap;
+        }
+        h1 {
+          letter-spacing: -1px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto !important;
+        }
+        *,
+        *::before,
+        *::after {
+          transition: none !important;
+          animation: none !important;
+        }
+      }
+      @media print {
+        .site-nav {
+          display: none !important;
+        }
+        body {
+          background: white;
+        }
+      }
+      button {
+        background: #176e58;
+        color: white;
+        border: 1px solid #176e58;
+        padding: 10px 16px;
+      }
+      button:hover {
+        background: #125643;
+        box-shadow: none;
+      }
+      select,
+      input {
+        background: white;
+        color: #182d35;
+        border: 1px solid #ccd7d4;
+        padding: 9px;
+      }
+      .correct {
+        color: #14532d;
+      }
+      .wrong,
+      .incorrect {
+        color: #991b1b;
+      }
+      .task {
+        border: 1px solid #dbe3df;
+        border-radius: 14px;
+        padding: 18px;
+        margin: 12px 0;
+        text-align: left;
+      }
+      .correct {
+        background: #e9f2ec !important;
+      }
+      .wrong {
+        background: #fee2e2 !important;
+      }
+      body {
+        text-align: left;
+      }
+      .hero {
+        border: 0;
+        border-bottom: 1px solid #dce3de;
+        border-radius: 0;
+        background: #fcfdfb;
+        padding: 34px max(22px, calc((100% - 1080px) / 2)) 28px;
+      }
+      .hero h1 {
+        margin: 10px 0 16px;
+      }
+      .hero p {
+        max-width: 820px;
+        color: #61716f;
+        margin: 0;
+      }
+      main {
+        max-width: 1136px;
+        padding: 26px 24px 45px;
+        margin: auto;
+      }
+      .eyebrow {
+        font-size: 11px;
+        letter-spacing: 1.6px;
+        color: #617572;
+        font-weight: 750;
+        text-transform: uppercase;
+      }
+      .card {
+        padding: 23px;
+        border: 1px solid #dce3de;
+        border-radius: 14px;
+        background: white;
+        margin: 0 0 22px;
+      }
+      .card h2 {
+        margin: 0 0 10px;
+        font-size: 22px;
+      }
+      .guide {
+        border-left: 4px solid #176e58;
+      }
+      .guide p {
+        margin: 7px 0;
+      }
+      .muted {
+        font-size: 14px;
+        color: #61716f;
+      }
+      .status-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+      }
+      progress {
+        width: 230px;
+        max-width: 100%;
+        height: 10px;
+        accent-color: #176e58;
+      }
+      .tray-head,
+      .bucket-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+      }
+      .count {
+        font-size: 12px;
+        color: #17695e;
+        background: #e4f5f1;
+        padding: 5px 10px;
+        border-radius: 20px;
+        white-space: nowrap;
+      }
+      .task-list {
+        display: grid;
+        gap: 12px;
+        margin-top: 18px;
+      }
+      .tray-list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      button {
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 650;
+        line-height: 1.5;
+        border: 1px solid #bdcdc5;
+        background: white;
+        color: #176e58;
+        border-radius: 8px;
+        padding: 10px 15px;
+        margin: 0;
+        cursor: pointer;
+      }
+      button:hover:not(:disabled) {
+        background: #edf5ef;
+      }
+      button:disabled {
+        opacity: 0.55;
+        cursor: default;
+      }
+      .primary {
+        background: #176e58;
+        border-color: #176e58;
+        color: white;
+      }
+      .primary:hover:not(:disabled) {
+        background: #125643;
+      }
+      .task-card {
+        display: block;
+        width: 100%;
+        padding: 14px;
+        border: 2px solid #bdcdc5;
+        text-align: left;
+        background: white;
+        color: #182d35;
+        cursor: grab;
+        user-select: none;
+      }
+      .task-card .task-text {
+        display: block;
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1.6;
+      }
+      .task-status {
+        display: block;
+        font-size: 12px;
+        color: #61716f;
+        margin-top: 9px;
+        font-weight: 450;
+      }
+      .task-card.selected {
+        outline: 3px solid #db9c32;
+        outline-offset: 2px;
+        border-color: #176e58;
+        background: #edf6ef;
+      }
+      .task-card.dragging {
+        opacity: 0.5;
+      }
+      .task-card.is-correct {
+        background: #e8f7ed;
+        border-color: #168166;
+      }
+      .task-card.is-correct .task-status {
+        color: #176e58;
+        font-weight: 650;
+      }
+      .task-card.is-wrong {
+        background: #fff0f3;
+        border-color: #b74151;
+      }
+      .task-card.is-wrong .task-status {
+        color: #9b2940;
+        font-weight: 650;
+      }
+      .task-card.is-unplaced {
+        border-color: #c99d4f;
+        background: #fff8eb;
+      }
+      .drop-zone.drop-target {
+        outline: 3px solid #db9c32;
+        outline-offset: 4px;
+        background: #edf6ef;
+      }
+      .buckets {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px;
+        margin-bottom: 22px;
+      }
+      .bucket {
+        border: 2px dashed #a3bbae;
+        border-radius: 16px;
+        background: #f8faf7;
+        padding: 22px;
+        min-height: 300px;
+      }
+      .bucket h2 {
+        font-size: 28px;
+        margin: 0;
+      }
+      .bucket-head .chip {
+        display: inline-grid;
+        place-items: center;
+        background: #176e58;
+        color: white;
+        width: 58px;
+        height: 58px;
+        border: 3px solid #a2c8b7;
+        outline: 2px dashed #9fbcad;
+        outline-offset: 3px;
+        border-radius: 9px;
+        font-size: 15px;
+        font-weight: 750;
+        flex: none;
+      }
+      .bucket-heading {
+        flex: 1;
+        margin-left: 8px;
+      }
+      .bucket-heading p {
+        font-size: 12px;
+        color: #61716f;
+        margin: 3px 0;
+      }
+      .bucket-target {
+        width: 100%;
+        margin-top: 20px;
+        background: #e7f1e9;
+      }
+      .bucket .task-list {
+        min-height: 70px;
+      }
+      .empty {
+        font-size: 14px;
+        color: #61716f;
+        line-height: 1.7;
+        grid-column: 1/-1;
+        margin: 6px 0;
+      }
+      .bank-return {
+        margin-top: 18px;
+        font-size: 13px;
+      }
+      .summary {
+        border: 1px solid #9fcbb9;
+        background: #def0e6;
+        border-radius: 14px;
+        padding: 23px;
+        margin: 26px 0;
+      }
+      .feedback {
+        padding: 0;
+        margin: 0 0 18px;
+        font-weight: 650;
+        color: #2b5546;
+        font-size: 15px;
+      }
+      .feedback.review {
+        color: #9b2940;
+      }
+      .feedback.success {
+        color: #125e43;
+      }
+      .completion {
+        padding: 20px;
+        text-align: center;
+        background: #e5f4e9;
+        border: 1px solid #9bc9b3;
+        border-radius: 12px;
+        margin-top: 22px;
+      }
+      .completion h2 {
+        margin: 0;
+        color: #176e58;
+      }
+      .completion p {
+        margin: 9px 0 17px;
+      }
+      .restart-area {
+        border-top: 1px solid #dce3de;
+        padding-top: 24px;
+        margin-top: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 22px;
+      }
+      .restart-area p {
+        margin: 4px 0;
+      }
+      .restart-area button {
+        flex: none;
+      }
+      footer {
+        font-size: 12px;
+        color: #61716f;
+        margin-top: 24px;
+      }
+      .noscript {
+        padding: 16px;
+        background: #ffe8e8;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      @media (max-width: 760px) {
+        .tray-list {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .buckets {
+          grid-template-columns: 1fr;
+        }
+        .bucket {
+          min-height: 220px;
+        }
+        main {
+          padding: 20px 15px 35px;
+        }
+        .hero {
+          padding: 28px 18px;
+        }
+        .card,
+        .bucket {
+          padding: 18px;
+        }
+        .restart-area {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+        .bucket-heading {
+          margin-left: 4px;
+        }
+      }
+      @media (max-width: 440px) {
+        .tray-list {
+          grid-template-columns: 1fr;
+        }
+        .tray-head {
+          align-items: start;
+        }
+        .task-card {
+          padding: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav
+      class="site-nav"
+      aria-label="Activity navigation">
+      <a href="../index.html"
+        ><span
+          class="site-mark"
+          aria-hidden="true"
+          >▦</span
+        >Computer Science<span class="site-sub">
+          / Activity lab - Designed by Thierry Taberna</span
+        ></a
+      ><a
+        class="site-back"
+        href="../index.html"
+        >← All activities</a
+      >
+    </nav>
+    <header class="hero">
+      <div class="eyebrow">Computer Science · Sorting challenge</div>
+      <h1>CPU vs GPU Challenge</h1>
+      <p>
+        Sort each task into the processor container that best suits it. Drag a
+        card, or select it and then choose CPU or GPU.
+      </p>
+    </header>
+    <main>
+      <noscript
+        ><p class="noscript">
+          Enable JavaScript to sort the tasks and check your answers.
+        </p></noscript
+      >
+      <section class="card guide">
+        <h2>Sort the workload</h2>
+        <p>
+          Place all six task cards in the <strong>CPU</strong> or
+          <strong>GPU</strong> container, then press
+          <strong>Check my answers</strong>. You can move cards between
+          containers or return a selected card to the tray.
+        </p>
+        <p class="muted">
+          On a touchscreen, tap a card and then its destination container. With
+          a keyboard, use Tab to focus a card or container button, and Enter or
+          Space to activate it. Escape cancels a selection.
+        </p>
+        <p class="muted">
+          For the graphics, machine-learning and simulation tasks, assume
+          suitable software and workloads that make use of GPU parallel
+          processing. CPUs and GPUs often work together.
+        </p>
+      </section>
+      <div class="status-row">
+        <strong id="placed-count">0 / 6 tasks placed</strong
+        ><progress
+          id="placed-progress"
+          max="6"
+          value="0"
+          aria-label="Tasks placed in a processor container"></progress>
+      </div>
+      <section
+        id="zone-bank"
+        class="card drop-zone"
+        data-zone="bank"
+        aria-labelledby="bank-heading">
+        <div class="tray-head">
+          <h2 id="bank-heading">Task tray</h2>
+          <span
+            class="count"
+            id="bank-count"
+            >6 tasks</span
+          >
+        </div>
+        <p class="muted">Choose a task to send to a processor.</p>
+        <div
+          id="bank-cards"
+          class="task-list tray-list"></div>
+        <button
+          type="button"
+          id="place-bank"
+          class="bank-return"
+          disabled>
+          Return selected task to tray
+        </button>
+      </section>
+      <div class="buckets">
+        <section
+          id="zone-CPU"
+          class="bucket drop-zone"
+          data-zone="CPU"
+          aria-labelledby="cpu-heading">
+          <div class="bucket-head">
+            <span
+              class="chip"
+              aria-hidden="true"
+              >CPU</span
+            >
+            <div class="bucket-heading">
+              <h2 id="cpu-heading">CPU</h2>
+              <p>Central processing unit</p>
+            </div>
+            <span
+              id="CPU-count"
+              class="count"
+              >0 tasks</span
+            >
+          </div>
+          <button
+            type="button"
+            id="place-CPU"
+            class="bucket-target"
+            disabled>
+            Place selected task in CPU
+          </button>
+          <div
+            id="CPU-cards"
+            class="task-list"></div>
+        </section>
+        <section
+          id="zone-GPU"
+          class="bucket drop-zone"
+          data-zone="GPU"
+          aria-labelledby="gpu-heading">
+          <div class="bucket-head">
+            <span
+              class="chip"
+              aria-hidden="true"
+              >GPU</span
+            >
+            <div class="bucket-heading">
+              <h2 id="gpu-heading">GPU</h2>
+              <p>Graphics processing unit</p>
+            </div>
+            <span
+              id="GPU-count"
+              class="count"
+              >0 tasks</span
+            >
+          </div>
+          <button
+            type="button"
+            id="place-GPU"
+            class="bucket-target"
+            disabled>
+            Place selected task in GPU
+          </button>
+          <div
+            id="GPU-cards"
+            class="task-list"></div>
+        </section>
+      </div>
+      <section
+        class="summary"
+        aria-label="Check your work">
+        <p
+          id="feedback"
+          class="feedback"
+          role="status"
+          aria-live="polite"></p>
+        <button
+          type="button"
+          id="check"
+          class="primary">
+          Check my answers
+        </button>
+      </section>
+      <section
+        id="completion"
+        class="completion"
+        hidden>
+        <h2>Perfectly sorted!</h2>
+        <p>All six tasks are in the correct processor container.</p>
+        <button
+          type="button"
+          id="play-again"
+          class="primary">
+          Play again
+        </button>
+      </section>
+      <section class="restart-area">
+        <div>
+          <strong>Try the challenge again</strong>
+          <p class="muted">
+            Start again returns every card to the tray and shuffles the order.
+          </p>
+        </div>
+        <button
+          type="button"
+          id="restart">
+          Start again
+        </button>
+      </section>
+      <footer>
+        Works offline. Your placements are kept while this page is open.
+      </footer>
+    </main>
+    <script>
+      'use strict';
+      const TASKS = [
+        { id: 't0', text: 'Rendering graphics in a video game', answer: 'GPU' },
+        { id: 't1', text: 'Running the operating system', answer: 'CPU' },
+        { id: 't2', text: 'Training a machine learning model', answer: 'GPU' },
+        {
+          id: 't3',
+          text: 'Running large-scale physics simulations',
+          answer: 'GPU',
+        },
+        { id: 't4', text: 'Managing input/output devices', answer: 'CPU' },
+        {
+          id: 't5',
+          text: 'Executing program instructions sequentially',
+          answer: 'CPU',
+        },
+      ];
+      const $ = (id) => document.getElementById(id),
+        zones = ['bank', 'CPU', 'GPU'];
+      const make = (tag, text, cls) => {
+        const e = document.createElement(tag);
+        if (text !== undefined) e.textContent = text;
+        if (cls) e.className = cls;
+        return e;
+      };
+      let locations = {},
+        marks = {},
+        order = [],
+        selected = null,
+        dragged = null;
+      function shuffle(items) {
+        const a = [...items];
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+      }
+      const task = (id) => TASKS.find((t) => t.id === id);
+      function notify(text, style = '') {
+        $('feedback').textContent = text;
+        $('feedback').className = 'feedback' + (style ? ' ' + style : '');
+      }
+      function render() {
+        for (const zone of zones) $(zone + '-cards').replaceChildren();
+        for (const id of order) {
+          const t = task(id),
+            zone = locations[id] || 'bank',
+            button = make('button', undefined, 'task-card');
+          button.type = 'button';
+          button.id = 'task-' + id;
+          button.dataset.task = id;
+          button.draggable = true;
+          button.classList.toggle('selected', selected === id);
+          button.classList.toggle('is-correct', marks[id] === 'correct');
+          button.classList.toggle('is-wrong', marks[id] === 'wrong');
+          button.classList.toggle('is-unplaced', marks[id] === 'blank');
+          button.setAttribute('aria-pressed', String(selected === id));
+          const label = make('span', t.text, 'task-text'),
+            status = make(
+              'span',
+              marks[id] === 'correct'
+                ? '✓ Correct placement'
+                : marks[id] === 'wrong'
+                ? 'Not correct yet. Move this task and check again.'
+                : marks[id] === 'blank'
+                ? 'Choose CPU or GPU for this task.'
+                : selected === id
+                ? 'Selected. Choose a container.'
+                : zone === 'bank'
+                ? 'Drag or select to move'
+                : 'In ' + zone + ' · select or drag to move',
+              'task-status'
+            );
+          button.append(label, status);
+          button.setAttribute(
+            'aria-label',
+            t.text +
+              '. ' +
+              (zone === 'bank' ? 'In the task tray.' : 'In ' + zone + '.') +
+              ' ' +
+              status.textContent
+          );
+          button.addEventListener('click', (e) => {
+            e.stopPropagation();
+            selected = selected === id ? null : id;
+            render();
+            notify(
+              selected
+                ? 'Selected “' + t.text + '”. Choose CPU or GPU.'
+                : 'Selection cancelled.'
+            );
+            $('task-' + id)?.focus();
+          });
+          button.addEventListener('dragstart', (e) => {
+            dragged = id;
+            selected = null;
+            if (e.dataTransfer) {
+              e.dataTransfer.setData('text/plain', id);
+              e.dataTransfer.effectAllowed = 'move';
+            }
+            button.classList.add('dragging');
+          });
+          button.addEventListener('dragend', () => {
+            dragged = null;
+            button.classList.remove('dragging');
+            document
+              .querySelectorAll('.drop-target')
+              .forEach((x) => x.classList.remove('drop-target'));
+          });
+          $(zone + '-cards').append(button);
+        }
+        for (const zone of zones) {
+          const cards = $(zone + '-cards'),
+            count = cards.children.length;
+          if (!count)
+            cards.append(
+              make(
+                'p',
+                zone === 'bank'
+                  ? 'All tasks are placed. You can move them between containers or check your answers.'
+                  : 'Drop tasks here, or select a task and choose this container.',
+                'empty'
+              )
+            );
+          $(zone + '-count').textContent =
+            count + ' task' + (count === 1 ? '' : 's');
+          const button = $('place-' + zone);
+          button.disabled =
+            !selected || (zone === 'bank' && !locations[selected]);
+        }
+        const placed = Object.keys(locations).length;
+        $('placed-count').textContent =
+          placed + ' / ' + TASKS.length + ' tasks placed';
+        $('placed-progress').value = placed;
+      }
+      function place(id, zone) {
+        if (!task(id) || !zones.includes(zone)) return;
+        const old = locations[id] || 'bank';
+        selected = null;
+        if (old === zone) {
+          render();
+          notify(
+            'This task is already ' +
+              (zone === 'bank' ? 'in the tray.' : 'in ' + zone + '.')
+          );
+          return;
+        }
+        if (zone === 'bank') delete locations[id];
+        else locations[id] = zone;
+        delete marks[id];
+        $('completion').hidden = true;
+        render();
+        notify(
+          'Moved “' +
+            task(id).text +
+            '” to ' +
+            (zone === 'bank' ? 'the task tray' : zone) +
+            '. Check your answers when ready.'
+        );
+        $('task-' + id)?.focus();
+      }
+      function checkAnswers() {
+        let correct = 0,
+          wrong = 0,
+          blank = 0;
+        for (const t of TASKS) {
+          if (!locations[t.id]) {
+            marks[t.id] = 'blank';
+            blank++;
+          } else if (locations[t.id] === t.answer) {
+            marks[t.id] = 'correct';
+            correct++;
+          } else {
+            marks[t.id] = 'wrong';
+            wrong++;
+          }
+        }
+        selected = null;
+        render();
+        const complete = correct === TASKS.length;
+        $('completion').hidden = !complete;
+        notify(
+          complete
+            ? 'All ' +
+                correct +
+                ' tasks are correctly sorted. Challenge complete!'
+            : correct +
+                ' correct · ' +
+                wrong +
+                ' to review · ' +
+                blank +
+                ' not placed. ' +
+                (wrong
+                  ? 'Move the marked tasks and check again.'
+                  : 'Place the remaining tasks and check again.'),
+          complete ? 'success' : wrong ? 'review' : ''
+        );
+        return { correct, wrong, blank };
+      }
+      function reset() {
+        locations = {};
+        marks = {};
+        selected = null;
+        dragged = null;
+        order = shuffle(TASKS.map((t) => t.id));
+        $('completion').hidden = true;
+        render();
+        notify(
+          'Ready to sort. Drag a task into CPU or GPU, or select a task and then choose its container.'
+        );
+      }
+      for (const zone of zones) {
+        const area = $('zone-' + zone);
+        area.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          area.classList.add('drop-target');
+          if (e.dataTransfer) e.dataTransfer.dropEffect = 'move';
+        });
+        area.addEventListener('dragleave', (e) => {
+          if (!area.contains(e.relatedTarget))
+            area.classList.remove('drop-target');
+        });
+        area.addEventListener('drop', (e) => {
+          e.preventDefault();
+          document
+            .querySelectorAll('.drop-target')
+            .forEach((x) => x.classList.remove('drop-target'));
+          const id = e.dataTransfer?.getData('text/plain') || dragged;
+          dragged = null;
+          place(id, zone);
+        });
+        area.addEventListener('click', (e) => {
+          if (selected && !e.target.closest('.task-card,button'))
+            place(selected, zone);
+        });
+        $('place-' + zone).addEventListener('click', () => {
+          if (selected) place(selected, zone);
+        });
+      }
+      $('check').addEventListener('click', checkAnswers);
+      $('restart').addEventListener('click', reset);
+      $('play-again').addEventListener('click', reset);
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && selected) {
+          selected = null;
+          render();
+          notify('Selection cancelled.');
+        }
+      });
+      reset();
+    </script>
+  </body>
 </html>
