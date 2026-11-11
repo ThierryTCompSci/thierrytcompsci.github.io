@@ -789,6 +789,61 @@
           display: block;
         }
       }
+
+      .checkpoint {
+        max-width: 760px;
+        margin: 20px auto;
+      }
+      .checkpoint fieldset {
+        border: 0;
+        padding: 0;
+        margin: 0 0 20px;
+        min-width: 0;
+      }
+      .checkpoint legend {
+        font-size: 12px;
+        color: #526964;
+        margin-bottom: 10px;
+      }
+      .checkpoint h3 {
+        font-size: 20px;
+        line-height: 1.5;
+      }
+      .quiz-option {
+        display: flex;
+        gap: 12px;
+        align-items: baseline;
+        padding: 13px 15px;
+        border: 1px solid #ccd7d4;
+        border-radius: 8px;
+        margin: 9px 0;
+        cursor: pointer;
+      }
+      .quiz-option:has(input:checked) {
+        border-color: #176e58;
+        background: #edf6ef;
+      }
+      .quiz-option input {
+        accent-color: #176e58;
+        flex-shrink: 0;
+      }
+      .quiz-option:focus-within {
+        outline: 3px solid #db9c32;
+        outline-offset: 2px;
+      }
+      .quiz-feedback {
+        min-height: 26px;
+        margin-top: 14px;
+      }
+      .quiz-feedback.correct {
+        color: #125643;
+      }
+      .quiz-feedback.retry {
+        color: #9a3b16;
+      }
+      #quiz-finished {
+        margin-top: 20px;
+      }
     </style>
   </head>
   <body>
@@ -814,7 +869,7 @@
       <header class="intro quest-intro">
         <div>
           <span class="eyebrow"
-            >Year 7 · Three lessons · Twelve challenges</span
+            >Year 7 · Four lessons · Twelve coding challenges</span
           >
           <h1>Small programs. Big adventures.</h1>
           <p>
@@ -833,7 +888,9 @@
         role="group"
         aria-label="Choose a challenge"></div>
 
-      <div class="quest-grid">
+      <div
+        class="quest-grid"
+        id="coding-lesson">
         <section
           class="brief-card"
           aria-labelledby="mission-title">
@@ -937,6 +994,71 @@
           </section>
         </div>
       </div>
+      <section
+        id="checkpoint"
+        class="brief-card checkpoint"
+        aria-labelledby="checkpoint-title"
+        hidden>
+        <span class="quest-label">Lesson 3 · Knowledge checkpoint</span>
+        <h2 id="checkpoint-title">Ready for the next adventure?</h2>
+        <p>
+          Choose one answer, then check it. Keep trying until you get it right.
+        </p>
+        <p
+          id="quiz-summary"
+          class="quest-status"></p>
+        <form id="quiz-form">
+          <fieldset>
+            <legend id="quiz-position"></legend>
+            <h3
+              id="quiz-question"
+              tabindex="-1"></h3>
+            <pre
+              id="quiz-code"
+              hidden></pre>
+            <div id="quiz-options"></div>
+          </fieldset>
+          <button
+            type="submit"
+            class="primary">
+            Check answers
+          </button>
+          <p
+            id="quiz-feedback"
+            class="quiz-feedback"
+            role="status"
+            aria-live="polite"></p>
+        </form>
+        <div class="next-actions">
+          <button
+            type="button"
+            id="quiz-previous">
+            ← Previous question</button
+          ><button
+            type="button"
+            id="quiz-next"
+            disabled>
+            Next question →
+          </button>
+        </div>
+        <div
+          id="quiz-finished"
+          tabindex="-1"
+          hidden>
+          <p>
+            <strong
+              >Checkpoint complete. You have answered every question
+              correctly.</strong
+            >
+          </p>
+          <button
+            type="button"
+            class="primary"
+            id="quiz-continue">
+            Continue to Lesson 4 →
+          </button>
+        </div>
+      </section>
       <p class="quest-status">
         Python needs internet access to load. Drafts save in this browser only.
       </p>
@@ -24143,6 +24265,7 @@ THE SOFTWARE.
           questState = {
             selected: Number.isInteger(saved.selected) ? saved.selected : 0,
             drafts: saved.drafts,
+            quiz: saved.quiz,
           };
         }
       } catch {}
@@ -24163,7 +24286,7 @@ THE SOFTWARE.
         $('save-status').classList.toggle('save-warning', !storageWorks);
       }
       function saveQuest() {
-        if (currentMission < 0) return;
+        if (currentMission < 0 || quizActive) return;
         questState.drafts[currentMission] = {
           ...draftFor(currentMission),
           code: $('editor').value,
@@ -24176,19 +24299,17 @@ THE SOFTWARE.
         if (index < 0 || index >= allMissions.length) return;
         if (activeJob) stopJob('Stopped to switch challenges.');
         saveQuest();
+        quizActive = false;
+        if (questState.quiz) questState.quiz.open = false;
+        $('coding-lesson').hidden = false;
+        $('checkpoint').hidden = true;
+        $('mission-tabs').hidden = false;
         currentMission = index;
         questState.selected = index;
         const m = allMissions[index],
           lesson = LESSONS[m.li],
           draft = draftFor(index);
-        $('lesson-tabs').innerHTML = LESSONS.map(
-          (l, i) =>
-            `<button type="button" data-lesson="${i}" aria-pressed="${
-              i === m.li
-            }">0${i + 1} · ${esc(l.title)}<small>${esc(
-              l.skill
-            )}</small></button>`
-        ).join('');
+        renderLessonTabs(m.li >= 2 ? 3 : m.li);
         $('mission-tabs').innerHTML = lesson.missions
           .map(
             (x, i) =>
@@ -24200,7 +24321,7 @@ THE SOFTWARE.
           )
           .join('');
         $('mission-content').innerHTML = `<span class="quest-label">Lesson ${
-          m.li + 1
+          m.li >= 2 ? 4 : m.li + 1
         } · Challenge ${
           m.mi + 1
         } of 4</span><h2 id="mission-title" tabindex="-1">${esc(
@@ -24232,8 +24353,14 @@ THE SOFTWARE.
       $('lesson-tabs').addEventListener('click', (e) => {
         const b = e.target.closest('[data-lesson]');
         if (b) {
-          chooseMission(Number(b.dataset.lesson) * 4);
-          $('mission-title').focus();
+          const lesson = Number(b.dataset.lesson);
+          if (lesson === 2) {
+            openCheckpoint();
+            $('quiz-question').focus();
+          } else {
+            chooseMission((lesson === 3 ? 2 : lesson) * 4);
+            $('mission-title').focus();
+          }
         }
       });
       $('mission-tabs').addEventListener('click', (e) => {
@@ -24243,9 +24370,271 @@ THE SOFTWARE.
           $('mission-title').focus();
         }
       });
-      chooseMission(
-        Math.max(0, Math.min(allMissions.length - 1, questState.selected))
-      );
+      const CHECKPOINT = [
+        {
+          question: 'What is a variable?',
+          options: [
+            'An instruction that always prints text',
+            'A name used to store a value that can change',
+            'A symbol used only for multiplication',
+            'An error caused by the keyboard',
+          ],
+          correct: 1,
+          why: 'A variable gives a value a name so you can use or update it later.',
+        },
+        {
+          question: 'Which operator is used for multiplication in Python?',
+          options: ['x', '+', '/', '*'],
+          correct: 3,
+          why: 'Python uses * to multiply. For example, 3 * 4 gives 12.',
+        },
+        {
+          question:
+            'Why do we use int() with input() when calculating with whole numbers?',
+          options: [
+            'To convert the entered text into a whole number',
+            'To display the answer on screen',
+            'To put quotation marks around the answer',
+            'To ask the same question again',
+          ],
+          correct: 0,
+          why: 'input() returns text. int() converts suitable text, such as "12", into the integer 12.',
+        },
+        {
+          question: 'What does print() do?',
+          options: [
+            'Waits for someone to type an answer',
+            'Converts text into a number',
+            'Displays output on the screen',
+            'Multiplies two stored values',
+          ],
+          correct: 2,
+          why: 'print() displays the values you give it in the console.',
+        },
+        {
+          question:
+            'What type of value does input() return, even if the user types 7?',
+          options: [
+            'An integer (whole number)',
+            'A string (text)',
+            'A float (decimal number)',
+            'A list of numbers',
+          ],
+          correct: 1,
+          why: 'input() always returns a string. Typing 7 gives the text "7" until you convert it.',
+        },
+        {
+          question: 'What will this program print?',
+          code: 'score = 10\nscore = score + 5\nprint(score)',
+          options: ['5', '10', '15', '105'],
+          correct: 2,
+          why: 'score starts at 10. The update adds 5 and stores 15 back in score.',
+        },
+        {
+          question: 'The user types 4. What will this program print?',
+          code: 'tubs = int(input("How many tubs? "))\nprint(tubs * 3)',
+          options: ['12', '43', '7', '444'],
+          correct: 0,
+          why: 'int() converts the answer to the number 4, and 4 * 3 is 12.',
+        },
+        {
+          question: 'What will print(9 / 2) display?',
+          options: ['4', '18', '7', '4.5'],
+          correct: 3,
+          why: 'The / operator divides. Nine divided by two is 4.5.',
+        },
+        {
+          question:
+            'Which line correctly stores the text Mars in a variable called planet?',
+          options: [
+            'planet == "Mars"',
+            'print("Mars")',
+            'planet = "Mars"',
+            '"planet" = Mars',
+          ],
+          correct: 2,
+          why: 'The = sign assigns a value to a variable. Text such as "Mars" needs quotation marks.',
+        },
+        {
+          question:
+            'You pay 20 coins for slime costing 12 coins. Which calculation gives the change?',
+          options: ['12 - 20', '20 - 12', '20 + 12', '20 / 12'],
+          correct: 1,
+          why: 'Subtract the cost from the amount paid: 20 - 12 gives 8 coins change.',
+        },
+      ];
+      let quizActive = false;
+      const storedQuiz = questState.quiz;
+      let quiz = {
+        index: 0,
+        answers: Array(CHECKPOINT.length).fill(null),
+        passed: Array(CHECKPOINT.length).fill(false),
+      };
+      if (
+        storedQuiz &&
+        Array.isArray(storedQuiz.answers) &&
+        Array.isArray(storedQuiz.passed)
+      ) {
+        CHECKPOINT.forEach((q, i) => {
+          const v = storedQuiz.answers[i];
+          quiz.answers[i] = Number.isInteger(v) && v >= 0 && v < 4 ? v : null;
+          quiz.passed[i] = storedQuiz.passed[i] === true && v === q.correct;
+        });
+        const firstPending = quiz.passed.indexOf(false);
+        quiz.index = Math.max(
+          0,
+          Math.min(
+            CHECKPOINT.length - 1,
+            Number.isInteger(storedQuiz.index) ? storedQuiz.index : 0,
+            firstPending < 0 ? CHECKPOINT.length - 1 : firstPending
+          )
+        );
+      }
+      function saveQuiz() {
+        questState.quiz = { ...quiz, open: quizActive };
+        persistQuest();
+      }
+      function renderLessonTabs(selected) {
+        const tabs = [
+          { title: LESSONS[0].title, skill: LESSONS[0].skill },
+          { title: LESSONS[1].title, skill: LESSONS[1].skill },
+          { title: 'Knowledge checkpoint', skill: 'Review Lessons 1 and 2' },
+          { title: LESSONS[2].title, skill: LESSONS[2].skill },
+        ];
+        $('lesson-tabs').innerHTML = tabs
+          .map(
+            (l, i) =>
+              `<button type="button" data-lesson="${i}" aria-pressed="${
+                i === selected
+              }">0${i + 1} · ${esc(l.title)}<small>${esc(
+                l.skill
+              )}</small></button>`
+          )
+          .join('');
+      }
+      function openCheckpoint() {
+        if (activeJob) stopJob('Stopped to open the checkpoint.');
+        saveQuest();
+        quizActive = true;
+        $('coding-lesson').hidden = true;
+        $('mission-tabs').hidden = true;
+        $('checkpoint').hidden = false;
+        renderLessonTabs(2);
+        renderQuestion();
+        saveQuiz();
+      }
+      function renderQuestion() {
+        const q = CHECKPOINT[quiz.index];
+        $('quiz-position').textContent = `Question ${quiz.index + 1} of ${
+          CHECKPOINT.length
+        }`;
+        $('quiz-question').textContent = q.question;
+        $('quiz-code').hidden = !q.code;
+        $('quiz-code').textContent = q.code || '';
+        $('quiz-options').innerHTML = q.options
+          .map(
+            (option, i) =>
+              `<label class="quiz-option"><input type="radio" name="checkpoint-answer" value="${i}" ${
+                quiz.answers[quiz.index] === i ? 'checked' : ''
+              }><span><strong>${'ABCD'[i]}.</strong> ${esc(
+                option
+              )}</span></label>`
+          )
+          .join('');
+        $('quiz-feedback').textContent = quiz.passed[quiz.index]
+          ? 'Correct. ' + q.why
+          : '';
+        $('quiz-feedback').className = quiz.passed[quiz.index]
+          ? 'quiz-feedback correct'
+          : 'quiz-feedback';
+        $('quiz-summary').textContent = `${
+          quiz.passed.filter(Boolean).length
+        } of ${CHECKPOINT.length} correct.`;
+        $('quiz-previous').disabled = quiz.index === 0;
+        $('quiz-next').disabled = !quiz.passed[quiz.index];
+        $('quiz-next').textContent =
+          quiz.index === CHECKPOINT.length - 1
+            ? 'Finish checkpoint'
+            : 'Next question →';
+        $('quiz-finished').hidden = true;
+      }
+      function selectQuizAnswer(value) {
+        if (!Number.isInteger(value) || value < 0 || value > 3) return;
+        quiz.answers[quiz.index] = value;
+        quiz.passed[quiz.index] = false;
+        $('quiz-feedback').textContent =
+          'Select Check answers to check your choice.';
+        $('quiz-feedback').className = 'quiz-feedback';
+        $('quiz-next').disabled = true;
+        $('quiz-finished').hidden = true;
+        $('quiz-summary').textContent = `${
+          quiz.passed.filter(Boolean).length
+        } of ${CHECKPOINT.length} correct.`;
+        saveQuiz();
+      }
+      function checkQuizAnswer() {
+        const q = CHECKPOINT[quiz.index],
+          choice = quiz.answers[quiz.index];
+        if (choice === null) {
+          $('quiz-feedback').textContent = 'Choose one answer first.';
+          $('quiz-feedback').className = 'quiz-feedback';
+          return;
+        }
+        const correct = choice === q.correct;
+        quiz.passed[quiz.index] = correct;
+        $('quiz-feedback').textContent = correct
+          ? 'Correct. ' + q.why
+          : 'Not quite. Try another answer, then select Check answers again.';
+        $('quiz-feedback').className =
+          'quiz-feedback ' + (correct ? 'correct' : 'retry');
+        $('quiz-next').disabled = !correct;
+        $('quiz-summary').textContent = `${
+          quiz.passed.filter(Boolean).length
+        } of ${CHECKPOINT.length} correct.`;
+        saveQuiz();
+      }
+      $('quiz-options').addEventListener('change', (event) => {
+        if (event.target.name === 'checkpoint-answer')
+          selectQuizAnswer(Number(event.target.value));
+      });
+      $('quiz-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+        checkQuizAnswer();
+      });
+      $('quiz-previous').addEventListener('click', () => {
+        if (quiz.index === 0) return;
+        quiz.index--;
+        renderQuestion();
+        saveQuiz();
+        $('quiz-question').focus();
+      });
+      $('quiz-next').addEventListener('click', () => {
+        if (!quiz.passed[quiz.index]) return;
+        if (quiz.index < CHECKPOINT.length - 1) {
+          quiz.index++;
+          renderQuestion();
+          saveQuiz();
+          $('quiz-question').focus();
+        } else if (quiz.passed.every(Boolean)) {
+          $('quiz-finished').hidden = false;
+          $('quiz-finished').focus();
+        } else {
+          quiz.index = quiz.passed.indexOf(false);
+          renderQuestion();
+          saveQuiz();
+          $('quiz-question').focus();
+        }
+      });
+      $('quiz-continue').addEventListener('click', () => {
+        chooseMission(8);
+        $('mission-title').focus();
+      });
+
+      if (questState.quiz?.open) openCheckpoint();
+      else
+        chooseMission(
+          Math.max(0, Math.min(allMissions.length - 1, questState.selected))
+        );
       window.addEventListener('beforeunload', saveQuest);
     </script>
   </body>
