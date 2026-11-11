@@ -1065,10 +1065,10 @@ THE SOFTWARE.
        try{
         const name='programming-'+Date.now()+'-'+(++session),out='/files/'+name,src=out;dir=await new File(out);await dir.mkdirs();
         if(!await dir.isDirectory())throw Error('Could not create the Java working folder: '+out);
-        const FileOutputStream=await lib.java.io.FileOutputStream,SourceString=await lib.java.lang.String;
+        const FileOutputStream=await lib.java.io.FileOutputStream;
         async function writeSource(filename,text){
          const path=src+'/'+filename,stream=await new FileOutputStream(path);
-         try{const value=await new SourceString(String(text));await stream.write(await value.getBytes('UTF-8'));}
+         try{const bytes=new TextEncoder().encode(String(text));await stream.write(new Int8Array(bytes.buffer,bytes.byteOffset,bytes.byteLength));}
          finally{await stream.close();}
          const sourceFile=await new File(path);
          if(!await sourceFile.isFile())throw Error('Could not create the Java source file: '+filename);
