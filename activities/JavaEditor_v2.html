@@ -339,9 +339,12 @@ const SUPPORT={"ConsoleIO.java": "import java.io.*;\nimport java.nio.charset.Sta
 const COMPILER_URL='https://raw.githubusercontent.com/leaningtech/javafiddle/f1ef9a95727b21393435589bcca1d5d5087aaa22/static/tools.jar';
 let lib,compilerLib,File,session=0,active=null,pending=null,requestSerial=0;
 const send=data=>self.postMessage(data);
+function describeError(error){if(error==null)return 'Unknown error';if(error.message)return String(error.message);try{const text=String(error);if(text!=='[object Object]')return text;return JSON.stringify(error)||text;}catch{return 'Unknown error';}}
 const read=async path=>(await cjFileBlob(path)).text();
-async function initialize(){try{
+async function initialize(){let stage='Loading the Java runtime';try{
+ send({type:'load-progress',stage});
  importScripts('https://cjrtnc.leaningtech.com/4.3/loader.js');
+ stage='Starting the Java runtime';send({type:'load-progress',stage});
  await cheerpjInit({version:8,status:'none',overrideDocumentBase:'https://cjrtnc.leaningtech.com/4.3/',javaProperties:['java.awt.headless=true'],natives:{
   async Java_ConsoleIO_readBridge(){
    if(!active)throw Error('No active console');if(active.eof)return null;
@@ -352,11 +355,15 @@ async function initialize(){try{
   async Java_ConsoleIO_outputBridge(runtime,text,channel){if(active&&active.message.kind!=='check')send({type:'output',id:active.message.id,text:String(text),channel:String(channel)});},
   async Java_ConsoleIO_promptBridge(runtime,prompt){if(active){active.prompt=String(prompt);if(active.message.kind!=='check')send({type:'output',id:active.message.id,text:String(prompt),channel:'stdout'});}}
  }});
- lib=await cheerpjRunLibrary('');File=await lib.java.io.File;
+ stage='Downloading the Java compiler';send({type:'load-progress',stage});
  const response=await fetch(COMPILER_URL);if(!response.ok)throw Error('Compiler download failed ('+response.status+').');
  const bytes=new Uint8Array(await response.arrayBuffer());if(bytes[0]!==80||bytes[1]!==75)throw Error('Invalid compiler archive.');
- cheerpOSAddStringFile('/str/programming-tools.jar',bytes);compilerLib=await cheerpjRunLibrary('/str/programming-tools.jar');send({type:'ready',interactive:true});
- }catch(error){send({type:'load-error',error:String(error.message||error)});}}
+ cheerpOSAddStringFile('/str/programming-tools.jar',bytes);
+ stage='Loading the Java compiler';send({type:'load-progress',stage});
+ lib=await cheerpjRunLibrary('/str/programming-tools.jar');compilerLib=lib;File=await lib.java.io.File;
+ await compilerLib.com.sun.tools.javac.Main;
+ send({type:'ready',interactive:true});
+ }catch(error){send({type:'load-error',stage,error:describeError(error)});}}
 async function execute(m){let dir; m.kind=m.kind||'run';m.cases=m.cases||[{}];m.sourceFile=m.sourceFile||'Main.java';m.entryClass=m.entryClass||'Main';
  const emitFailure=error=>{const result={passed:false,error,reason:error,stdout:'',stderr:''};for(let i=0;i<m.cases.length;i++)send({type:m.kind==='check'?'test-result':'run-result',id:m.id,index:i,result});if(m.kind==='check')send({type:'done',id:m.id});};
  try{
@@ -460,10 +467,11 @@ function createWorker(){
  const instance=worker;
  worker.onmessage=event=>{
   if(worker!==instance)return;const message=event.data;
+  if(message.type==='load-progress'){if(activeJob){$('run-status').textContent=message.stage+'…';$('console-state').textContent='Loading';}return;}
   if(message.type==='ready'){
    workerReady=true;dispatchJob();return;
   }
-  if(message.type==='load-error'){workerFailure('Java could not load. Check your internet connection and whether your school allows cjrtnc.leaningtech.com and raw.githubusercontent.com, then try again.');return;}
+  if(message.type==='load-error'){const details=(message.stage?message.stage+' failed.':'Java startup failed.')+'\n'+(message.error||'The runtime did not provide error details.');appendOutput(details+'\n');workerFailure('Java could not start. See the details in the console below.');return;}
   if(!activeJob||message.id!==activeJob.id)return;
   if(message.type==='case-start'){armRunTimeout();return;}
   if(message.type==='output'){appendOutput(message.text);if(message.channel==='stderr')activeJob.hasStderr=true;return;}
@@ -474,7 +482,7 @@ function createWorker(){
    endJob(message.result.error?'Java reported an error. Read the message in the console.':activeJob.hasStderr?'Run finished with messages on standard error.':'Run complete.',Boolean(message.result.error||activeJob.hasStderr));
   }
  };
- worker.onerror=event=>{event.preventDefault();if(worker===instance)workerFailure('Java could not start or the worker failed. Check your connection and use a current browser. If opening this file is blocked, serve it from your school website.');};
+ worker.onerror=event=>{event.preventDefault();if(worker!==instance)return;appendOutput('Java worker error: '+(event.message||'The browser stopped the Java worker without error details.')+'\n');workerFailure('Java could not start. See the details in the console below.');};
  }catch(error){workerFailure('This browser could not start Java. Use a current browser with WebAssembly and web worker support.');}
 }
 function startJob(){
