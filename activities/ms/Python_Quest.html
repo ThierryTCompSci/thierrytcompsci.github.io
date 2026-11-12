@@ -844,7 +844,14 @@
       #quiz-finished {
         margin-top: 20px;
       }
-    </style>
+    
+/* Visible vertical resize grips. Width remains controlled by the page layout. */
+.editor-resize-handle{display:flex;align-items:center;justify-content:center;gap:9px;min-height:30px;background:#e9f2ec;border:1px solid #c5d7cd;color:#426050;font:11px/1.5 Inter,ui-sans-serif,system-ui,sans-serif;cursor:ns-resize;touch-action:none;user-select:none}
+.editor-resize-handle::before{content:'';width:32px;height:6px;border-top:2px solid #718f81;border-bottom:2px solid #718f81;flex-shrink:0}
+.editor-resize-handle:hover,.editor-resize-handle.resizing{background:#dbece2}
+.editor-resize-handle:focus-visible{outline:3px solid #db9c32;outline-offset:-3px}
+#playground-resize-handle{margin-bottom:10px}
+</style>
   </head>
   <body>
     <a
@@ -24637,5 +24644,34 @@ THE SOFTWARE.
         );
       window.addEventListener('beforeunload', saveQuest);
     </script>
-  </body>
+  <script id="editor-vertical-resize">
+(function(){
+ const editor=document.getElementById('editor');if(!editor)return;
+ function attachGrip(field,host,wrap,label,minHeight,id){
+  const fixedWrapper=host&&host.id==='code-editor',grip=document.createElement('div');
+  grip.id=id;grip.className='editor-resize-handle';grip.tabIndex=0;
+  grip.setAttribute('role','separator');grip.setAttribute('aria-orientation','horizontal');grip.setAttribute('aria-label',label+' vertically');
+  grip.setAttribute('aria-controls',host?host.id+' '+field.id:field.id);grip.setAttribute('aria-valuemin',String(minHeight));grip.setAttribute('aria-valuemax','1600');
+  grip.title='Drag up or down. With keyboard focus, use the up and down arrow keys.';grip.textContent='Drag to resize '+(field.id==='playground'?'playground':'editor');
+  wrap.insertAdjacentElement('afterend',grip);
+  const initialNodes=fixedWrapper?[wrap]:host?[field,host]:[field];for(const node of initialNodes){node.style.minHeight=minHeight+'px';node.style.maxHeight='1600px';node.style.resize='none';}
+  function activeSizer(){return fixedWrapper?wrap:host&&!host.hidden?host:field;}
+  function height(){const node=activeSizer();return node.getBoundingClientRect().height||parseFloat(getComputedStyle(node).height)||(field.id==='playground'?160:320);}
+  function resize(value){const h=Math.max(minHeight,Math.min(1600,Math.round(value)));if(fixedWrapper)wrap.style.height=h+'px';else{field.style.height=h+'px';if(host)host.style.height=h+'px';}
+   if(field.id==='editor'){const lines=document.getElementById('line-numbers');if(lines)lines.style.height=h+'px';}
+   grip.setAttribute('aria-valuenow',String(h));grip.setAttribute('aria-valuetext',h+' pixels high');
+  }
+  let drag=null;
+  grip.addEventListener('pointerdown',event=>{if(event.button!==0||drag)return;event.preventDefault();grip.focus({preventScroll:true});drag={id:event.pointerId,y:event.clientY,height:height()};grip.setPointerCapture(event.pointerId);grip.classList.add('resizing');});
+  grip.addEventListener('pointermove',event=>{if(drag&&event.pointerId===drag.id)resize(drag.height+event.clientY-drag.y);});
+  function end(event){if(!drag||event.pointerId!==drag.id)return;const id=drag.id;drag=null;grip.classList.remove('resizing');if(grip.hasPointerCapture(id))grip.releasePointerCapture(id);}
+  for(const type of ['pointerup','pointercancel','lostpointercapture'])grip.addEventListener(type,end);
+  grip.addEventListener('keydown',event=>{const step=event.shiftKey?64:16;let value;if(event.key==='ArrowUp')value=height()-step;else if(event.key==='ArrowDown')value=height()+step;else if(event.key==='Home')value=minHeight;else if(event.key==='End')value=1600;else return;event.preventDefault();resize(value);});
+  grip.setAttribute('aria-valuenow',String(Math.round(height())));
+ }
+ attachGrip(editor,document.getElementById('python-code-editor')||document.getElementById('code-editor'),editor.closest('.editor-wrap')||editor,'Resize Python editor',220,'editor-resize-handle');
+ const playground=document.getElementById('playground');if(playground)attachGrip(playground,null,playground,'Resize Python playground',120,'playground-resize-handle');
+})();
+</script>
+</body>
 </html>
