@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Table of Values · Straight Line Lab</title>
+<style>
+  :root {
+    color-scheme: light;
+    font-family: system-ui, sans-serif;
+    color: #19213a;
+    background: #f5f5fb;
+    --ink: #19213a;
+    --muted: #545e78;
+    --purple: #5236ad;
+    --purple-dark: #3f258f;
+    --line: #dedfec;
+    --good: #14634c;
+    --bad: #9f2f42;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; }
+  button, input { font: inherit; }
+  button { cursor: pointer; }
+  button:disabled { opacity: .48; cursor: default; }
+  :focus-visible { outline: 3px solid #7653d6; outline-offset: 3px; }
+  [hidden] { display: none !important; }
+  .wrap { max-width: 900px; margin: auto; padding-inline: 24px; }
+  .site-header { background: white; border-bottom: 1px solid var(--line); }
+  .brand { min-height: 64px; display: flex; gap: 10px; align-items: center; font-weight: 770; }
+  .icon {
+    display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px;
+    background: var(--purple); color: white; font-size: 22px;
+  }
+  .subject { margin-left: auto; color: var(--muted); font-size: .82rem; font-weight: 650; }
+  main { padding-block: 33px 42px; }
+  h1 { font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -.05em; line-height: 1.06; margin: 0 0 8px; }
+  p { margin: 0; }
+  .intro p { color: var(--muted); line-height: 1.45; }
+  .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 9px 16px; margin: 21px 0 12px; }
+  .question-label { font-weight: 760; }
+  .progress { display: flex; gap: 8px; align-items: center; color: var(--muted); font-size: .84rem; margin-left: auto; }
+  progress { width: 80px; height: 8px; accent-color: var(--good); }
+  .navigation { display: flex; gap: 7px; }
+  .secondary {
+    color: var(--ink); background: white; border: 1px solid var(--line); border-radius: 9px;
+    font-weight: 680; font-size: .85rem; min-height: 39px; padding: 7px 12px;
+  }
+  .secondary:hover:not(:disabled) { border-color: var(--purple); color: var(--purple-dark); }
+  .card {
+    border: 1px solid var(--line); border-radius: 20px; background: #fff;
+    box-shadow: 0 8px 28px #29244b08; overflow: hidden;
+  }
+  #activity { position: relative; }
+  .success-overlay {
+    position: absolute; inset: 0; z-index: 1; display: grid; place-items: center; pointer-events: none;
+  }
+  .success-tick {
+    display: grid; place-items: center; width: 96px; height: 96px; border: 4px solid #fff; border-radius: 25px;
+    background: var(--good); color: #fff; box-shadow: 0 8px 28px #124c3a40; font-size: 56px; line-height: 1;
+    animation: success-pop 950ms ease-in-out both;
+  }
+  @keyframes success-pop {
+    0% { opacity: 0; transform: scale(.45); }
+    24% { opacity: 1; transform: scale(1.12); }
+    37%, 72% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(.7); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .success-tick { animation: none; }
+  }
+  .equation-panel { padding: 19px 25px 22px; background: #eeebff; border-bottom: 1px solid #e2dbfa; }
+  h2 { margin: 0 0 6px; font-size: .94rem; font-weight: 720; color: var(--purple-dark); }
+  .math { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+  .equation { font-size: clamp(1.7rem, 5vw, 2.6rem); color: var(--purple-dark); font-weight: 720; line-height: 1.12; }
+  form { padding: 22px 25px 25px; }
+  .table-explanation { margin-bottom: 12px; color: var(--muted); font-size: .92rem; }
+  table { width: 100%; border: 1px solid var(--line); border-radius: 11px; border-spacing: 0; table-layout: fixed; overflow: hidden; }
+  th, td { padding: 9px 5px; text-align: center; border-right: 1px solid var(--line); }
+  tr > :last-child { border-right: 0; }
+  thead th { background: #f5f4fb; border-bottom: 1px solid var(--line); }
+  .axis { width: 55px; background: #eeebff; color: var(--purple-dark); font-weight: 750; }
+  td { height: 67px; }
+  .entry { background: #faf8ff; }
+  input {
+    width: min(100%, 87px); color: var(--purple-dark); background: #fff; border: 1px solid #9984d4;
+    border-radius: 8px; font-weight: 730; text-align: center; padding: 4px 2px; min-height: 44px;
+  }
+  input::placeholder { color: #63548b; opacity: 1; }
+  input[data-state="correct"] { background: #eaf8f0; color: var(--good); border-color: var(--good); }
+  input[aria-invalid="true"] { background: #fff2f4; color: var(--bad); border-color: var(--bad); }
+  .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 11px 16px; margin-top: 17px; }
+  .primary {
+    padding: 9px 16px; min-height: 44px; background: var(--purple); color: white; border: 1px solid transparent;
+    border-radius: 9px; font-weight: 740;
+  }
+  .primary:hover { background: var(--purple-dark); }
+  .hint { margin-top: 13px; padding: 10px 12px; background: #f5f2ff; border-radius: 9px; color: var(--purple-dark); font-size: .88rem; }
+  .hint summary { width: fit-content; cursor: pointer; font-weight: 700; }
+  .hint p { margin-top: 6px; line-height: 1.45; }
+  .feedback:empty { display: none; }
+  .feedback { color: var(--bad); font-weight: 650; font-size: .88rem; line-height: 1.45; }
+  .feedback[data-state="correct"] { color: var(--good); }
+  .completion { margin-top: 21px; padding: 32px 20px; text-align: center; }
+  .completion h2 { color: var(--good); font-size: clamp(1.8rem, 5vw, 2.4rem); letter-spacing: -.035em; }
+  .completion p { color: var(--muted); margin: 8px 0 18px; }
+  @media (max-width: 560px) {
+    .wrap { padding-inline: 13px; }
+    main { padding-block: 23px 30px; }
+    .toolbar { gap: 8px 12px; }
+    .progress { margin-left: 0; }
+    .navigation { margin-left: auto; }
+    .equation-panel, form { padding-inline: 12px; }
+    .axis { width: 30px; }
+    th, td { padding-inline: 2px; }
+    td { height: 61px; }
+    progress { width: 48px; }
+  }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap brand"><span class="icon" aria-hidden="true">↗</span> Straight Line Lab <span class="subject">Year 8 Maths</span></div>
+</header>
+<main class="wrap">
+  <div class="intro">
+    <h1>Table of values</h1>
+    <p>Substitute each <i>x</i>-value into the given equation to find the missing <i>y</i>-values.</p>
+  </div>
+  <div class="toolbar" id="toolbar">
+    <span class="question-label" id="question" tabindex="-1" aria-describedby="equation"></span>
+    <div class="progress">
+      <progress id="progress" aria-label="Questions complete"></progress>
+      <span id="progress-label"></span>
+    </div>
+    <nav class="navigation" aria-label="Question navigation">
+      <button class="secondary" id="previous" type="button">‹ Previous</button>
+      <button class="secondary" id="next" type="button">Next ›</button>
+    </nav>
+  </div>
+  <section class="card" id="activity" aria-labelledby="equation-label">
+    <div class="equation-panel">
+      <h2 id="equation-label">Given equation</h2>
+      <p class="equation math" id="equation"></p>
+    </div>
+    <form id="answers" autocomplete="off">
+      <p class="table-explanation" id="table-help">Enter a number in each blank cell.</p>
+      <table class="math" aria-label="Table of x and y values" aria-describedby="table-help">
+        <thead><tr id="x-row"></tr></thead>
+        <tbody><tr id="y-row"></tr></tbody>
+      </table>
+      <div class="actions">
+        <button class="primary" id="check" type="submit">Check answers</button>
+        <p class="feedback" id="feedback" role="status"></p>
+      </div>
+      <details class="hint" id="hint">
+        <summary>See a worked column</summary>
+        <p id="example"></p>
+      </details>
+    </form>
+    <div class="success-overlay" id="success-overlay" aria-hidden="true" hidden>
+      <span class="success-tick">✓</span>
+    </div>
+  </section>
+  <section class="card completion" id="completion" aria-labelledby="completion-title" hidden>
+    <h2 id="completion-title" tabindex="-1" aria-describedby="completion-detail">Congratulations!</h2>
+    <p id="completion-detail">You correctly completed all 12 questions.</p>
+    <button class="primary" id="restart" type="button">Restart with new questions</button>
+  </section>
+</main>
+<script>
+"use strict";
+
+const slopes = [-4, -3, -2, -1, 2, 3, 4];
+const intercepts = [-6, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6];
+const storageKey = "table-of-values-previous-equations";
+let questions = [];
+
+function sample(items, count) {
+  const pool = [...items];
+  return Array.from({ length: count }, () => {
+    const index = Math.floor(Math.random() * pool.length);
+    return pool.splice(index, 1)[0];
+  });
+}
+
+const equationKey = (m, c) => m + "," + c;
+
+function generateQuestions(previousEquations) {
+  const groups = [
+    { lines: intercepts.map(c => [1, c]), count: 3 },
+    { lines: slopes.map(m => [m, 0]), count: 3 },
+    { lines: slopes.flatMap(m => intercepts.map(c => [m, c])), count: 6 }
+  ];
+  return groups.flatMap(({ lines, count }) => {
+    const fresh = lines.filter(([m, c]) => !previousEquations.includes(equationKey(m, c)));
+    return sample(fresh.length >= count ? fresh : lines, count).map(([m, c], index) => ({
+      m, c,
+      xValues: [...sample([-4, -3, -2, -1], 2), 0, ...sample([1, 2, 3, 4], 2)].sort((a, b) => a - b),
+      blanks: sample([0, 1, 2, 3, 4], index === 0 ? 2 : 3),
+      values: [], marks: [], complete: false, checked: false
+    }));
+  });
+}
+
+const byId = id => document.getElementById(id);
+const xRow = byId("x-row");
+const yRow = byId("y-row");
+const feedback = byId("feedback");
+const previous = byId("previous");
+const next = byId("next");
+let index = 0;
+let inputs = [];
+let advancing = false;
+
+const numberText = number => String(number).replace("-", "−");
+const constantTerm = c => c === 0 ? "" : c < 0 ? " − " + Math.abs(c) : " + " + c;
+const calculate = (question, x) => question.m * x + question.c;
+const readNumber = text => {
+  const value = text.trim().replace(/−/g, "-");
+  return /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(value) ? Number(value) : NaN;
+};
+
+function cell(tag, text, scope) {
+  const element = document.createElement(tag);
+  element.textContent = text;
+  if (scope) element.scope = scope;
+  return element;
+}
+
+function renderProgress() {
+  const completed = questions.filter(question => question.complete).length;
+  byId("progress").value = completed;
+  byId("progress-label").textContent = completed + "/" + questions.length + " complete";
+}
+
+function renderFeedback() {
+  const question = questions[index];
+  for (const [column, input] of inputs) {
+    const mark = question.marks[column];
+    input.dataset.state = mark || "";
+    if (mark) input.setAttribute("aria-invalid", String(mark !== "correct"));
+    else input.removeAttribute("aria-invalid");
+  }
+  const badColumns = question.blanks.filter(column => question.marks[column] && question.marks[column] !== "correct");
+  const allCorrect = question.checked && question.blanks.every(column => question.marks[column] === "correct");
+  feedback.dataset.state = allCorrect ? "correct" : "";
+  if (allCorrect) {
+    feedback.textContent = "All missing values are correct.";
+  } else if (badColumns.length) {
+    const values = badColumns.map(column => numberText(question.xValues[column]));
+    feedback.textContent = values.length === 1 ? "Try again. Check the value for x = " + values[0] + "." :
+      "Try again. Check the columns with x-values " + new Intl.ListFormat("en", { style: "long" }).format(values) + ".";
+  } else {
+    feedback.textContent = "";
+  }
+}
+
+function renderQuestion() {
+  const question = questions[index];
+  const { m, c, xValues, blanks } = question;
+  byId("question").textContent = "Question " + (index + 1) + " of " + questions.length;
+  const coefficient = m === 1 ? "" : m === -1 ? "−" : numberText(m);
+  byId("equation").textContent = "y = " + coefficient + "x" + constantTerm(c);
+  previous.disabled = index === 0;
+  next.disabled = index === questions.length - 1;
+  const xLabel = cell("th", "x", "row");
+  const yLabel = cell("th", "y", "row");
+  xLabel.className = yLabel.className = "axis";
+  xRow.replaceChildren(xLabel, ...xValues.map(x => cell("th", numberText(x), "col")));
+  inputs = [];
+  yRow.replaceChildren(yLabel, ...xValues.map((x, column) => {
+    const missing = blanks.includes(column);
+    const entry = cell("td", missing ? "" : numberText(calculate(question, x)));
+    if (missing) {
+      entry.className = "entry";
+      const input = document.createElement("input");
+      input.type = "text";
+      input.maxLength = 12;
+      input.placeholder = "?";
+      input.spellcheck = false;
+      input.setAttribute("aria-label", "Missing y-value for x equals " + x);
+      input.value = question.values[column] || "";
+      input.addEventListener("input", () => {
+        question.values[column] = input.value;
+        question.marks[column] = undefined;
+        renderFeedback();
+      });
+      inputs.push([column, input]);
+      entry.append(input);
+    }
+    return entry;
+  }));
+  const givenX = xValues.find((x, column) => !blanks.includes(column));
+  const substitution = m === 1 ? numberText(givenX) : numberText(m) + " × (" + numberText(givenX) + ")";
+  byId("example").textContent = "For x = " + numberText(givenX) + ", y = " + substitution +
+    constantTerm(c) + " = " + numberText(calculate(question, givenX)) + ".";
+  byId("hint").open = false;
+  renderFeedback();
+  renderProgress();
+}
+
+function navigate(offset) {
+  index += offset;
+  renderQuestion();
+  byId("question").focus();
+}
+
+previous.addEventListener("click", () => navigate(-1));
+next.addEventListener("click", () => navigate(1));
+byId("answers").addEventListener("submit", event => {
+  event.preventDefault();
+  if (advancing) return;
+  const question = questions[index];
+  question.checked = true;
+  for (const [column, input] of inputs) {
+    question.values[column] = input.value;
+    question.marks[column] = readNumber(input.value) === calculate(question, question.xValues[column]) ?
+      "correct" : "incorrect";
+  }
+  const correct = question.blanks.every(column => question.marks[column] === "correct");
+  if (correct) question.complete = true;
+  renderFeedback();
+  renderProgress();
+  if (correct) celebrateAndAdvance();
+});
+
+function celebrateAndAdvance() {
+  advancing = true;
+  previous.disabled = next.disabled = byId("check").disabled = true;
+  for (const [, input] of inputs) input.readOnly = true;
+  const overlay = byId("success-overlay");
+  overlay.hidden = false;
+  window.setTimeout(() => {
+    overlay.hidden = true;
+    advancing = false;
+    byId("check").disabled = false;
+    // Return to skipped questions after reaching the end of the round.
+    const following = questions.findIndex((task, position) => position > index && !task.complete);
+    const target = following === -1 ? questions.findIndex(task => !task.complete) : following;
+    if (target !== -1) {
+      navigate(target - index);
+      return;
+    }
+    byId("toolbar").hidden = true;
+    byId("activity").hidden = true;
+    byId("completion").hidden = false;
+    byId("completion-title").focus();
+  }, 1050);
+}
+
+function startRound() {
+  let previousEquations = questions.map(({ m, c }) => equationKey(m, c));
+  if (!previousEquations.length) {
+    try {
+      const saved = JSON.parse(sessionStorage.getItem(storageKey));
+      if (Array.isArray(saved)) previousEquations = saved;
+    } catch {
+      // Local HTML files can run in browsers that restrict storage.
+    }
+  }
+  questions = generateQuestions(previousEquations);
+  try {
+    sessionStorage.setItem(storageKey, JSON.stringify(questions.map(({ m, c }) => equationKey(m, c))));
+  } catch {
+    // Restart still uses the previous round held in memory.
+  }
+  index = 0;
+  byId("progress").max = questions.length;
+  byId("toolbar").hidden = false;
+  byId("activity").hidden = false;
+  byId("completion").hidden = true;
+  renderQuestion();
+}
+
+byId("restart").addEventListener("click", () => {
+  startRound();
+  byId("question").focus();
+});
+startRound();
+</script>
+</body>
+</html>
