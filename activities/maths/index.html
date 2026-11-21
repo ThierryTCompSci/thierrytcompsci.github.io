@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Straight Line Lab · Year 8 Maths</title>
+<style>
+  :root {
+    color-scheme: light;
+    font-family: system-ui, sans-serif;
+    color: #19213a;
+    background: #f5f5fb;
+    --purple: #5236ad;
+    --purple-dark: #3f258f;
+    --line: #dedfec;
+    --muted: #525c75;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; }
+  .wrap { width: min(100%, 1060px); margin: auto; padding-inline: 24px; }
+  header { background: #fff; border-bottom: 1px solid var(--line); }
+  .brand { min-height: 63px; display: flex; align-items: center; gap: 10px; font-weight: 770; }
+  .brand-icon { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: var(--purple); color: white; font-size: 22px; }
+  .year { margin-left: auto; font-size: .83rem; color: var(--muted); font-weight: 650; }
+  main { padding-block: 29px 36px; }
+  h1, h2, h3, p { margin: 0; }
+  .hero {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px 28px;
+    padding: clamp(20px, 4.5vw, 38px); border: 1px solid #3f258f; border-radius: 20px;
+    color: white; background: linear-gradient(115deg, #34217d, #593abb);
+  }
+  h1 { font-size: clamp(1.95rem, 5.6vw, 3rem); line-height: 1.08; letter-spacing: -.05em; }
+  .hero p { margin-top: 7px; color: #eee9ff; font-size: .98rem; }
+  .math { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+  .model { padding: 9px 12px; border: 1px solid #ffffff60; border-radius: 10px; background: #ffffff14; white-space: nowrap; font-weight: 700; font-size: 1rem; }
+  nav { margin-top: 18px; }
+  .card {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    border: 1px solid var(--line); border-radius: 13px; background: white;
+    padding: 14px 16px; color: inherit; text-decoration: none; box-shadow: 0 4px 8px #27214c05;
+  }
+  .card:hover { border-color: #9479da; background: #faf8ff; }
+  .card:focus-visible { outline: 3px solid #7653d6; outline-offset: 3px; }
+  .card.featured { border-color: #d9cdf7; background: #f0ecff; }
+  .card.featured:hover { border-color: #9479da; background: #e9e2ff; }
+  .card h2, .card h3 { font-size: 1.05rem; letter-spacing: -.02em; line-height: 1.2; }
+  .card p { margin-top: 4px; color: var(--muted); font-size: .85rem; line-height: 1.4; }
+  .arrow { color: var(--purple-dark); font-size: 1.25rem; flex: none; }
+  .section-title { margin: 20px 0 9px; font-size: 1.13rem; letter-spacing: -.02em; }
+  .levels { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; padding: 0; margin: 0; }
+  .levels .card { height: 100%; }
+  @media (max-width: 720px) { .levels { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 460px) {
+    .wrap { padding-inline: 15px; }
+    main { padding-top: 19px; }
+    .levels { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap brand"><span class="brand-icon" aria-hidden="true">↗</span>Straight Line Lab <span class="year">Year 8 Maths</span></div>
+</header>
+<main class="wrap">
+  <div class="hero">
+    <div>
+      <h1>Coordinates &amp; graphs</h1>
+      <p>Choose an activity to practise straight-line equations.</p>
+    </div>
+    <span class="model math">y = mx + c</span>
+  </div>
+  <nav aria-label="Practice activities">
+    <a class="card featured" href="table-of-values.html">
+      <div>
+        <h2>Table of values</h2>
+        <p>Use a given equation to fill in the missing <i>y</i>-values. 12 questions.</p>
+      </div>
+      <span class="arrow" aria-hidden="true">→</span>
+    </a>
+    <h2 class="section-title">Plot points and find the equation</h2>
+    <ul class="levels">
+      <li><a class="card" href="straight-line-lab-level-1.html">
+        <div><h3>Level 1</h3><p><span class="math">y = mx</span> · 5 tasks</p></div>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a></li>
+      <li><a class="card" href="straight-line-lab-level-2.html">
+        <div><h3>Level 2</h3><p><span class="math">y = x + c</span> · 5 tasks</p></div>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a></li>
+      <li><a class="card" href="straight-line-lab-level-3.html">
+        <div><h3>Level 3</h3><p><span class="math">y = mx + c</span> · 5 tasks<br>Integer gradients</p></div>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a></li>
+      <li><a class="card" href="straight-line-lab-level-4.html">
+        <div><h3>Level 4</h3><p><span class="math">y = mx + c</span> · 10 tasks<br>Fractional gradients</p></div>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a></li>
+      <li><a class="card" href="straight-line-lab-level-5.html">
+        <div><h3>Level 5</h3><p>Mixed practice · 20 tasks</p></div>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a></li>
+      <li><a class="card" href="straight-line-lab-level-6.html">
+        <div><h3>Level 6</h3><p>Unlimited mixed practice</p></div>
+        <span class="arrow" aria-hidden="true">→</span>
+      </a></li>
+    </ul>
+  </nav>
+</main>
+</body>
+</html>
