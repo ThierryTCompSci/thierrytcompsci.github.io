@@ -144,6 +144,7 @@
       <div class="graph-footer">
         <span id="plot-status" aria-live="polite"></span>
         <div class="plot-actions">
+          <button class="secondary" type="button" id="trace-line">Trace line</button>
           <button class="secondary" type="button" id="clear-plot">Clear points</button>
         </div>
       </div>
@@ -202,12 +203,13 @@
 
 const makeTask = ([m, c, x1, x2]) => ({
   m, c, points: [[x1, m * x1 + c], [x2, m * x2 + c]],
-  plotted: [], answers: ["", "", ""], feedback: null, completed: false
+  plotted: [], traced: false, answers: ["", "", ""], feedback: null, completed: false
 });
 
 const byId = id => document.getElementById(id);
 const fields = ["gradient", "intercept", "equation"].map(byId);
 const graph = byId("graph");
+const traceButton = byId("trace-line");
 const ctx = graph.getContext("2d");
 const limit = 8;
 const size = 415;
@@ -333,7 +335,7 @@ function drawGraph() {
   ctx.fillText("y", origin, 14);
 
   const task = currentTask();
-  if (task.feedback?.plot?.ok) drawPlottedLine(task.plotted);
+  if (task.traced || task.feedback?.plot?.ok) drawPlottedLine(task.plotted);
 
   task.plotted.forEach((point, index) => {
     const labelIndex = task.feedback?.plot?.ok ? task.points.findIndex(target => equalPoint(point, target)) : -1;
@@ -365,10 +367,11 @@ function drawGraph() {
 }
 
 function renderPlot() {
-  const { plotted } = currentTask();
+  const { plotted, traced } = currentTask();
   const selection = plotted.length ? plotted.map(formatPoint).join(" and ") : "0 of 2 points plotted";
   const cursorStatus = showCursor ? "Cursor " + formatPoint(cursor) + " · " : "";
-  byId("plot-status").textContent = cursorStatus + selection;
+  byId("plot-status").textContent = cursorStatus + selection + (traced ? " · Line traced" : "");
+  traceButton.disabled = advancing || plotted.length !== 2;
   byId("clear-plot").disabled = advancing || plotted.length === 0;
   drawGraph();
 }
@@ -448,6 +451,7 @@ byId("restart").addEventListener("click", () => {
 
 function updatePlot() {
   level.countCurrent = true;
+  currentTask().traced = false;
   const feedback = currentTask().feedback;
   if (feedback) {
     feedback.plot = null;
@@ -500,6 +504,10 @@ byId("clear-plot").addEventListener("click", () => {
   currentTask().plotted = [];
   updatePlot();
   graph.focus();
+});
+traceButton.addEventListener("click", () => {
+  currentTask().traced = true;
+  renderPlot();
 });
 window.addEventListener("resize", drawGraph);
 
