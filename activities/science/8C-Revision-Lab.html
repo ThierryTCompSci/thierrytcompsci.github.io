@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f6f7fb">
+<title>Breathing &amp; Respiration Revision Lab</title>
+<meta name="description" content="Explore six self-checking Year 8 science activities on breathing, respiration and data skills.">
+<style>
+:root {color-scheme:light; --background:#f6f7fb; --ink:#181835; --muted:#555770; --violet:#573cba; --accent:#6546d7; --line:#e3e3ee; --purple-tint:#eee9fc; --green:#1f624f; font: 100%/1.5 "Aptos","Inter",system-ui,sans-serif}
+*,*::before,*::after {box-sizing:border-box}
+body {margin:0;background:var(--background);color:var(--ink)}
+button,select,input {font:inherit}
+button {cursor:pointer}
+[hidden] {display:none!important}
+button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible, [tabindex="-1"]:focus-visible {outline:3px solid #5e44ce;outline-offset:3px}
+.topbar {background:#fff;border-bottom:1px solid var(--line)}
+.topbar-inner {max-width:1260px;margin:auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.brand {display:flex;gap:11px;align-items:center;font-size:1.06rem;font-weight:800;letter-spacing:-.02em}
+.brand-icon {background:var(--accent);color:#fff;border-radius:11px;width:34px;height:34px;display:grid;place-items:center;font-size:1.2rem}
+.unit {color:var(--violet);background:#f2eefc;font-size:.875rem;font-weight:750;border-radius:50px;padding:6px 12px;white-space:nowrap}
+.shell {max-width:1260px;margin:auto;padding:30px 32px 46px;display:grid;grid-template-columns:246px minmax(0,1fr);gap:26px;align-items:start}
+.sidebar,.activity {background:#fff;border:1px solid var(--line);border-radius:21px;box-shadow:0 6px 20px rgb(42 31 91 / .035)}
+.sidebar {padding:19px 13px 15px}
+.sidebar h2 {font-size:.95rem;margin:0 9px 10px;letter-spacing:-.01em}
+.topic-list {display:grid;gap:3px}
+.topic {background:none;border:1px solid transparent;color:var(--muted);display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:center;text-align:left;border-radius:11px;padding:9px 7px;width:100%;font-size:.875rem;line-height:1.3;font-weight:650}
+.topic:hover {background:#f7f5fe;color:var(--violet)}
+.topic[aria-current="true"] {background:#f0ebfc;color:#452b9b;border-color:#e7ddff;font-weight:800}
+.topic-symbol {width:26px;height:26px;border-radius:8px;background:#f1f1f9;display:grid;place-items:center;color:var(--violet);font-size:.875rem;font-weight:800}
+.topic[aria-current="true"] .topic-symbol {background:#e3d8ff}
+.topic-count {font-variant-numeric:tabular-nums;font-size:.875rem}
+.progress-box {margin:15px 4px 0;padding:13px 9px 0;border-top:1px solid var(--line)}
+.progress-label {display:flex;justify-content:space-between;gap:8px;font-size:.875rem;font-weight:750}
+progress {appearance:none;border:0;display:block;width:100%;height:8px;border-radius:20px;background:#edebf7;overflow:hidden;margin-top:8px}
+progress::-webkit-progress-bar {background:#edebf7}
+progress::-webkit-progress-value {background:#7756e8;border-radius:20px}
+progress::-moz-progress-bar {background:#7756e8;border-radius:20px}
+.reset-link {background:none;color:var(--muted);border:0;padding:0;min-height:34px;margin-top:8px;font-size:.875rem;text-decoration:underline;text-underline-offset:3px}
+.reset-link:hover {color:var(--violet)}
+.hero {position:relative;min-height:236px;overflow:hidden;isolation:isolate;border-radius:21px;border:1px solid #e6ddfd;background:linear-gradient(110deg,#f1eaff 6%,#ebe4fc 68%,#e0eaff 100%);display:grid;grid-template-columns:minmax(0,1fr) minmax(160px,34%);align-items:center;margin-bottom:20px}
+.hero-copy {padding:27px 0 27px 30px;z-index:1}
+.eyebrow {margin:0 0 8px;color:var(--violet);font-size:.875rem;font-weight:800;letter-spacing:.055em;text-transform:uppercase}
+h1 {font-size:clamp(2.12rem,4.25vw,3.42rem);line-height:1.03;letter-spacing:-.064em;margin:0 0 12px;font-weight:850}
+.hero p:last-child {margin:0;max-width:34ch;font-size:1rem;color:#48446b}
+.hero-art {width:100%;height:auto;max-height:240px;align-self:center;justify-self:center;display:block}
+.activity {padding:24px 27px}
+.activity-head {display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding-bottom:17px;border-bottom:1px solid var(--line);margin-bottom:17px}
+.activity-head h2 {font-size:1.33rem;line-height:1.2;letter-spacing:-.035em;margin:1px 0 0}
+.steps {display:flex;align-items:center;gap:5px;flex-shrink:0}
+.step {border:1px solid var(--line);background:#fff;color:var(--muted);width:32px;height:32px;border-radius:9px;font-size:.875rem;font-weight:750;padding:0}
+.step[aria-current="step"] {background:var(--accent);color:#fff;border-color:var(--accent)}
+.step.is-correct:not([aria-current="step"]) {color:var(--green);background:#eaf7ef;border-color:#c1e6ce}
+.activity-meta {font-size:.875rem;font-weight:750;color:var(--violet);margin:0 0 5px}
+#prompt {font-size:1.13rem;line-height:1.4;letter-spacing:-.01em;font-weight:750;margin:0 0 9px}
+.hint {margin:0 0 10px;color:var(--muted);font-size:.925rem}
+.option-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.option {display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;min-height:48px;cursor:pointer;font-size:.9375rem;line-height:1.35}
+.option:hover {border-color:#a995ef}
+.option:has(input:checked) {background:#f5f0ff;border-color:#8c74de}
+.option input {accent-color:var(--accent);width:17px;height:17px;flex-shrink:0;margin:0}
+fieldset {margin:0;padding:0;border:0;min-width:0}
+.match-list {display:grid;gap:7px;max-width:640px}
+.match-row {display:grid;grid-template-columns:minmax(118px,.8fr) minmax(0,1.3fr);gap:12px;align-items:center;font-size:.9375rem}
+.match-row label {font-weight:700}
+.order-list {list-style:none;display:grid;gap:7px;padding:0;margin:0;max-width:620px}
+.order-item {border:1px solid var(--line);border-radius:10px;padding:5px 7px 5px 10px;display:grid;grid-template-columns:26px 1fr auto;align-items:center;gap:9px;font-size:.9375rem}
+.order-pos {font-weight:750;color:var(--violet)}
+.order-arrows {display:flex;gap:3px}
+.order-arrows button {border:1px solid var(--line);border-radius:7px;background:#f8f7fc;color:var(--ink);min-width:36px;min-height:34px;padding:0;font-weight:750}
+.order-arrows button:disabled {color:#747589;background:#f4f4f7;cursor:default;opacity:.58}
+select,.number-input {border:1px solid #cbcade;border-radius:9px;padding:8px 12px;background:#fff;color:var(--ink);min-height:43px;width:100%}
+select {appearance:none;background-image:linear-gradient(45deg,transparent 50%,#514678 50%),linear-gradient(135deg,#514678 50%,transparent 50%);background-position:calc(100% - 16px) 50%,calc(100% - 11px) 50%;background-size:5px 5px;background-repeat:no-repeat;padding-right:27px}
+.number-row {display:flex;align-items:center;gap:10px;margin-top:13px}
+.number-input {width:115px}
+.data-table {border-collapse:separate;border-spacing:0;margin:0 0 12px;width:min(100%,540px);font-size:.875rem;text-align:center;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.data-table th,.data-table td {padding:6px 7px}
+.data-table th {background:#f2eefc;font-weight:750}
+.data-table th:first-child {text-align:left}
+.data-table tr + tr th,.data-table td {border-top:1px solid var(--line)}
+.feedback {padding:10px 12px;border-radius:10px;margin:13px 0 0;font-size:.9375rem}
+.feedback:empty {display:none}
+.feedback[data-result="correct"] {background:#eaf7ef;color:#184f3d}
+.feedback[data-result="retry"] {background:#fff3e1;color:#73440e}
+.feedback[data-result="incomplete"] {background:#f0edfa;color:#44366d}
+.actions {display:flex;justify-content:space-between;align-items:center;gap:9px;flex-wrap:wrap;margin-top:16px}
+.navigation {display:flex;gap:7px}
+.control {min-height:42px;border-radius:10px;padding:7px 12px;border:1px solid var(--line);background:#fff;color:var(--ink);font-size:.9rem;font-weight:750}
+.control:hover:not(:disabled) {background:#f6f2ff;border-color:#b39feb}
+.control:disabled {opacity:.5;cursor:default}
+.primary {background:var(--accent);color:#fff;border-color:var(--accent);padding-inline:17px}
+.primary:hover:not(:disabled) {background:#5436bd;border-color:#5436bd}
+.notice {margin:0 0 12px;border-radius:12px;padding:11px 15px;background:#e6f5ea;color:#1a533e;font-weight:750}
+dialog {border:1px solid var(--line);border-radius:16px;color:var(--ink);padding:20px;max-width:min(410px,calc(100% - 32px))}
+dialog::backdrop {background:rgb(29 20 57 / .44)}
+dialog h2 {margin:0 0 5px}
+dialog p {margin:0;color:var(--muted)}
+.sr-only {position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+@media(max-width:900px) {
+ .shell {grid-template-columns:208px minmax(0,1fr);gap:16px;padding-inline:22px}
+ .topic {grid-template-columns:23px 1fr auto;gap:6px}
+ .topic-symbol {width:23px;height:24px}
+ .hero-copy {padding-left:23px}
+ .activity {padding:20px}
+}
+@media(max-width:720px) {
+ .topbar-inner {padding-inline:16px}
+ .shell {padding:16px;grid-template-columns:1fr;gap:13px}
+ .main {display:contents}
+ .hero {grid-row:1;margin:0;min-height:184px;grid-template-columns:minmax(0,1fr) minmax(102px,31%)}
+ .hero-copy {padding:20px 0 20px 17px}
+ .sidebar {padding:13px 10px 10px}
+ .topic-list {grid-template-columns:repeat(2,minmax(0,1fr))}
+ .progress-box {padding-top:9px;margin-top:8px}
+ .activity {padding:16px}
+ .option-grid {grid-template-columns:1fr}
+}
+@media(max-width:380px) {
+ .unit {font-size:.75rem;padding:5px 8px}
+ .hero {grid-template-columns:minmax(0,1fr) 100px}
+ .topic {grid-template-columns:1fr auto}
+ .topic-symbol {display:none}
+ .activity-head {flex-wrap:wrap}
+ .match-row {grid-template-columns:1fr;gap:4px}
+}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="topbar-inner">
+  <div class="brand"><span class="brand-icon" aria-hidden="true">✦</span> Revision Lab</div>
+  <div class="unit">Year 8 Science · 8C</div>
+</div></header>
+<main class="shell">
+  <aside class="sidebar" aria-labelledby="activities-title">
+    <h2 id="activities-title">Activities</h2>
+    <nav class="topic-list" id="topics" aria-label="Revision topics"></nav>
+    <div class="progress-box">
+      <div class="progress-label"><label for="progress">Overall progress</label><span id="progress-count"></span></div>
+      <progress id="progress" value="0"></progress>
+      <button type="button" class="reset-link" id="reset">Reset progress</button>
+    </div>
+  </aside>
+  <div class="main">
+    <section class="hero" aria-labelledby="title">
+      <div class="hero-copy">
+        <p class="eyebrow">Interactive revision</p>
+        <h1 id="title">Breathing &amp;<br>respiration</h1>
+        <p>Choose an activity, check your answers and try again as often as you like.</p>
+      </div>
+      <canvas id="lung-art" class="hero-art" width="640" height="500" aria-hidden="true"></canvas>
+    </section>
+    <section class="activity" aria-labelledby="activity-title">
+      <header class="activity-head">
+        <h2 id="activity-title"></h2>
+        <div class="steps" id="steps" role="group" aria-label="Questions in this activity"></div>
+      </header>
+      <p class="notice" id="complete" hidden>All questions correct. You’ve completed the revision lab!</p>
+      <form id="quiz">
+        <p class="activity-meta" id="activity-meta"></p>
+        <h3 id="prompt" tabindex="-1"></h3>
+        <p id="hint" class="hint"></p>
+        <div id="response"></div>
+        <p class="feedback" id="feedback" role="status" aria-atomic="true"></p>
+        <div class="actions">
+          <button type="submit" class="control primary">Check answer</button>
+          <div class="navigation">
+            <button type="button" class="control" id="previous">Previous</button>
+            <button type="button" class="control" id="next">Next question</button>
+          </div>
+        </div>
+      </form>
+    </section>
+  </div>
+</main>
+<dialog id="reset-dialog" aria-labelledby="reset-title">
+  <form method="dialog">
+    <h2 id="reset-title">Reset progress?</h2>
+    <p>This clears your answers and scores on this browser.</p>
+    <div class="actions">
+      <button class="control" value="cancel" autofocus>Cancel</button>
+      <button class="control primary" value="reset">Reset progress</button>
+    </div>
+  </form>
+</dialog>
+<noscript><p>This revision lab needs JavaScript to check your answers.</p></noscript>
+<script>
+"use strict";
+
+const topics = [
+  { title: "Aerobic respiration", symbol: "O₂", questions: [
+    { kind: "match", prompt: "Complete the word equation for aerobic respiration.", labels: ["Reactant 1", "Reactant 2", "Product 1", "Product 2"], options: ["Carbon dioxide", "Glucose", "Lactic acid", "Oxygen", "Water"], expected: ["Glucose", "Oxygen", "Carbon dioxide", "Water"], pairwise: true, hint: "Use the two reactants and the two products. The order within each pair can vary.", retry: "Check which substances cells take in and which they produce.", explain: "Glucose + oxygen → carbon dioxide + water. The reactions release energy." },
+    { kind: "single", prompt: "Where does most aerobic respiration take place in a cell?", options: ["Nucleus", "Cell membrane", "Mitochondria", "Cytoplasm outside the mitochondria"], expected: [2], retry: "Think of the structures where most energy is released using oxygen.", explain: "Most aerobic respiration takes place in mitochondria." },
+    { kind: "single", prompt: "What does ATP do?", options: ["Carries oxygen around the body", "Transfers energy to processes in the cell", "Changes carbon dioxide into oxygen", "Sweeps mucus towards the throat"], expected: [1], retry: "ATP is involved after respiration releases energy.", explain: "ATP transfers energy released by respiration to cell processes that need it." },
+    { kind: "multi", prompt: "What do aerobic respiration and complete methane combustion have in common?", options: ["Both produce carbon dioxide and water", "Both transfer energy to ATP", "Both use oxygen", "Both release energy as light from a flame"], expected: [0,2], hint: "Choose two.", retry: "Think about what goes into both reactions and what comes out.", explain: "Both reactions use oxygen and produce carbon dioxide and water. Cells transfer some of the energy released to ATP." }
+  ]},
+  { title: "Breathing & lungs", symbol: "⇌", questions: [
+    { kind: "order", prompt: "Put the airways in order from the nose or mouth to the smallest air spaces.", options: ["Bronchioles", "Alveoli", "Trachea", "Bronchi"], expected: [2,3,0,1], retry: "Start with the windpipe. Airways branch into smaller tubes before reaching the air pockets.", explain: "Air travels through the trachea, bronchi and bronchioles to the alveoli." },
+    { kind: "order", prompt: "Put the steps of breathing in into order.", options: ["Air flows into the lungs", "Chest volume increases", "Diaphragm contracts and moves down", "Pressure in the lungs falls below outside pressure"], expected: [2,1,3,0], retry: "Begin with a muscle movement, then think about volume and pressure.", explain: "The diaphragm moves down, increasing chest volume. Lung pressure falls below outside pressure, so air flows in." },
+    { kind: "multi", prompt: "Which features help gases diffuse quickly at the alveoli?", options: ["A large surface area", "A thick wall between the air and blood", "A good blood supply", "Thin walls", "A dry surface"], expected: [0,2,3], hint: "Choose three.", retry: "Look for features that give gases more space or a shorter path to diffuse, or maintain a concentration difference.", explain: "A large surface area, thin walls and a good blood supply make gas exchange more efficient." },
+    { kind: "match", prompt: "Match each gas to its direction of travel in the lungs.", labels: ["Oxygen", "Carbon dioxide"], options: ["Blood to alveoli", "Alveoli to blood", "Neither direction"], expected: ["Alveoli to blood","Blood to alveoli"], retry: "Think about what the blood picks up from the air and what the body breathes out.", explain: "Oxygen diffuses into the blood. Carbon dioxide diffuses into the alveoli and is breathed out." }
+  ]},
+  { title: "Getting oxygen", symbol: "●", questions: [
+    { kind: "match", prompt: "Match each term to its role in delivering oxygen to cells.", labels: ["Haemoglobin", "Capillaries", "Tissue fluid"], options: ["Carries oxygen in red blood cells", "Fluid that lets oxygen reach body cells", "Tiny vessels where exchange with tissues occurs"], expected: ["Carries oxygen in red blood cells","Tiny vessels where exchange with tissues occurs","Fluid that lets oxygen reach body cells"], retry: "Start with the red blood cell, then follow the oxygen from the blood to the tissue.", explain: "Haemoglobin carries oxygen in red blood cells. Oxygen leaves the blood at capillaries and diffuses through tissue fluid to cells." },
+    { kind: "match", prompt: "Match each change during exercise to what it helps the body do.", labels: ["Faster breathing", "Faster pulse"], options: ["Moves more air into and out of the lungs", "Moves blood to and from working muscles faster"], expected: ["Moves more air into and out of the lungs","Moves blood to and from working muscles faster"], retry: "Think about which change is caused by the breathing muscles and which one reflects what the heart is doing.", explain: "Working muscles respire faster. Breathing moves more air, and faster blood flow delivers oxygen and glucose to the muscles more quickly." },
+    { kind: "match", prompt: "Match each effect of smoking to its result.", labels: ["Carbon monoxide binds to haemoglobin", "Cilia are damaged", "Alveolar walls break down"], options: ["Less oxygen can be carried by the blood", "Less surface area is available for gas exchange", "Less mucus is swept towards the throat"], expected: ["Less oxygen can be carried by the blood","Less mucus is swept towards the throat","Less surface area is available for gas exchange"], retry: "Think about the normal jobs of haemoglobin, cilia and alveoli.", explain: "Carbon monoxide reduces the oxygen the blood can carry. Damaged cilia clear less mucus. Damaged alveoli reduce the surface area for gas exchange." },
+    { kind: "order", prompt: "Order the effects of emphysema from the initial damage to its effect on working muscles.", options: ["Less oxygen reaches working muscles", "Alveolar walls break down", "Less oxygen moves into the blood", "The surface area for gas exchange decreases"], expected: [1,3,2,0], retry: "Start with what happens to the alveoli and their surface area.", explain: "When alveolar walls break down, gas exchange surface area falls, so less oxygen diffuses into the blood and reaches the muscles." }
+  ]},
+  { title: "Comparing gas exchange", symbol: "❋", questions: [
+    { kind: "match", prompt: "Match each organism to its gas exchange structure.", labels: ["Human", "Fish", "Plant leaf"], options: ["Gills", "Stomata", "Lungs"], expected: ["Lungs","Gills","Stomata"], retry: "Remember that fish get oxygen from water. Leaves exchange gases through tiny pores.", explain: "Humans exchange gases at the alveoli in their lungs. Fish use gills. Leaf pores are called stomata." },
+    { kind: "single", prompt: "What feature do both human lungs and fish gills have?", options: ["Both have stomata", "Both take oxygen directly from air", "Both have a large gas exchange surface", "Both have alveoli"], expected: [2], retry: "Look for a feature that helps diffusion regardless of whether oxygen comes from air or water.", explain: "Both organs provide a large gas exchange surface, helping oxygen diffuse into the blood." },
+    { kind: "match", prompt: "A leaf is respiring in the dark. Match each gas to its direction through the stomata.", labels: ["Oxygen", "Carbon dioxide"], options: ["Into the leaf", "Out of the leaf", "Neither direction"], expected: ["Into the leaf","Out of the leaf"], retry: "In the dark, think about the reactants and products of respiration.", explain: "The leaf takes in oxygen for respiration and releases carbon dioxide." },
+    { kind: "single", prompt: "Which result shows that gas from respiring seeds contains carbon dioxide?", options: ["Limewater turns milky", "Limewater turns blue", "Limewater stays clear", "Water turns purple"], expected: [0], retry: "Remember what happens to the clarity of limewater.", explain: "Carbon dioxide turns clear limewater cloudy or milky." }
+  ]},
+  { title: "Working scientifically", symbol: "÷", questions: [
+    { kind: "number", data: true, prompt: "Which resting breathing rate is anomalous?", expected: 35, retry: "Look for the value that is far from the other four readings.", explain: "35 breaths per minute is much higher than the other four readings." },
+    { kind: "number", data: true, prompt: "Find the mean of the four readings after leaving out the anomalous result.", expected: 20, retry: "Add the four remaining values, then divide by four.", explain: "(18 + 20 + 19 + 23) ÷ 4 = 20 breaths per minute." },
+    { kind: "number", data: true, prompt: "Find the range of the four readings after leaving out the anomalous result.", expected: 5, retry: "Subtract the smallest remaining number from the largest remaining number.", explain: "23 − 18 = 5 breaths per minute." },
+    { kind: "match", prompt: "Match each calculation to what it tells you about repeated readings.", labels: ["Mean", "Range"], options: ["Estimates a typical value", "Shows the spread of the readings"], expected: ["Estimates a typical value","Shows the spread of the readings"], retry: "One describes a typical result and the other describes how far apart the results are.", explain: "The mean estimates a typical value. The range measures the gap between the highest and lowest readings." }
+  ]},
+  { title: "Exercise & recovery", symbol: "ϟ", questions: [
+    { kind: "single", prompt: "Why do muscles also respire anaerobically during a sprint?", options: ["Muscles no longer need energy", "Aerobic respiration alone cannot meet the muscles’ energy demand", "The heart stops pumping blood to the muscles", "Glucose is only used after exercise"], expected: [1], retry: "Think about how quickly the muscles need energy and how quickly they get oxygen.", explain: "Oxygen cannot be supplied fast enough for aerobic respiration alone to meet the sprinting muscles’ energy demand." },
+    { kind: "single", prompt: "Which word equation describes anaerobic respiration in human muscle?", options: ["Glucose + oxygen → carbon dioxide + water", "Lactic acid → carbon dioxide + water", "Oxygen → glucose", "Glucose → lactic acid"], expected: [3], retry: "Anaerobic respiration uses a sugar and does not require oxygen.", explain: "Glucose → lactic acid. Anaerobic respiration releases less energy per glucose molecule than aerobic respiration." },
+    { kind: "single", prompt: "Which phrase gives the full name of EPOC?", options: ["Energy production during oxygen circulation", "Extra pulse and oxygen control", "Excess post-exercise oxygen consumption", "Exercise pressure and oxygen capacity"], expected: [2], retry: "EPOC describes the extra oxygen the body takes in after exercise.", explain: "EPOC stands for excess post-exercise oxygen consumption." },
+    { kind: "multi", prompt: "Why does the body take in extra oxygen after a sprint?", options: ["To refill oxygen stores in blood and muscles", "To turn aerobic respiration off", "To support recovery processes that deal with lactic acid", "To stop the blood carrying glucose"], expected: [0,2], hint: "Choose two.", retry: "Think about what was used up in the sprint and what built up.", explain: "Extra oxygen replenishes oxygen stores and supports recovery processes, including dealing with lactic acid." }
+  ]}
+];
+
+const typeNames = {single:"Multiple choice", multi:"Select all that apply", match:"Matching", order:"Put in order", number:"Calculate or identify"};
+const total = topics.reduce((count, topic) => count + topic.questions.length, 0);
+const storageKey = "year8-unit8c-revision-v1";
+const byId = id => document.getElementById(id);
+const state = {topic:0, question:0, entries:{}};
+
+function restore() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(storageKey) || "null");
+    if (!saved || typeof saved.entries !== "object" || !saved.entries) return;
+    if (!topics[saved.topic]?.questions[saved.question]) return;
+    Object.assign(state, saved);
+  } catch { /* Practice still works when storage is unavailable. */ }
+}
+
+function save() {
+  try { localStorage.setItem(storageKey, JSON.stringify(state)); }
+  catch { /* School browsers may disable local storage. */ }
+}
+
+function element(tag, attrs = {}, content = "") {
+  const node = document.createElement(tag);
+  Object.entries(attrs).forEach(([key, value]) => node.setAttribute(key, value));
+  if (content) node.textContent = content;
+  return node;
+}
+
+function entryFor(topic, question) {
+  return state.entries[topic + "/" + question];
+}
+
+function currentQuestion() {
+  return topics[state.topic].questions[state.question];
+}
+
+function currentEntry() {
+  const key = state.topic + "/" + state.question;
+  const question = currentQuestion();
+  if (!state.entries[key]) {
+    const value = question.kind === "number" ? "" :
+      question.kind === "match" ? question.labels.map(() => "") :
+      question.kind === "order" ? question.options.map((_, index) => index) : [];
+    state.entries[key] = {value, result:"", correct:false, changed:false};
+  }
+  return state.entries[key];
+}
+
+function navigate(topic, question) {
+  state.topic = topic;
+  state.question = question;
+  render(true);
+}
+
+function updateProgress() {
+  const counts = topics.map((topic, i) => topic.questions.filter((_, j) => entryFor(i,j)?.correct).length);
+  const completed = counts.reduce((sum, count) => sum + count, 0);
+  byId("progress").max = total;
+  byId("progress").value = completed;
+  byId("progress-count").textContent = completed + " / " + total;
+  byId("complete").hidden = completed !== total;
+  byId("topics").querySelectorAll(".topic").forEach((button, i) => {
+    button.lastElementChild.textContent = counts[i] + "/" + topics[i].questions.length;
+    button.setAttribute("aria-current", i === state.topic ? "true" : "false");
+    button.setAttribute("aria-label", topics[i].title + ", " + counts[i] + " of " + topics[i].questions.length + " correct");
+  });
+  byId("steps").querySelectorAll(".step").forEach((button, i) => {
+    const correct = Boolean(entryFor(state.topic,i)?.correct);
+    button.classList.toggle("is-correct", correct);
+    button.setAttribute("aria-label", "Question " + (i + 1) + (correct ? ", correct" : ""));
+  });
+}
+
+function showFeedback() {
+  const {result} = currentEntry();
+  const question = currentQuestion();
+  const feedback = byId("feedback");
+  feedback.dataset.result = result;
+  const messages = {
+    correct:["Correct.", question.explain],
+    retry:["Try again.", question.retry],
+    incomplete:["Answer first.", question.kind === "order" ? "Use the move buttons to put the steps in order." : "Complete the response before checking."]
+  };
+  feedback.replaceChildren();
+  if (messages[result]) {
+    feedback.append(element("strong", {}, messages[result][0]), " " + messages[result][1]);
+  }
+}
+
+function changeAnswer(entry, value) {
+  entry.value = value;
+  entry.changed = true;
+  entry.result = "";
+  showFeedback();
+  save();
+}
+
+function choices(question, entry) {
+  const fieldset = element("fieldset", {"aria-labelledby":"prompt", "aria-describedby":"hint"});
+  const grid = element("div", {class:"option-grid"});
+  question.options.forEach((option, index) => {
+    const label = element("label", {class:"option"});
+    const input = element("input", {type:question.kind === "single" ? "radio" : "checkbox", name:"choice", value:index});
+    input.checked = entry.value.includes(index);
+    input.addEventListener("change", () => {
+      const selected = [...grid.querySelectorAll("input:checked")].map(node => Number(node.value));
+      changeAnswer(entry, selected);
+    });
+    label.append(input, document.createTextNode(option));
+    grid.append(label);
+  });
+  fieldset.append(grid);
+  return fieldset;
+}
+
+function matching(question, entry) {
+  const list = element("div", {class:"match-list"});
+  question.labels.forEach((label, index) => {
+    const row = element("div", {class:"match-row"});
+    const id = "match-" + index;
+    const select = element("select", {id});
+    select.append(element("option", {value:""}, "Choose an answer"));
+    question.options.forEach(option => select.append(element("option",{value:option},option)));
+    select.value = entry.value[index];
+    select.addEventListener("change", () => {
+      const updated = [...entry.value];
+      updated[index] = select.value;
+      changeAnswer(entry, updated);
+    });
+    row.append(element("label", {for:id}, label), select);
+    list.append(row);
+  });
+  return list;
+}
+
+function order(question, entry) {
+  const list = element("ol", {class:"order-list", "aria-label":"Order your answer"});
+  entry.value.forEach((option, position) => {
+    const row = element("li", {class:"order-item"});
+    const name = question.options[option];
+    const controls = element("div", {class:"order-arrows"});
+    [[-1,"up","↑"],[1,"down","↓"]].forEach(([offset, direction, arrow]) => {
+      const button = element("button", {type:"button", "aria-label":"Move " + name + " " + direction, "data-move":option + "/" + direction}, arrow);
+      const target = position + offset;
+      button.disabled = target < 0 || target >= entry.value.length;
+      button.addEventListener("click", () => {
+        const updated = [...entry.value];
+        [updated[position],updated[target]] = [updated[target],updated[position]];
+        changeAnswer(entry, updated);
+        const replacement = order(question, entry);
+        list.replaceWith(replacement);
+        const nextFocus = replacement.querySelector('[data-move="' + option + "/" + direction + '"]:not(:disabled)') ||
+          replacement.querySelector('[data-move^="' + option + '/"]:not(:disabled)');
+        nextFocus?.focus();
+        byId("announcer").textContent = name + " moved to position " + (target + 1) + ".";
+      });
+      controls.append(button);
+    });
+    row.append(element("span", {class:"order-pos", "aria-hidden":"true"}, String(position + 1)), element("span", {}, name), controls);
+    list.append(row);
+  });
+  return list;
+}
+
+function dataTable() {
+  const table = element("table", {class:"data-table"});
+  table.append(element("caption", {class:"sr-only"}, "Five resting breathing rate readings for one pupil under the same conditions"));
+  const rows = [["Reading", 1, 2, 3, 4, 5], ["Breaths per minute", 18, 20, 35, 19, 23]];
+  const head = element("thead"), body = element("tbody");
+  rows.forEach((values, i) => {
+    const row = element("tr");
+    values.forEach((value,j) => row.append(i === 0 || j === 0 ?
+      element("th", {scope:i===0 ? "col" : "row"}, String(value)) : element("td", {}, String(value))));
+    (i === 0 ? head : body).append(row);
+  });
+  table.append(head,body);
+  return table;
+}
+
+function numeric(question, entry) {
+  const wrapper = element("div");
+  if (question.data) wrapper.append(dataTable());
+  const row = element("div", {class:"number-row"});
+  const input = element("input", {id:"number-answer", type:"number", inputmode:"decimal", step:"any", class:"number-input", "aria-describedby":"number-units"});
+  input.value = entry.value;
+  input.addEventListener("input", () => changeAnswer(entry, input.value));
+  row.append(element("label", {for:"number-answer", class:"sr-only"}, "Your answer"), input, element("span", {id:"number-units"}, "breaths per minute"));
+  wrapper.append(row);
+  return wrapper;
+}
+
+function render(moveFocus = false) {
+  const topic = topics[state.topic];
+  const question = currentQuestion();
+  const entry = currentEntry();
+  byId("activity-title").textContent = topic.title;
+  byId("prompt").textContent = question.prompt;
+  byId("activity-meta").textContent = "Question " + (state.question + 1) + " of " + topic.questions.length + " · " + typeNames[question.kind];
+  const hint = question.hint || (question.kind === "order" ? "Use the up and down buttons to move each item." : "");
+  byId("hint").textContent = hint;
+  byId("hint").hidden = !hint;
+  const response = question.kind === "number" ? numeric(question, entry) :
+    question.kind === "match" ? matching(question, entry) :
+    question.kind === "order" ? order(question, entry) : choices(question, entry);
+  byId("response").replaceChildren(response);
+  byId("steps").replaceChildren(...topic.questions.map((_, index) => {
+    const button = element("button", {type:"button", class:"step"}, String(index + 1));
+    if (index === state.question) button.setAttribute("aria-current","step");
+    button.addEventListener("click", () => navigate(state.topic,index));
+    return button;
+  }));
+  const first = state.topic === 0 && state.question === 0;
+  const topicEnd = state.question === topic.questions.length - 1;
+  byId("previous").disabled = first;
+  byId("next").disabled = topicEnd && state.topic === topics.length - 1;
+  byId("next").textContent = topicEnd && !byId("next").disabled ? "Next activity" : "Next question";
+  showFeedback();
+  updateProgress();
+  save();
+  if (moveFocus) {
+    const prompt = byId("prompt");
+    prompt.focus({preventScroll:true});
+    if (prompt.getBoundingClientRect().top < 0 || prompt.getBoundingClientRect().bottom > window.innerHeight - 48) {
+      byId("activity-title").scrollIntoView({block:"start"});
+    }
+  }
+}
+
+function sameList(given, expected) {
+  return given.length === expected.length && given.every((item, index) => item === expected[index]);
+}
+
+function grade(question, entry) {
+  const {value} = entry;
+  if (question.kind === "number") {
+    if (value === "" || !Number.isFinite(Number(value))) return "incomplete";
+    return Number(value) === question.expected ? "correct" : "retry";
+  }
+  if (!value.length || value.includes("") || (question.kind === "order" && !entry.changed)) return "incomplete";
+  const correct = question.pairwise ?
+    sameList([...value.slice(0,2)].sort(), [...question.expected.slice(0,2)].sort()) &&
+    sameList([...value.slice(2)].sort(), [...question.expected.slice(2)].sort()) :
+    sameList(value, question.expected);
+  return correct ? "correct" : "retry";
+}
+
+byId("quiz").addEventListener("submit", event => {
+  event.preventDefault();
+  const entry = currentEntry();
+  entry.result = grade(currentQuestion(), entry);
+  if (entry.result === "correct") entry.correct = true;
+  showFeedback();
+  updateProgress();
+  save();
+});
+byId("topics").append(...topics.map((topic, i) => {
+  const button = element("button", {type:"button", class:"topic"});
+  button.append(element("span", {class:"topic-symbol", "aria-hidden":"true"}, topic.symbol), element("span", {}, topic.title), element("span", {class:"topic-count"}));
+  button.addEventListener("click", () => {
+    const firstUnsolved = topic.questions.findIndex((_, j) => !entryFor(i,j)?.correct);
+    navigate(i, firstUnsolved === -1 ? 0 : firstUnsolved);
+  });
+  return button;
+}));
+byId("previous").addEventListener("click", () => {
+  if (state.question > 0) navigate(state.topic, state.question - 1);
+  else navigate(state.topic - 1, topics[state.topic - 1].questions.length - 1);
+});
+byId("next").addEventListener("click", () => {
+  if (state.question < topics[state.topic].questions.length - 1) navigate(state.topic,state.question + 1);
+  else navigate(state.topic + 1,0);
+});
+byId("reset").addEventListener("click", () => {
+  byId("reset-dialog").returnValue = "cancel";
+  byId("reset-dialog").showModal();
+});
+byId("reset-dialog").addEventListener("close", () => {
+  if (byId("reset-dialog").returnValue !== "reset") return;
+  state.entries = {};
+  navigate(0,0);
+});
+document.body.append(element("div", {id:"announcer", class:"sr-only", role:"status"}));
+restore();
+render();
+</script>
+<script>
+(() => {
+  const canvas = document.getElementById("lung-art");
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+  ctx.translate(14, 0);
+
+  const halo = ctx.createRadialGradient(340,252,20,340,252,204);
+  halo.addColorStop(0,"#ede4ff");
+  halo.addColorStop(.74,"#e2d4ff");
+  halo.addColorStop(1,"#d6cdfa");
+  ctx.fillStyle = halo;
+  ctx.beginPath();
+  ctx.arc(340,246,192,0,Math.PI*2);
+  ctx.fill();
+  ctx.lineWidth = 1.5;
+  ctx.strokeStyle = "#ffffffa8";
+  for (const radius of [195,215]) {
+    ctx.beginPath();
+    ctx.arc(340,246,radius,0,Math.PI*2);
+    ctx.stroke();
+  }
+  ctx.fillStyle = "#7361b82f";
+  for (let y = 64; y <= 436; y+=18) {
+    for (let x = 132; x <= 550; x+=18) {
+      const d = Math.hypot(x-340,y-246);
+      if (d < 207 && d > 137) {
+        ctx.beginPath();
+        ctx.arc(x,y,1.7,0,Math.PI*2);
+        ctx.fill();
+      }
+    }
+  }
+
+  const left = new Path2D("M310 159 C303 130 281 123 262 136 C222 158 190 214 178 272 C161 356 181 386 220 386 C253 385 294 368 309 338 C320 316 313 288 316 264 C318 233 322 202 310 159 Z");
+  const right = new Path2D("M370 159 C378 130 400 123 419 136 C459 158 491 215 502 273 C519 355 499 386 460 386 C427 385 393 375 381 353 C370 334 380 312 369 296 C355 277 365 249 364 226 C361 201 360 181 370 159 Z");
+  for (const [shape,x1,x2] of [[left,184,327],[right,352,501]]) {
+    ctx.save();
+    ctx.shadowColor = "#5036ac66";
+    ctx.shadowBlur = 24;
+    ctx.shadowOffsetY = 10;
+    const gradient = ctx.createLinearGradient(x1,150,x2,375);
+    gradient.addColorStop(0,"#9d7cf3");
+    gradient.addColorStop(.54,"#7652d5");
+    gradient.addColorStop(1,"#5132ab");
+    ctx.fillStyle = gradient;
+    ctx.fill(shape);
+    ctx.restore();
+    ctx.strokeStyle = "#ad95fa";
+    ctx.lineWidth = 2;
+    ctx.stroke(shape);
+  }
+
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  function stroke(path, width, colour) {
+    ctx.lineWidth = width;
+    ctx.strokeStyle = colour;
+    ctx.stroke(new Path2D(path));
+  }
+
+  const trunk = "M340 113 L340 211 M340 211 Q337 224 300 244 Q280 257 258 292 M340 211 Q343 224 380 244 Q400 257 422 292";
+  stroke(trunk,25,"#5938ad");
+  stroke(trunk,19,"#d8c6ff");
+  stroke("M336 113 L336 206",5,"#f2eaff");
+  for (let y = 122; y < 208; y+=13) {
+    stroke("M332 " + y + " Q340 " + (y+4) + " 348 " + y,2.4,"#9576df");
+  }
+  stroke("M294 250 Q278 222 252 216 M278 269 Q254 274 230 268 M258 290 Q251 315 229 335 M258 290 Q270 316 268 342",8,"#dccbff");
+  stroke("M386 250 Q402 222 428 216 M402 269 Q426 274 450 268 M422 290 Q429 315 451 335 M422 290 Q410 316 412 342",8,"#dccbff");
+  stroke("M257 218 Q251 200 261 183 M254 218 Q234 218 225 230 M235 270 Q216 255 204 260 M234 331 Q217 332 213 346 M268 337 Q281 344 283 353 M423 217 Q431 201 423 182 M426 216 Q444 218 454 230 M445 269 Q462 254 473 259 M447 331 Q464 332 468 346 M412 337 Q401 345 400 354",4,"#d3bfff");
+
+  ctx.fillStyle = "#ffffffc8";
+  [[154,126,7],[510,136,5],[548,301,7],[145,327,5],[359,433,5]].forEach(([x,y,r]) => {
+    ctx.beginPath();
+    ctx.moveTo(x,y-r*1.6);
+    ctx.quadraticCurveTo(x+2,y-2,x+r*1.6,y);
+    ctx.quadraticCurveTo(x+2,y+2,x,y+r*1.6);
+    ctx.quadraticCurveTo(x-2,y+2,x-r*1.6,y);
+    ctx.quadraticCurveTo(x-2,y-2,x,y-r*1.6);
+    ctx.fill();
+  });
+})();
+</script>
+</body>
+</html>

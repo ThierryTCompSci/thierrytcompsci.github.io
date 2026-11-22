@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#edf4f2">
+<meta name="description" content="Year 8 Unit 8C flashcards for breathing, respiration, gas exchange and data skills.">
+<title>Breathing and Respiration Flashcards</title>
+<style>
+:root {color-scheme:light; font:100%/1.5 "Aptos","Inter",system-ui,sans-serif; --ink:#102b2a; --muted:#46635f; --teal:#115d52; --deep:#103f39; --mint:#d9eee6; --line:#cbded7; --page:#edf4f2}
+*,*::before,*::after {box-sizing:border-box}
+body {margin:0;background:var(--page);color:var(--ink)}
+button {font:inherit;cursor:pointer}
+button:focus-visible, article:focus-visible, .empty:focus-visible {outline:3px solid #a54b27;outline-offset:3px}
+button:disabled {cursor:default;opacity:.48}
+[hidden] {display:none!important}
+.masthead {border-bottom:1px solid var(--line);background:#f9fcfa}
+.masthead-inner {max-width:1200px;margin:auto;padding:13px 30px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand {display:flex;gap:10px;align-items:center;font-size:1rem;font-weight:800}
+.brand-mark {display:grid;place-items:center;width:32px;height:32px;background:var(--deep);color:#fff;border-radius:9px}
+.unit {font-size:.875rem;font-weight:750;color:#205c53}
+.layout {max-width:1200px;margin:auto;padding:27px 30px 35px;display:grid;grid-template-columns:254px minmax(0,1fr);gap:23px;align-items:start}
+.deck {grid-column:2;min-width:0}
+.deck-intro {display:block;padding:2px 0 18px}
+h1 {font-size:clamp(1.8rem,3.9vw,3.15rem);line-height:1.02;letter-spacing:-.055em;margin:0 0 8px;font-weight:850}
+.intro {margin:0;color:var(--muted);font-size:1rem}
+.sidebar {grid-column:1;grid-row:1;background:#f9fcfa;border:1px solid var(--line);border-radius:19px;padding:15px 12px}
+.sidebar h2 {font-size:1.02rem;margin:0 7px 10px}
+.topics {display:grid;gap:3px}
+.topic {display:grid;grid-template-columns:30px 1fr auto;gap:8px;align-items:center;min-height:43px;padding:6px 7px;border:1px solid transparent;background:transparent;border-radius:10px;text-align:left;color:#254943;font-size:.875rem;font-weight:700}
+.topic:hover {background:#eef6f1}
+.topic[aria-current="true"] {background:#daf0e7;border-color:#b5d9cc;color:#134e45}
+.topic-icon {display:grid;place-items:center;width:29px;height:27px;border-radius:8px;background:#eaf4ef;color:#1a6155;font-size:.865rem;font-weight:850}
+.topic[aria-current="true"] .topic-icon {background:#c1e4d8}
+.topic small {font:inherit;font-variant-numeric:tabular-nums}
+.progress {border-top:1px solid var(--line);margin:14px 5px 0;padding:13px 3px 0}
+.progress-top {display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:.875rem;font-weight:800}
+progress {appearance:none;display:block;width:100%;height:8px;border:0;border-radius:14px;background:#ddeae5;overflow:hidden;margin:8px 0}
+progress::-webkit-progress-bar {background:#ddeae5}
+progress::-webkit-progress-value {background:#228473;border-radius:14px}
+progress::-moz-progress-bar {background:#228473;border-radius:14px}
+.reset {border:0;background:none;text-decoration:underline;text-underline-offset:3px;padding:5px 0;color:var(--muted);font-size:.875rem}
+.study {background:#f9fcfa;border:1px solid var(--line);border-radius:20px;padding:18px 20px 20px;box-shadow:0 10px 26px #143d3510}
+.toolbar {display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px;flex-wrap:wrap}
+.view-switch {display:flex;gap:2px;padding:3px;background:#e9f2ee;border:1px solid #dbe9e2;border-radius:12px}
+.view {border:0;background:transparent;color:#365b55;padding:7px 10px;border-radius:8px;font-size:.875rem;font-weight:750}
+.view[aria-pressed="true"] {background:#fff;color:#124f45;box-shadow:0 1px 4px #143d351b}
+.control {border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:8px 13px;min-height:42px;font-size:.9rem;font-weight:780}
+.control:hover:not(:disabled) {background:#e8f4ef;border-color:#95c2b4}
+.primary {background:var(--teal);border-color:var(--teal);color:#fff}
+.primary:hover:not(:disabled) {background:var(--deep);border-color:var(--deep)}
+.learner {background:#fff4de;border-color:#e2cb9a;color:#604515}
+.learner:hover:not(:disabled) {background:#fbe8bf;border-color:#c8a55f}
+.stack {position:relative;margin:0 3px 11px;isolation:isolate}
+.stack::before,.stack::after {position:absolute;content:"";height:100%;inset-inline:14px;top:6px;border:1px solid #b2cfc4;border-radius:19px;background:#e0eee8;z-index:-1}
+.stack::before {top:11px;inset-inline:24px}
+.card {min-height:306px;padding:23px 26px 25px;display:flex;flex-direction:column;border:1px solid #244c44;border-radius:19px;color:#fff;background:radial-gradient(ellipse at 115% 12%,#297465 0,transparent 47%),linear-gradient(133deg,#103c36 0%,#15564d 100%);overflow-wrap:anywhere}
+.card[data-face="answer"] {border-color:#9bc6b6;color:#102b2a;background:radial-gradient(ellipse at 115% 15%,#c9eadb 0,transparent 53%),#e9f6ef}
+.card-top {display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:.875rem;font-weight:780}
+.card-label {color:#cff3e6}
+.card[data-face="answer"] .card-label {color:#366051}
+.card-index {white-space:nowrap;font-variant-numeric:tabular-nums}
+.card-content {flex:1;display:flex;flex-direction:column;justify-content:center;padding:25px 0}
+.card-content h2 {font-size:clamp(1.37rem,3vw,2.35rem);line-height:1.17;letter-spacing:-.034em;margin:0;max-width:31ch}
+.card[data-face="answer"] .card-content h2 {font-size:clamp(1.12rem,2.2vw,1.56rem);letter-spacing:-.018em}
+.card[data-face="answer"] .card-content h2.equation {font-size:clamp(1.24rem,2.8vw,1.9rem);font-weight:820}
+.card-extra {margin:10px 0 0;color:#365b4d}
+.card-bottom {font-size:.875rem;color:#cff3e6;margin:0;min-height:1.5em}
+.card[data-face="answer"] .card-bottom {color:#365b4d}
+.deck-controls {padding-top:11px;display:flex;align-items:center;justify-content:space-between;gap:9px;flex-wrap:wrap}
+.nav-group,.rating {display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.rating {justify-content:flex-end}
+.empty {padding:26px;border:1px dashed #9dbfb4;border-radius:16px;background:#eaf5ee;min-height:230px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+.empty h2 {margin:0 0 7px;font-size:1.45rem}
+.empty p {margin:0 0 17px;color:var(--muted)}
+.keys {margin:12px 0 0;color:var(--muted);font-size:.875rem}
+kbd {font:inherit;font-weight:780;border:1px solid #bcd2ca;border-radius:5px;padding:1px 4px;background:#f8fcfa}
+.sr-only {position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+dialog {border:1px solid var(--line);border-radius:16px;color:var(--ink);padding:20px;max-width:min(418px,calc(100% - 28px))}
+dialog::backdrop {background:#102b2a66}
+dialog h2 {margin:0 0 5px;font-size:1.25rem}
+dialog p {margin:0 0 16px;color:var(--muted)}
+dialog .nav-group {justify-content:flex-end}
+@media (max-width:920px) {
+ .layout {grid-template-columns:216px minmax(0,1fr);gap:15px;padding-inline:18px}
+ .masthead-inner {padding-inline:18px}
+ .topic {grid-template-columns:24px 1fr auto;gap:5px}
+ .topic-icon {width:23px}
+ .study {padding:16px}
+}
+@media (max-width:700px) {
+ .layout {display:grid;grid-template-columns:1fr;gap:12px;padding:15px}
+ .deck {display:contents}
+ .deck-intro {grid-row:1;padding:4px 0 1px}
+ .sidebar {grid-column:1;grid-row:2;padding:10px}
+ .sidebar h2 {margin-bottom:5px}
+ .topics {grid-template-columns:repeat(2,minmax(0,1fr))}
+ .progress {margin-top:7px;padding-top:7px}
+ .study {grid-row:3;padding:12px}
+ .keys {grid-row:4;margin-top:0}
+ .card {padding:18px 16px;min-height:268px}
+ .deck-controls {justify-content:flex-start}
+}
+@media (max-width:395px) {
+ .topic {grid-template-columns:1fr auto}
+ .topic-icon {display:none}
+ .rating {width:100%;justify-content:flex-start}
+ .masthead-inner {padding-inline:14px}
+ .unit {font-size:.8125rem}
+ .view {padding-inline:7px}
+}
+</style>
+</head>
+<body>
+<header class="masthead"><div class="masthead-inner">
+  <div class="brand"><span class="brand-mark" aria-hidden="true">▣</span> Revision Lab</div>
+  <div class="unit">Year 8 Science · 8C</div>
+</div></header>
+<main class="layout">
+  <aside class="sidebar" aria-labelledby="topic-heading">
+    <h2 id="topic-heading">Topics</h2>
+    <nav class="topics" id="topics" aria-label="Flashcard topics"></nav>
+    <div class="progress">
+      <div class="progress-top"><label for="progress">Cards you know</label><span id="progress-count"></span></div>
+      <progress id="progress" value="0"></progress>
+      <button type="button" class="reset" id="reset">Reset progress</button>
+    </div>
+  </aside>
+  <section class="deck" aria-labelledby="main-heading">
+    <header class="deck-intro">
+      <h1 id="main-heading">Breathing and respiration flashcards</h1>
+      <p class="intro">Say your answer first. Reveal the card, then decide if you know it.</p>
+    </header>
+    <div class="study">
+      <div class="toolbar">
+        <div class="view-switch" role="group" aria-label="Cards to study">
+          <button type="button" class="view" id="all-cards" aria-pressed="true">All cards</button>
+          <button type="button" class="view" id="review" aria-pressed="false">Still learning</button>
+        </div>
+        <button type="button" class="control" id="shuffle">Shuffle cards</button>
+      </div>
+      <div id="card-region">
+        <div class="stack">
+          <article class="card" id="card" tabindex="-1" data-face="question" aria-labelledby="card-text">
+            <div class="card-top"><span class="card-label" id="card-topic"></span><span class="card-index" id="card-index"></span></div>
+            <div class="card-content" aria-live="polite" aria-atomic="true">
+              <h2 id="card-text"></h2>
+              <p id="card-extra" class="card-extra" hidden></p>
+            </div>
+            <p class="card-bottom" id="card-status"></p>
+          </article>
+        </div>
+        <div class="deck-controls">
+          <div class="nav-group" aria-label="Card navigation" role="group">
+            <button type="button" class="control" id="prev">Previous</button>
+            <button type="button" class="control" id="next">Next</button>
+          </div>
+          <div class="rating">
+            <button type="button" class="control primary" id="flip">Reveal answer</button>
+            <button type="button" class="control learner" id="again" hidden>Still learning</button>
+            <button type="button" class="control primary" id="known" hidden>Got it</button>
+          </div>
+        </div>
+      </div>
+      <div class="empty" id="empty" tabindex="-1" hidden>
+        <h2 id="empty-title">No cards to review yet</h2>
+        <p id="empty-note">Mark a card as Still learning to find it here.</p>
+        <button type="button" class="control primary" id="browse">Show all cards</button>
+      </div>
+      <div id="live" role="status" class="sr-only" aria-atomic="true"></div>
+    </div>
+    <p class="keys"><kbd>Space</kbd> reveals the answer. Use <kbd>←</kbd> and <kbd>→</kbd> to move between cards.</p>
+  </section>
+</main>
+<dialog id="reset-dialog" aria-labelledby="reset-title">
+  <form method="dialog">
+    <h2 id="reset-title">Reset flashcard progress?</h2>
+    <p>This clears your Got it and Still learning marks on this browser.</p>
+    <div class="nav-group">
+      <button class="control" value="cancel" autofocus>Cancel</button>
+      <button class="control primary" value="reset">Reset progress</button>
+    </div>
+  </form>
+</dialog>
+<noscript><p>Enable JavaScript to reveal answers and track your flashcard progress.</p></noscript>
+<script type="application/json" id="flashcard-data">
+[
+  {"id":"aerobic","title":"Aerobic respiration","icon":"O₂","cards":[
+    ["respiration","What is respiration?","A series of chemical reactions in living cells that releases energy from substances such as glucose. Cells use the energy for processes such as movement and growth."],
+    ["aerobic","What does aerobic mean?","With oxygen. Aerobic respiration uses oxygen to release energy from glucose."],
+    ["aerobic-equation","Write the word equation for aerobic respiration.","glucose + oxygen → carbon dioxide + water","Energy is released during the reaction."],
+    ["reactants-products","What is the difference between reactants and products?","Reactants are what you start with and go on the left of the arrow. Products are what the reaction makes and go on the right."],
+    ["fuel-source","Where do human cells get the glucose and oxygen they use?","Glucose comes from digested food. Oxygen comes from the air. The blood carries both to body cells."],
+    ["mitochondria","Where does most aerobic respiration happen in a cell?","In the mitochondria. The singular is mitochondrion."],
+    ["atp","What does ATP do in a cell?","ATP carries energy released during respiration and transfers it to cell processes when it is needed.","ATP stands for adenosine triphosphate."],
+    ["burning-similar","How are complete methane combustion and aerobic respiration similar?","Both use oxygen and release energy. Both produce carbon dioxide and water."],
+    ["burning-different","How does aerobic respiration differ from burning a fuel?","Aerobic respiration happens in cells and transfers energy to ATP. Burning releases energy mainly as heat and often gives out light."]
+  ]},
+  {"id":"lungs","title":"Breathing and lungs","icon":"∿","cards":[
+    ["breathing","What do breathing, ventilation and gas exchange each mean?","Breathing is the muscle action that changes lung volume. Ventilation moves air in and out of the lungs. In the lungs, gas exchange is the movement of oxygen and carbon dioxide between air and blood."],
+    ["air-route","What route does inhaled air take from the nose or mouth to the air pockets?","Nose or mouth → trachea → bronchi → bronchioles → alveoli"],
+    ["trachea","What does the trachea do, and what keeps it open?","The trachea, or windpipe, carries air towards and away from the lungs. Rings of cartilage keep it open."],
+    ["bronchi","What is the difference between a bronchus and a bronchiole?","The trachea splits into two bronchi. One enters each lung. Bronchioles are smaller branches that lead to the alveoli."],
+    ["inhale","What do the diaphragm and ribs do when you breathe in?","The diaphragm contracts and moves down. The muscles between the ribs contract, moving the ribs up and out."],
+    ["inhale-pressure","Why does air flow into the lungs during inhalation?","Chest volume increases and the lungs expand. The pressure in the lungs falls below outside pressure, so air flows in."],
+    ["exhale","What do the diaphragm and ribs do when you breathe out quietly?","The diaphragm relaxes and moves up. The muscles between the ribs relax, and the ribs move down and in."],
+    ["exhale-pressure","Why does air flow out of the lungs during quiet exhalation?","Chest volume decreases and the lungs get smaller. The pressure in the lungs rises above outside pressure, so air flows out."],
+    ["diffusion","What is diffusion?","The net movement of particles from a region of higher concentration to a region of lower concentration."],
+    ["alveoli","What are alveoli?","Tiny air pockets in the lungs where oxygen and carbon dioxide move between air and blood.","One air pocket is an alveolus. An air sac is a group of alveoli."],
+    ["gas-directions","Which way do oxygen and carbon dioxide diffuse at the alveoli?","Oxygen goes from the air in the alveoli into the blood. Carbon dioxide goes from the blood into the air in the alveoli."],
+    ["alveoli-area","How do the surface area and walls of the alveoli help gas exchange?","Millions of alveoli give a large surface area. The walls of the alveoli and capillaries are thin, so gases only have a short distance to diffuse."],
+    ["alveoli-supply","How do moisture and blood flow help gas exchange at the alveoli?","Moisture lets gases dissolve. A good blood supply carries oxygen away and brings carbon dioxide, maintaining concentration differences."],
+    ["mucus-cilia","How do goblet cells and ciliated cells work together?","Goblet cells make sticky mucus that traps dust and microorganisms. Cilia sweep the mucus towards the throat, where it is swallowed."],
+    ["tidal-volume","What is tidal volume?","The volume of air breathed in or out in one normal breath."],
+    ["vital-capacity","What is vital capacity?","The greatest volume of air you can breathe out after breathing in as deeply as possible."]
+  ]},
+  {"id":"oxygen","title":"Getting oxygen","icon":"♥","cards":[
+    ["vessels","Which way do arteries and veins carry blood, and what happens in capillaries?","Arteries carry blood away from the heart. Veins carry it back. Substances move between the blood and tissues at the capillaries."],
+    ["vessel-structure","How does the structure of each blood vessel suit its job?","Arteries have thick, elastic walls for high pressure. Veins have valves to stop backflow. Capillary walls are one cell thick, giving a short distance for diffusion."],
+    ["haemoglobin","How is oxygen carried in the blood?","It binds to haemoglobin, a substance inside red blood cells."],
+    ["tissue-fluid","What is tissue fluid and how does it form?","Tissue fluid surrounds body cells. It forms when some liquid from the blood plasma moves out through capillary walls."],
+    ["cell-route","Which way do oxygen, glucose and wastes travel near body cells?","Oxygen and glucose move from the blood through tissue fluid to body cells. Carbon dioxide and other wastes move from the cells through tissue fluid back into the blood."],
+    ["exercise-breathing","Why does breathing rate rise during exercise?","Working muscles respire faster to release more energy. Faster breathing takes in more oxygen and helps remove more carbon dioxide."],
+    ["exercise-pulse","Why does pulse rate rise during exercise?","The heart pumps blood faster to deliver oxygen and glucose to working muscles and carry carbon dioxide away."],
+    ["carbon-monoxide","How does carbon monoxide reduce oxygen delivery?","It binds to haemoglobin, so the blood carries less oxygen to body cells."],
+    ["smoke-cilia","Why can mucus build up in the airways of a smoker?","Heat and chemicals in smoke can damage cilia. The cilia sweep away less mucus, so it builds up."],
+    ["tar","What is tar and why is it harmful?","Tar is a sticky substance in tobacco smoke. It contains chemicals that can cause cancer, and smoking damages the lungs."],
+    ["emphysema","How does emphysema reduce oxygen delivery to the body?","Alveolar walls break down, reducing the surface area for gas exchange. Less oxygen diffuses into the blood and reaches body cells."],
+    ["asthma","How can asthma reduce oxygen intake?","Airways narrow and extra mucus can build up. Less air reaches the alveoli for gas exchange."],
+    ["arteries","How can narrowed arteries reduce oxygen delivery?","Narrower arteries carry less blood to tissues. Nicotine can narrow blood vessels, and fatty deposits can narrow arteries over time."],
+    ["heart-attack","How can reduced blood flow cause a heart attack?","If blood supply to part of the heart muscle is cut off, those cells receive too little oxygen and start to die."]
+  ]},
+  {"id":"exchange","title":"Comparing gas exchange","icon":"❋","cards":[
+    ["limewater","How can you test for carbon dioxide from a respiring organism?","Pass the gas through clear limewater. If carbon dioxide is present, the limewater turns cloudy or milky."],
+    ["indicator","How does carbon dioxide affect hydrogen carbonate indicator?","Extra carbon dioxide makes the solution more acidic, so the indicator changes towards yellow."],
+    ["ph","What does the pH scale tell you?","pH below 7 is acidic, pH 7 is neutral, and pH above 7 is alkaline."],
+    ["human-fish","How do humans and fish get oxygen?","Humans use alveoli in their lungs to take oxygen from air. Fish use gills to take dissolved oxygen from water."],
+    ["fish-gills","How are gills adapted for gas exchange?","Gill filaments have thin plates called lamellae with a large surface area and a good blood supply. Water and blood flow in opposite directions, maintaining a difference in oxygen concentration."],
+    ["exchange-similar","Name two useful features shared by lungs and gills.","Both have a large surface area and a good blood supply. Both also have thin surfaces for diffusion."],
+    ["stomata","How do gases move in and out of leaves?","They diffuse through tiny pores called stomata, often on the underside of the leaf. One pore is a stoma."],
+    ["dark-leaf","Which gases move in and out of a respiring leaf in the dark?","Oxygen moves in and carbon dioxide moves out. Respiration continues in the dark."],
+    ["photosynthesis","What happens to oxygen and carbon dioxide during photosynthesis?","In the light, photosynthesis uses carbon dioxide and releases oxygen. Plants continue to respire in the light."],
+    ["other-animals","How do frogs and insects exchange gases?","Adult frogs can use lungs and moist skin. Tadpoles usually use gills. Insects use openings called spiracles and tiny tubes that take air close to cells."],
+    ["birds-cells","How do birds and single-celled organisms exchange gases?","Birds use lungs. Air sacs help move air through the lungs. Single-celled organisms exchange gases directly across the cell membrane."]
+  ]},
+  {"id":"data","title":"Working scientifically","icon":"÷","cards":[
+    ["mean","How do you calculate a mean, and why use it?","Add all the readings being used, then divide by the number of readings. The mean estimates a typical value from repeats."],
+    ["range","How do you calculate a range, and why use it?","Subtract the lowest reading from the highest. A small range means the readings are close together."],
+    ["anomaly","What is an anomalous result?","A reading that does not fit the pattern of the other measurements. It is also called an outlier."],
+    ["handle-anomaly","What should you do if a result looks anomalous?","Check how it was measured and repeat it if possible. If there is a good reason to leave it out, say so before calculating."],
+    ["data-outlier","The readings are 18, 20, 35, 19 and 23 breaths per minute. Which is anomalous?","35 breaths per minute. It is well above the other four readings."],
+    ["data-mean","Find the mean of 18, 20, 19 and 23 breaths per minute.","(18 + 20 + 19 + 23) ÷ 4 = 20 breaths per minute."],
+    ["data-range","Find the range of 18, 20, 19 and 23 breaths per minute.","23 − 18 = 5 breaths per minute."]
+  ]},
+  {"id":"recovery","title":"Exercise and recovery","icon":"ϟ","cards":[
+    ["anaerobic","What does anaerobic mean?","Without oxygen. Anaerobic respiration releases energy from glucose without using oxygen."],
+    ["anaerobic-when","When do human muscles also use anaerobic respiration?","During intense exercise, such as sprinting, when oxygen cannot be supplied fast enough for aerobic respiration alone to meet the muscles’ energy demand."],
+    ["anaerobic-equation","Write the word equation for anaerobic respiration in human muscles.","glucose → lactic acid","Energy is released."],
+    ["energy-per-glucose","Which type of respiration releases more energy per glucose molecule?","Aerobic respiration releases more energy per glucose molecule than anaerobic respiration."],
+    ["lactic-acid","Why can muscles only rely on extra anaerobic respiration for a short time?","Anaerobic respiration releases less energy per glucose molecule. Lactic acid builds up and the muscles tire quickly."],
+    ["epoc","What does EPOC stand for and what does it describe?","Excess post-exercise oxygen consumption. It is the extra oxygen the body takes in after hard exercise. It is sometimes called oxygen debt."],
+    ["epoc-reasons","Why does the body take in extra oxygen after a sprint?","To refill oxygen stores in blood and muscles and support recovery processes, including dealing with lactic acid.","Some lactic acid travels to the liver, where it can be converted back to glucose."],
+    ["recover-pulse","Why can breathing rate and pulse stay high just after exercise?","Faster breathing takes in extra oxygen. Faster blood flow delivers it and helps carry lactic acid away from muscles during recovery."]
+  ]}
+]
+</script>
+<script>
+"use strict";
+const element = id => document.getElementById(id);
+const topics = JSON.parse(element("flashcard-data").textContent);
+const cards = topics.flatMap(topic => topic.cards.map(([id,question,answer,note]) =>
+  ({id,question,answer,note,topic:topic.id,topicTitle:topic.title})));
+const cardsById = new Map(cards.map(card => [card.id,card]));
+const topicIds = new Set(["all", ...topics.map(topic => topic.id)]);
+const storageKey = "8c-flashcards-v1";
+const ratings = new Map();
+let topic = "all";
+let mode = "all";
+let ordering = cards.map(card => card.id);
+let activeId = cards[0].id;
+let revealed = false;
+let reviewedLast = false;
+
+function restore() {
+  try {
+    const state = JSON.parse(localStorage.getItem(storageKey) || "null");
+    if (!state) return;
+    for (const [id, value] of Object.entries(state.ratings || {})) {
+      if (cardsById.has(id) && (value === "known" || value === "again")) ratings.set(id,value);
+    }
+    if (topicIds.has(state.topic)) topic = state.topic;
+    if (state.mode === "review") mode = "review";
+    activeId = cardsById.has(state.activeId) ? state.activeId : null;
+    const savedOrder = state.ordering;
+    if (Array.isArray(savedOrder) && savedOrder.length === cards.length &&
+        new Set(savedOrder).size === cards.length && savedOrder.every(id => cardsById.has(id))) {
+      ordering = savedOrder;
+    }
+  } catch { /* Browsers may disable automated storage for local files. */ }
+}
+
+function save() {
+  try {
+    localStorage.setItem(storageKey, JSON.stringify({ratings:Object.fromEntries(ratings),topic,mode,activeId,ordering}));
+  } catch { /* The page still works without persistence. */ }
+}
+
+function inTopic(card) {
+  return topic === "all" || card.topic === topic;
+}
+
+function deck() {
+  return ordering.filter(id => inTopic(cardsById.get(id)) && (mode === "all" || ratings.get(id) === "again"));
+}
+
+function announce(message) {
+  element("live").textContent = message;
+}
+
+function updateProgress() {
+  const known = cards.filter(card => ratings.get(card.id) === "known").length;
+  element("progress").max = cards.length;
+  element("progress").value = known;
+  element("progress-count").textContent = known + " / " + cards.length;
+  const reviewCount = cards.filter(card => inTopic(card) && ratings.get(card.id) === "again").length;
+  element("review").textContent = "Still learning (" + reviewCount + ")";
+  for (const button of element("topics").children) {
+    const id = button.dataset.topic;
+    const relevant = cards.filter(card => id === "all" || card.topic === id);
+    const learned = relevant.filter(card => ratings.get(card.id) === "known").length;
+    button.lastElementChild.textContent = learned + "/" + relevant.length;
+    button.setAttribute("aria-current", String(id === topic));
+    button.setAttribute("aria-label", button.dataset.title + ", " + learned + " of " + relevant.length + " known");
+  }
+}
+
+const equations = new Set(["aerobic-equation","anaerobic-equation","air-route","data-mean","data-range"]);
+function render(focusCard = false) {
+  const ids = deck();
+  if (!ids.includes(activeId)) activeId = ids[0] ?? null;
+  const index = ids.indexOf(activeId);
+  const card = cardsById.get(activeId);
+  element("all-cards").setAttribute("aria-pressed", String(mode === "all"));
+  element("review").setAttribute("aria-pressed", String(mode === "review"));
+  element("shuffle").disabled = ids.length < 2;
+  element("card-region").hidden = !card;
+  element("empty").hidden = Boolean(card);
+  updateProgress();
+  if (card) {
+    element("card").dataset.face = revealed ? "answer" : "question";
+    element("card-topic").textContent = card.topicTitle + " · " + (revealed ? "Answer" : "Question");
+    element("card-index").textContent = (index+1) + " / " + ids.length;
+    const text = element("card-text");
+    text.textContent = revealed ? card.answer : card.question;
+    text.classList.toggle("equation", revealed && equations.has(card.id));
+    element("card-extra").hidden = !(revealed && card.note);
+    element("card-extra").textContent = revealed ? card.note ?? "" : "";
+    element("card-status").textContent = revealed ? "How did you do?" :
+      ratings.get(card.id) === "again" ? "Marked still learning" :
+      ratings.get(card.id) === "known" ? "Marked got it" : "";
+    element("prev").disabled = index === 0;
+    element("next").disabled = index === ids.length - 1;
+    element("flip").textContent = revealed ? "Show question" : "Reveal answer";
+    element("again").hidden = !revealed;
+    element("known").hidden = !revealed;
+    if (focusCard) element("card").focus({preventScroll:true});
+  } else {
+    element("empty-title").textContent = reviewedLast ? "Review complete" : "No cards to review here";
+    element("empty-note").textContent = reviewedLast ?
+      "You’ve marked every card in this review as Got it." :
+      "Mark a card as Still learning to find it here.";
+    if (focusCard) element("empty").focus({preventScroll:true});
+  }
+  save();
+}
+
+function activate(id) {
+  activeId = id;
+  revealed = false;
+  reviewedLast = false;
+  render(true);
+}
+
+function changeTopic(id) {
+  topic = id;
+  activate(null);
+  const card = element("card-region").hidden ? element("empty") : element("card");
+  if (card.getBoundingClientRect().top > innerHeight - 110) card.scrollIntoView({block:"nearest"});
+}
+
+function setMode(value) {
+  if (mode === value) return;
+  mode = value;
+  activate(activeId);
+}
+
+function move(offset) {
+  const ids = deck();
+  const target = ids.indexOf(activeId) + offset;
+  if (target >= 0 && target < ids.length) activate(ids[target]);
+}
+
+function flip() {
+  if (!activeId) return;
+  revealed = !revealed;
+  render();
+}
+
+function rate(value) {
+  if (!activeId || !revealed) return;
+  const before = deck();
+  const index = before.indexOf(activeId);
+  ratings.set(activeId,value);
+  const remaining = deck();
+  const following = remaining.includes(activeId) ?
+    (remaining[index+1] ?? remaining[0]) : (remaining[index] ?? remaining[0]);
+  reviewedLast = remaining.length === 0;
+  revealed = false;
+  activeId = following ?? null;
+  render(true);
+  if (reviewedLast) announce("Review complete.");
+  else if (value === "known" && ratings.size === cards.length && cards.every(card => ratings.get(card.id) === "known")) {
+    announce("You know all " + cards.length + " cards.");
+  } else {
+    announce(value === "known" ? "Marked got it." : "Marked still learning.");
+  }
+}
+
+function shuffle() {
+  const ids = deck();
+  if (ids.length < 2) return;
+  const original = [...ids];
+  for (let i=ids.length-1;i>0;i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [ids[i],ids[j]] = [ids[j],ids[i]];
+  }
+  if (ids.every((id,i) => id === original[i])) ids.push(ids.shift());
+  const visible = new Set(ids);
+  let i = 0;
+  ordering = ordering.map(id => visible.has(id) ? ids[i++] : id);
+  activate(ids[0]);
+  announce("Cards shuffled.");
+}
+
+for (const {id,title,icon} of [{id:"all",title:"All topics",icon:"▣"},...topics]) {
+  const button = document.createElement("button");
+  button.className = "topic";
+  button.type = "button";
+  button.dataset.topic = id;
+  button.dataset.title = title;
+  const marker = document.createElement("span");
+  marker.className = "topic-icon";
+  marker.setAttribute("aria-hidden","true");
+  marker.textContent = icon;
+  const label = document.createElement("span");
+  label.textContent = title;
+  button.append(marker,label,document.createElement("small"));
+  button.addEventListener("click", () => changeTopic(id));
+  element("topics").append(button);
+}
+
+element("all-cards").addEventListener("click", () => setMode("all"));
+element("review").addEventListener("click", () => setMode("review"));
+element("browse").addEventListener("click", () => setMode("all"));
+element("prev").addEventListener("click", () => move(-1));
+element("next").addEventListener("click", () => move(1));
+element("flip").addEventListener("click",flip);
+element("again").addEventListener("click", () => rate("again"));
+element("known").addEventListener("click", () => rate("known"));
+element("shuffle").addEventListener("click",shuffle);
+element("reset").addEventListener("click", () => {
+  const dialog = element("reset-dialog");
+  dialog.returnValue = "cancel";
+  dialog.showModal();
+});
+element("reset-dialog").addEventListener("close", () => {
+  if (element("reset-dialog").returnValue !== "reset") return;
+  ratings.clear();
+  topic = "all";
+  mode = "all";
+  ordering = cards.map(card => card.id);
+  activate(ordering[0]);
+  announce("Flashcard progress reset.");
+});
+document.addEventListener("keydown", event => {
+  if (event.altKey || event.ctrlKey || event.metaKey || element("reset-dialog").open || !activeId) return;
+  if (event.target.closest("input, select, textarea, [contenteditable]")) return;
+  if (event.key === " " && !event.target.closest("button, a")) {
+    event.preventDefault();
+    flip();
+  } else if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+    event.preventDefault();
+    move(event.key === "ArrowLeft" ? -1 : 1);
+  }
+});
+restore();
+render();
+</script>
+</body>
+</html>
