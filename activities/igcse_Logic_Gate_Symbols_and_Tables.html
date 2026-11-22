@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1" />
+    <meta
+      name="color-scheme"
+      content="light" />
+    <title>Identify and test symbols | IGCSE Computer Science</title>
+    <style>
+      :root {
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+        color: #182d35;
+        background: #f3f5f1;
+        font-synthesis: none;
+        --green: #176e58;
+        --muted: #61716f;
+        --line: #dce3de;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        line-height: 1.6;
+      }
+      button,
+      input {
+        font: inherit;
+      }
+      button {
+        cursor: pointer;
+      }
+      button:disabled {
+        cursor: not-allowed;
+        opacity: 0.45;
+      }
+      button:focus-visible,
+      input:focus-visible,
+      a:focus-visible,
+      [tabindex]:focus-visible {
+        outline: 3px solid #db9c32;
+        outline-offset: 3px;
+      }
+      a {
+        color: var(--green);
+      }
+      .site-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 18px;
+        background: #fcfdfb;
+        border-bottom: 1px solid var(--line);
+        padding: 16px 5%;
+      }
+      .site-nav a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #182d35;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 750;
+      }
+      .mark {
+        display: grid;
+        place-items: center;
+        background: var(--green);
+        color: white;
+        width: 32px;
+        height: 32px;
+        border-radius: 7px;
+      }
+      .site-sub {
+        font-size: 9px;
+        letter-spacing: 1.4px;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .site-nav .back {
+        font-size: 12px;
+        color: var(--green);
+      }
+      main {
+        max-width: 1160px;
+        margin: auto;
+        padding: 32px 24px 46px;
+      }
+      .eyebrow {
+        font-size: 11px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        font-weight: 750;
+        color: var(--muted);
+      }
+      h1 {
+        font-size: clamp(28px, 4vw, 42px);
+        letter-spacing: -1.2px;
+        line-height: 1.15;
+        margin: 10px 0 13px;
+      }
+      h2 {
+        font-size: 22px;
+        line-height: 1.3;
+        margin: 0 0 13px;
+      }
+      h3 {
+        font-size: 15px;
+        line-height: 1.4;
+        margin: 0 0 10px;
+      }
+      .intro {
+        margin-bottom: 24px;
+      }
+      .intro p {
+        font-size: 15px;
+        color: var(--muted);
+        max-width: 910px;
+        margin: 9px 0;
+      }
+      .badge {
+        display: inline-block;
+        background: #e4f1e9;
+        color: #176e58;
+        border-radius: 20px;
+        padding: 5px 12px;
+        font-size: 12px;
+        margin-top: 6px;
+      }
+      .card {
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 24px;
+        margin-bottom: 20px;
+        min-width: 0;
+      }
+      .guide {
+        border-left: 4px solid var(--green);
+      }
+      .guide p {
+        margin: 0;
+      }
+      .muted {
+        font-size: 13px;
+        color: var(--muted);
+      }
+      button {
+        border: 1px solid #bdcdc5;
+        background: white;
+        color: var(--green);
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-size: 14px;
+        font-weight: 650;
+        line-height: 1.45;
+        min-height: 42px;
+      }
+      button:hover:not(:disabled) {
+        background: #edf5ef;
+      }
+      .primary {
+        background: var(--green);
+        border-color: var(--green);
+        color: white;
+      }
+      .primary:hover {
+        background: #125643 !important;
+      }
+      button[aria-pressed='true'] {
+        background: #e3f1e8;
+        border-color: var(--green);
+        box-shadow: inset 3px 0 var(--green);
+      }
+      .feedback {
+        font-size: 12px;
+        margin: 7px 0 0;
+        line-height: 1.4;
+        font-weight: 650;
+        min-width: 0;
+      }
+      .feedback:empty {
+        display: none;
+      }
+      .feedback.correct {
+        color: var(--green);
+      }
+      .feedback.wrong {
+        color: #9b2940;
+      }
+      .feedback.missing {
+        color: #846018;
+      }
+      button.correct,
+      .step.correct,
+      .gate-card.correct,
+      td.correct,
+      input.correct {
+        border-color: #168166;
+        background: #eef9f3;
+      }
+      button.wrong,
+      .step.wrong,
+      .gate-card.wrong,
+      td.wrong,
+      input.wrong {
+        border-color: #b85460;
+        background: #fff3f4;
+      }
+      .summary {
+        background: #e4f1e8;
+        border: 1px solid #b2cfbd;
+        border-radius: 13px;
+        padding: 23px;
+      }
+      .summary strong {
+        display: block;
+        font-size: 16px;
+        margin-bottom: 15px;
+      }
+      .summary p {
+        font-size: 12px;
+        color: #526b5e;
+        margin: 12px 0 0;
+      }
+      .reset-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 22px;
+        border-top: 1px solid var(--line);
+        padding-top: 24px;
+        margin-top: 32px;
+      }
+      .reset-section p {
+        font-size: 13px;
+        color: var(--muted);
+        margin: 4px 0;
+      }
+      .reset-section button {
+        flex: none;
+      }
+      .activity-nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 14px;
+        font-size: 13px;
+        margin-top: 30px;
+      }
+      footer {
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 23px;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+      .context {
+        background: #f2f6f1;
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        padding: 14px;
+        font-size: 14px;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        margin: 0 0 20px;
+      }
+      code {
+        font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      }
+      .noscript {
+        background: #fff1d8;
+        padding: 18px;
+      }
+      .progress {
+        font-size: 12px;
+        color: var(--muted);
+        margin: 0 0 18px;
+      }
+      .match-board {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.3fr);
+        column-gap: 58px;
+        position: relative;
+        align-items: start;
+      }
+      .match-column {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        gap: 11px;
+      }
+      .match-column h3 {
+        margin-bottom: 1px;
+        color: #61716f;
+        font-size: 12px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+      .match-item {
+        min-width: 0;
+      }
+      .pair-button {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        text-align: left;
+        padding: 14px;
+        min-height: 64px;
+        background: #fcfdfb;
+        font-size: 14px;
+        overflow-wrap: anywhere;
+      }
+      .definition {
+        font-size: 13px;
+        font-weight: 500;
+      }
+      .definition-letter {
+        display: inline-grid;
+        place-items: center;
+        background: #e4eee7;
+        border-radius: 50%;
+        min-width: 26px;
+        height: 26px;
+        font-size: 12px;
+        color: #176e58;
+      }
+      .pair-label {
+        font-size: 10px;
+        margin-left: auto;
+        background: #e4eee7;
+        border-radius: 5px;
+        padding: 2px 5px;
+        white-space: nowrap;
+      }
+      .connections {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .word-bank {
+        background: #edf4ee;
+        border: 1px dashed #a6bdaf;
+        border-radius: 11px;
+        padding: 17px;
+        margin-bottom: 24px;
+      }
+      .bank-words {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .word-token {
+        background: white;
+        cursor: grab;
+        font-size: 14px;
+      }
+      .used-word {
+        font-size: 12px;
+        color: #708477;
+        display: inline-flex;
+        align-items: center;
+        border: 1px dashed #b8cabf;
+        padding: 9px 12px;
+        border-radius: 8px;
+        opacity: 0.75;
+      }
+      .passages p {
+        font-size: 17px;
+        line-height: 2.8;
+        margin: 14px 0;
+      }
+      .blank {
+        font-size: 14px;
+        display: inline-block;
+        vertical-align: middle;
+        margin: 3px 5px;
+        min-width: 135px;
+        min-height: 40px;
+        border-style: dashed;
+        color: #61716f;
+        background: #f7faf7;
+        padding: 7px 12px;
+      }
+      .blank.filled {
+        border-style: solid;
+        color: #176e58;
+        background: #e9f3ec;
+        cursor: grab;
+      }
+      .blank-status {
+        font-size: 11px;
+        white-space: nowrap;
+        color: #526b61;
+      }
+      .steps {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 11px;
+      }
+      .step {
+        display: grid;
+        grid-template-columns: 32px minmax(0, 1fr) auto;
+        gap: 15px;
+        align-items: center;
+        padding: 16px;
+        background: #f8faf7;
+        border: 1px solid #bdcdc5;
+        border-radius: 11px;
+        cursor: grab;
+      }
+      .step p {
+        font-size: 14px;
+        margin: 0;
+      }
+      .step .feedback {
+        font-size: 12px;
+        margin-top: 7px;
+      }
+      .position {
+        display: grid;
+        place-items: center;
+        background: #e1eee6;
+        color: var(--green);
+        font-size: 13px;
+        font-weight: 750;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+      }
+      .move-controls {
+        display: flex;
+        gap: 6px;
+      }
+      .move-controls button {
+        min-width: 42px;
+        padding: 7px 10px;
+      }
+      .dragging {
+        opacity: 0.5;
+      }
+      .options {
+        display: grid;
+        gap: 12px;
+      }
+      .statement {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        width: 100%;
+        padding: 17px;
+        text-align: left;
+        font-weight: 500;
+      }
+      .selection-icon {
+        font-size: 20px;
+        color: var(--green);
+        width: 24px;
+        flex: none;
+        text-align: center;
+      }
+      .expression-list {
+        display: grid;
+        gap: 16px;
+      }
+      .expression-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1.5fr) minmax(130px, 0.8fr);
+        gap: 8px 18px;
+        align-items: center;
+        border-bottom: 1px solid #e5ebe6;
+        padding-bottom: 17px;
+      }
+      .expression-row label {
+        font-size: 15px;
+        overflow-wrap: anywhere;
+      }
+      .expression-row input {
+        padding: 11px 12px;
+        font-size: 15px;
+        border: 1px solid #bdcdc5;
+        border-radius: 8px;
+        min-width: 0;
+        width: 100%;
+        background: #fcfdfb;
+      }
+      .expression-row .feedback {
+        grid-column: 2;
+        margin: 0;
+      }
+      .symbol-scroll {
+        overflow: auto;
+        margin-bottom: 20px;
+      }
+      .symbol-scroll img {
+        display: block;
+        width: 100%;
+        min-width: 720px;
+        height: auto;
+        max-width: 1170px;
+      }
+      .gate-cards {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+      .gate-card {
+        background: #f8faf7;
+        border: 1px solid #dce3de;
+        border-radius: 10px;
+        padding: 16px;
+        min-width: 0;
+      }
+      .choice-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+      }
+      .answer-choice {
+        font-size: 12px;
+        padding: 7px 11px;
+        min-width: 43px;
+        min-height: 40px;
+      }
+      .truth-section {
+        border-top: 1px solid var(--line);
+        padding-top: 26px;
+        margin-top: 28px;
+      }
+      .table-scroll {
+        overflow: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        font-size: 13px;
+        min-width: 660px;
+      }
+      th,
+      td {
+        text-align: center;
+        padding: 11px 8px;
+        border: 1px solid #dce3de;
+      }
+      th {
+        background: #edf3ec;
+        font-size: 12px;
+      }
+      td .choice-group {
+        justify-content: center;
+        flex-wrap: nowrap;
+      }
+      td .feedback {
+        max-width: 100px;
+        font-size: 11px;
+      }
+      td .answer-choice {
+        min-width: 35px;
+        padding: 6px 9px;
+      }
+      .hub-tools {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin: 20px 0;
+      }
+      .hub-tools input {
+        padding: 11px 13px;
+        border: 1px solid #bdcdc5;
+        border-radius: 8px;
+        flex: 1;
+        min-width: 230px;
+        background: white;
+      }
+      .hub-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+      .hub-card {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 19px;
+        text-decoration: none;
+        color: #182d35;
+      }
+      .hub-card:hover {
+        border-color: #176e58;
+        background: #fcfdfb;
+      }
+      .hub-card h2 {
+        font-size: 18px;
+        margin: 0;
+      }
+      .hub-card p {
+        font-size: 12px;
+        color: var(--muted);
+        margin: 0;
+      }
+      .hub-card .badge {
+        align-self: flex-start;
+        font-size: 10px;
+        margin-top: auto;
+      }
+      .hub-count {
+        font-size: 13px;
+        color: #61716f;
+      }
+      .hub-card[hidden] {
+        display: none;
+      }
+      .hub-link {
+        font-size: 12px;
+        color: #176e58;
+        font-weight: 650;
+      }
+      @media (max-width: 800px) {
+        .site-sub {
+          display: none;
+        }
+        .hub-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .match-board {
+          column-gap: 35px;
+        }
+        .pair-button {
+          padding: 11px;
+          font-size: 13px;
+        }
+        .definition {
+          font-size: 12px;
+        }
+        .pair-label {
+          font-size: 9px;
+        }
+        .gate-cards {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 560px) {
+        main {
+          padding: 24px 14px 35px;
+        }
+        .site-nav {
+          padding: 14px;
+        }
+        .site-nav a {
+          font-size: 12px;
+        }
+        .card {
+          padding: 17px;
+        }
+        .match-board {
+          column-gap: 20px;
+          grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.2fr);
+        }
+        .pair-button {
+          flex-wrap: wrap;
+          min-height: 75px;
+          padding: 9px;
+          font-size: 12px;
+          gap: 5px;
+        }
+        .definition {
+          font-size: 12px;
+        }
+        .definition-letter {
+          min-width: 22px;
+          height: 22px;
+        }
+        .pair-label {
+          margin-left: 0;
+        }
+        .step {
+          grid-template-columns: 28px minmax(0, 1fr);
+          gap: 11px;
+          padding: 13px;
+        }
+        .move-controls {
+          grid-column: 2;
+          justify-content: flex-end;
+        }
+        .move-controls button {
+          min-width: 44px;
+          min-height: 44px;
+        }
+        .position {
+          width: 28px;
+          height: 28px;
+        }
+        .reset-section {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .passages p {
+          font-size: 15px;
+          line-height: 2.7;
+        }
+        .blank {
+          font-size: 13px;
+          min-width: 120px;
+        }
+        .word-token {
+          font-size: 13px;
+        }
+        .expression-row {
+          grid-template-columns: 1fr;
+        }
+        .expression-row .feedback {
+          grid-column: 1;
+        }
+        .hub-grid {
+          grid-template-columns: 1fr;
+        }
+        .summary {
+          padding: 18px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          scroll-behavior: auto !important;
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav
+      class="site-nav"
+      aria-label="Activity navigation">
+      <a href="IGCSE_Activities.html"
+        ><span
+          class="mark"
+          aria-hidden="true"
+          >▦</span
+        >Computer Science<span class="site-sub">
+          / Designed by Thierry Taberna</span
+        ></a
+      ><a
+        class="back"
+        href="../../index.html"
+        >← All activities</a
+      >
+    </nav>
+    <main>
+      <header class="intro">
+        <div class="eyebrow">Cambridge IGCSE Computer Science · Paper 2</div>
+        <h1>Identify and test symbols</h1>
+        <p>Boolean logic · Recognise gates</p>
+      </header>
+      <noscript
+        ><p class="noscript">
+          Enable JavaScript to complete this activity and check your answers. It
+          works offline.
+        </p></noscript
+      >
+      <section class="card guide">
+        <h2>Your task</h2>
+        <p>
+          Name each gate in the supplied image, then complete the truth tables.
+          Choose an answer for every symbol and every output.
+        </p>
+      </section>
+      <section
+        class="card"
+        aria-label="Interactive activity">
+        <p
+          id="progress"
+          class="progress"></p>
+        <div id="activity"></div>
+        <p
+          id="move-message"
+          class="sr-only"
+          role="status"
+          aria-live="polite"></p>
+      </section>
+      <section
+        class="summary"
+        aria-label="Check your work">
+        <strong
+          id="result"
+          role="status"
+          aria-live="polite"></strong
+        ><button
+          id="check"
+          class="primary"
+          type="button">
+          Check my answers
+        </button>
+        <p>
+          Adjust your answers and check again. Feedback marks your work without
+          revealing the correct answers.
+        </p>
+      </section>
+      <section class="reset-section">
+        <div>
+          <strong>Try again</strong>
+          <p>
+            Reset clears your answers and feedback. Matching choices, word
+            banks, statements and action cards are shuffled where applicable.
+          </p>
+        </div>
+        <button
+          id="reset"
+          type="button">
+          Reset my answers
+        </button>
+      </section>
+      <footer>
+        Based on the supplied IGCSE activities and answer key. Independent
+        webpage with embedded CSS and JavaScript. Answers are kept only while
+        this page is open. No sign-in or internet connection required.
+      </footer>
+    </main>
+    <script>
+      const ACTIVITY = {
+        number: 43,
+        paper: 2,
+        code: '10A',
+        letter: 'B',
+        title: 'Identify and test symbols',
+        topic: 'Boolean logic · Recognise gates',
+        file: 'igcse_Logic_Gate_Symbols_and_Tables.html',
+        type: 'gates',
+        instructions:
+          'Name each gate in the supplied image, then complete the truth tables. Choose an answer for every symbol and every output.',
+        image:
+          'data:image/png;base64,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',
+        symbol_answers: ['XOR', 'NAND', 'NOT', 'OR', 'NOR', 'AND'],
+        truth: [
+          [0, 0, 0, 0, 1, 1, 0],
+          [0, 1, 0, 1, 1, 0, 1],
+          [1, 0, 0, 1, 1, 0, 1],
+          [1, 1, 1, 1, 0, 0, 0],
+        ],
+        not_answers: [1, 0],
+      };
+      ('use strict');
+      const $ = (id) => document.getElementById(id),
+        host = $('activity'),
+        NS = 'http://www.w3.org/2000/svg';
+      const node = (tag, text, cls) => {
+        const e = document.createElement(tag);
+        if (text !== undefined) e.textContent = text;
+        if (cls) e.className = cls;
+        return e;
+      };
+      const shuffled = (list) => {
+        const a = [...list];
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+      };
+      let state,
+        previousOrder = '',
+        resizeObserver;
+      function fresh() {
+        const old = state?.order?.join(',') || previousOrder;
+        state = {
+          answers: {},
+          feedback: {},
+          checked: false,
+          left: null,
+          right: null,
+          word: null,
+          dragToken: null,
+          dragOrder: null,
+        };
+        if (ACTIVITY.type === 'match') {
+          state.termOrder = shuffled(ACTIVITY.terms.map((t) => t.id));
+          state.defOrder = shuffled(ACTIVITY.definitions.map((t) => t.id));
+        }
+        if (ACTIVITY.type === 'fill')
+          state.wordOrder = shuffled(ACTIVITY.words.map((_, i) => i));
+        if (ACTIVITY.type === 'multi')
+          state.optionOrder = shuffled(ACTIVITY.items.map((t) => t.id));
+        if (ACTIVITY.type === 'order') {
+          state.order = shuffled(ACTIVITY.items.map((t) => t.id));
+          while (
+            state.order.join(',') === ACTIVITY.answer.join(',') ||
+            state.order.join(',') === old
+          )
+            state.order.push(state.order.shift());
+          previousOrder = state.order.join(',');
+        }
+        if (ACTIVITY.type === 'gates')
+          state.gateChoices = shuffled([
+            'AND',
+            'OR',
+            'NOT',
+            'NAND',
+            'NOR',
+            'XOR',
+          ]);
+        render();
+        $('result').textContent =
+          'Ready. Complete the activity, then check your answers.';
+      }
+      function mark(key) {
+        const p = node('p', '', 'feedback');
+        p.dataset.feedback = key;
+        p.id = 'feedback-' + key;
+        const result = state.feedback[key];
+        if (result) {
+          p.classList.add(
+            result.correct ? 'correct' : result.answered ? 'wrong' : 'missing'
+          );
+          p.textContent = result.correct
+            ? '✓ Correct.'
+            : result.answered
+            ? 'Not correct yet. Try again.'
+            : 'Choose or enter an answer.';
+        }
+        return p;
+      }
+      function styleAnswer(e, key) {
+        if (state.feedback[key])
+          e.classList.add(state.feedback[key].correct ? 'correct' : 'wrong');
+      }
+      function changed(message = 'Answer changed. Check your answers again.') {
+        state.feedback = {};
+        state.checked = false;
+        $('result').textContent = message;
+        $('move-message').textContent = message;
+      }
+      function answeredCount() {
+        const type = ACTIVITY.type;
+        if (type === 'order') return state.order.length;
+        if (type === 'multi')
+          return ACTIVITY.items.filter(
+            (i) => state.answers['c' + i.id] === true
+          ).length;
+        return Object.values(state.answers).filter(
+          (v) => v !== null && v !== undefined && String(v).trim() !== ''
+        ).length;
+      }
+      function updateProgress() {
+        $('progress').textContent =
+          ACTIVITY.type === 'order'
+            ? 'Arrange all ' +
+              ACTIVITY.items.length +
+              ' actions, first to last.'
+            : ACTIVITY.type === 'multi'
+            ? answeredCount() +
+              ' statements selected. Select every statement that applies.'
+            : answeredCount() + ' answers entered.';
+      }
+      function drawLines() {
+        if (ACTIVITY.type !== 'match') return;
+        const board = $('match-board'),
+          svg = $('connections');
+        if (!board || !svg) return;
+        svg.replaceChildren();
+        const bounds = board.getBoundingClientRect();
+        if (!bounds.width || !bounds.height) return;
+        svg.setAttribute(
+          'viewBox',
+          '0 0 ' + bounds.width + ' ' + bounds.height
+        );
+        for (const t of ACTIVITY.terms) {
+          const value = state.answers['m' + t.id];
+          if (value === undefined) continue;
+          const a = $('term-' + t.id).getBoundingClientRect(),
+            b = $('definition-' + value).getBoundingClientRect(),
+            x1 = a.right - bounds.left,
+            y1 = a.top + a.height / 2 - bounds.top,
+            x2 = b.left - bounds.left,
+            y2 = b.top + b.height / 2 - bounds.top,
+            path = document.createElementNS(NS, 'path');
+          path.setAttribute(
+            'd',
+            `M ${x1} ${y1} C ${x1 + 30} ${y1}, ${x2 - 30} ${y2}, ${x2} ${y2}`
+          );
+          path.setAttribute('fill', 'none');
+          path.setAttribute(
+            'stroke',
+            state.feedback['m' + t.id]
+              ? state.feedback['m' + t.id].correct
+                ? '#176e58'
+                : '#b85460'
+              : '#8ca79a'
+          );
+          path.setAttribute('stroke-width', '2');
+          svg.append(path);
+        }
+      }
+      function connect(left, right) {
+        for (const t of ACTIVITY.terms)
+          if (state.answers['m' + t.id] === right)
+            delete state.answers['m' + t.id];
+        state.answers['m' + left] = right;
+        state.left = null;
+        state.right = null;
+        changed('Pair connected. You can change it by selecting a new pair.');
+        render();
+        $('term-' + left)?.focus();
+      }
+      function renderMatch() {
+        const board = node('div', undefined, 'match-board');
+        board.id = 'match-board';
+        const svg = document.createElementNS(NS, 'svg');
+        svg.id = 'connections';
+        svg.classList.add('connections');
+        svg.setAttribute('aria-hidden', 'true');
+        const left = node('div', undefined, 'match-column'),
+          right = node('div', undefined, 'match-column');
+        left.append(node('h3', ACTIVITY.number === 22 ? 'URL part' : 'Term'));
+        right.append(
+          node('h3', ACTIVITY.number === 22 ? 'Role' : 'Definition')
+        );
+        for (const id of state.termOrder) {
+          const term = ACTIVITY.terms.find((t) => t.id === id),
+            wrap = node('div', undefined, 'match-item'),
+            button = node('button', undefined, 'pair-button');
+          button.id = 'term-' + id;
+          button.type = 'button';
+          button.setAttribute('aria-pressed', String(state.left === id));
+          button.append(node('span', term.text));
+          const value = state.answers['m' + id];
+          if (value !== undefined)
+            button.append(
+              node(
+                'small',
+                '↔ ' + String.fromCharCode(65 + state.defOrder.indexOf(value)),
+                'pair-label'
+              )
+            );
+          button.addEventListener('click', () => {
+            if (state.right !== null) connect(id, state.right);
+            else {
+              state.left = state.left === id ? null : id;
+              render();
+              $('term-' + id).focus();
+              $('move-message').textContent =
+                state.left === null
+                  ? 'Selection cleared.'
+                  : 'Selected ' + term.text + '. Choose its definition.';
+            }
+          });
+          styleAnswer(button, 'm' + id);
+          wrap.append(button, mark('m' + id));
+          left.append(wrap);
+        }
+        for (let index = 0; index < state.defOrder.length; index++) {
+          const id = state.defOrder[index],
+            definition = ACTIVITY.definitions.find((d) => d.id === id),
+            button = node('button', undefined, 'pair-button definition');
+          button.id = 'definition-' + id;
+          button.type = 'button';
+          button.setAttribute('aria-pressed', String(state.right === id));
+          button.append(
+            node(
+              'strong',
+              String.fromCharCode(65 + index),
+              'definition-letter'
+            ),
+            node('span', definition.text)
+          );
+          const linked = ACTIVITY.terms.find(
+            (t) => state.answers['m' + t.id] === id
+          );
+          if (linked) button.append(node('small', 'Linked', 'pair-label'));
+          button.addEventListener('click', () => {
+            if (state.left !== null) connect(state.left, id);
+            else {
+              state.right = state.right === id ? null : id;
+              render();
+              $('definition-' + id).focus();
+              $('move-message').textContent = 'Choose the matching term.';
+            }
+          });
+          right.append(button);
+        }
+        board.append(svg, left, right);
+        host.append(board);
+        if (typeof ResizeObserver !== 'undefined') {
+          resizeObserver = new ResizeObserver(drawLines);
+          resizeObserver.observe(board);
+        }
+        requestAnimationFrame(drawLines);
+      }
+      function placeWord(slot, token) {
+        for (const key of Object.keys(state.answers))
+          if (state.answers[key] === token) delete state.answers[key];
+        state.answers['f' + slot] = token;
+        state.word = null;
+        state.dragToken = null;
+        changed('Word placed in blank ' + (slot + 1) + '.');
+        render();
+        $('blank-' + slot)?.focus();
+      }
+      function returnWord(token) {
+        for (const key of Object.keys(state.answers))
+          if (state.answers[key] === token) delete state.answers[key];
+        state.word = null;
+        state.dragToken = null;
+        changed('Word returned to the bank.');
+        render();
+        $('word-' + token)?.focus();
+      }
+      function renderFill() {
+        const bank = node('section', undefined, 'word-bank');
+        bank.id = 'word-bank';
+        bank.setAttribute(
+          'aria-label',
+          'Word bank. Drop a placed word here to return it.'
+        );
+        bank.append(node('h3', 'Word bank'));
+        const words = node('div', undefined, 'bank-words');
+        for (const token of state.wordOrder) {
+          const word = ACTIVITY.words[token],
+            used = Object.values(state.answers).includes(token);
+          if (used) {
+            words.append(node('span', word + ' · placed', 'used-word'));
+            continue;
+          }
+          const button = node('button', word, 'word-token');
+          button.type = 'button';
+          button.id = 'word-' + token;
+          button.draggable = true;
+          button.setAttribute('aria-pressed', String(state.word === token));
+          button.addEventListener('click', () => {
+            state.word = state.word === token ? null : token;
+            render();
+            if (state.word !== null)
+              host.querySelector('.blank:not(.filled)')?.focus();
+            else $('word-' + token)?.focus();
+            $('move-message').textContent =
+              state.word !== null
+                ? 'Selected ' + word + '. Choose a blank.'
+                : 'Selection cleared.';
+          });
+          button.addEventListener('dragstart', (e) => {
+            state.dragToken = token;
+            if (e.dataTransfer) {
+              e.dataTransfer.setData('text/plain', String(token));
+              e.dataTransfer.effectAllowed = 'move';
+            }
+          });
+          button.addEventListener('dragend', () => {
+            state.dragToken = null;
+          });
+          words.append(button);
+        }
+        bank.append(words);
+        bank.addEventListener('dragover', (e) => {
+          if (state.dragToken !== null) e.preventDefault();
+        });
+        bank.addEventListener('drop', (e) => {
+          if (state.dragToken === null) return;
+          e.preventDefault();
+          returnWord(state.dragToken);
+        });
+        host.append(bank);
+        const passages = node('div', undefined, 'passages');
+        for (const paragraph of ACTIVITY.paragraphs) {
+          const p = node('p');
+          const parts = paragraph.split(/\((\d+)\)\s*_+/g);
+          parts.forEach((part, i) => {
+            if (i % 2 === 0) {
+              p.append(document.createTextNode(part));
+              return;
+            }
+            const slot = Number(part) - 1,
+              token = state.answers['f' + slot],
+              filled = token !== undefined,
+              button = node(
+                'button',
+                slot +
+                  1 +
+                  ' · ' +
+                  (filled ? ACTIVITY.words[token] : 'Choose a word'),
+                'blank' + (filled ? ' filled' : '')
+              );
+            button.type = 'button';
+            button.id = 'blank-' + slot;
+            button.dataset.slot = slot;
+            button.setAttribute(
+              'aria-label',
+              'Blank ' +
+                (slot + 1) +
+                ': ' +
+                (filled
+                  ? ACTIVITY.words[token] + '. Select to return to bank.'
+                  : 'empty. Select a bank word first.')
+            );
+            styleAnswer(button, 'f' + slot);
+            button.draggable = filled;
+            button.addEventListener('click', () => {
+              if (state.word !== null) placeWord(slot, state.word);
+              else if (filled) returnWord(token);
+              else {
+                $('move-message').textContent =
+                  'Choose a word from the bank first.';
+                host.querySelector('.word-token')?.focus();
+              }
+            });
+            button.addEventListener('dragstart', (e) => {
+              if (!filled) {
+                e.preventDefault();
+                return;
+              }
+              state.dragToken = token;
+              if (e.dataTransfer) {
+                e.dataTransfer.setData('text/plain', String(token));
+                e.dataTransfer.effectAllowed = 'move';
+              }
+            });
+            button.addEventListener('dragend', () => {
+              state.dragToken = null;
+            });
+            button.addEventListener('dragover', (e) => {
+              if (state.dragToken !== null) e.preventDefault();
+            });
+            button.addEventListener('drop', (e) => {
+              if (state.dragToken === null) return;
+              e.preventDefault();
+              placeWord(slot, state.dragToken);
+            });
+            p.append(button);
+            if (state.feedback['f' + slot]) {
+              const hint = node(
+                'span',
+                state.feedback['f' + slot].correct
+                  ? ' ✓'
+                  : ' · Review blank ' + (slot + 1),
+                'blank-status'
+              );
+              p.append(hint);
+            }
+          });
+          passages.append(p);
+        }
+        host.append(passages);
+      }
+      function moveOrder(id, target) {
+        const from = state.order.indexOf(id);
+        if (from < 0 || target < 0 || target >= state.order.length) return;
+        state.order.splice(from, 1);
+        state.order.splice(target, 0, id);
+        changed('Moved action to position ' + (target + 1) + '.');
+        render();
+        const li = host.querySelector('[data-order="' + id + '"]');
+        li?.querySelector('button:not(:disabled)')?.focus();
+      }
+      function renderOrder() {
+        const list = node('ol', undefined, 'steps');
+        list.setAttribute('aria-label', 'Actions from first to last');
+        state.order.forEach((id, index) => {
+          const item = ACTIVITY.items.find((t) => t.id === id),
+            li = node('li', undefined, 'step');
+          li.dataset.order = id;
+          li.draggable = true;
+          const content = node('div');
+          content.append(node('p', item.text), mark('o' + index));
+          const controls = node('div', undefined, 'move-controls');
+          for (const [delta, label] of [
+            [-1, '↑'],
+            [1, '↓'],
+          ]) {
+            const b = node('button', label);
+            b.type = 'button';
+            b.disabled =
+              index + delta < 0 || index + delta >= state.order.length;
+            b.setAttribute(
+              'aria-label',
+              (delta < 0 ? 'Move up: ' : 'Move down: ') + item.text
+            );
+            b.dataset.move = delta;
+            b.addEventListener('click', () => moveOrder(id, index + delta));
+            controls.append(b);
+          }
+          const number = node('span', index + 1, 'position');
+          number.setAttribute('aria-hidden', 'true');
+          li.append(number, content, controls);
+          styleAnswer(li, 'o' + index);
+          li.addEventListener('dragstart', (e) => {
+            if (e.target.closest('button')) {
+              e.preventDefault();
+              return;
+            }
+            state.dragOrder = id;
+            li.classList.add('dragging');
+            if (e.dataTransfer) {
+              e.dataTransfer.setData('text/plain', String(id));
+              e.dataTransfer.effectAllowed = 'move';
+            }
+          });
+          li.addEventListener('dragover', (e) => {
+            if (state.dragOrder !== null && state.dragOrder !== id)
+              e.preventDefault();
+          });
+          li.addEventListener('drop', (e) => {
+            if (state.dragOrder === null || state.dragOrder === id) return;
+            e.preventDefault();
+            const source = state.dragOrder;
+            state.dragOrder = null;
+            moveOrder(source, index);
+          });
+          li.addEventListener('dragend', () => {
+            state.dragOrder = null;
+            li.classList.remove('dragging');
+          });
+          list.append(li);
+        });
+        host.append(list);
+      }
+      function renderMulti() {
+        const list = node('div', undefined, 'options');
+        for (const id of state.optionOrder) {
+          const item = ACTIVITY.items.find((t) => t.id === id),
+            key = 'c' + id,
+            wrap = node('div'),
+            button = node('button', undefined, 'statement');
+          button.type = 'button';
+          button.dataset.choice = id;
+          button.setAttribute(
+            'aria-pressed',
+            String(state.answers[key] === true)
+          );
+          button.append(
+            node('span', state.answers[key] ? '✓' : '○', 'selection-icon'),
+            node('span', item.text)
+          );
+          button.addEventListener('click', () => {
+            state.answers[key] = !state.answers[key];
+            changed();
+            render();
+            host.querySelector('[data-choice="' + id + '"]').focus();
+          });
+          if (state.answers[key]) styleAnswer(button, key);
+          wrap.append(button);
+          if (state.answers[key]) wrap.append(mark(key));
+          list.append(wrap);
+        }
+        host.append(list);
+      }
+      function renderExpressions() {
+        const list = node('div', undefined, 'expression-list');
+        ACTIVITY.items.forEach((item, i) => {
+          const key = 'e' + i,
+            wrap = node('div', undefined, 'expression-row'),
+            label = node('label');
+          label.htmlFor = key;
+          label.append(node('code', item.prompt));
+          const input = node('input');
+          input.type = 'text';
+          input.id = key;
+          input.value = state.answers[key] ?? '';
+          input.spellcheck = false;
+          input.autocomplete = 'off';
+          if (item.kind === 'number') input.inputMode = 'decimal';
+          input.setAttribute('aria-describedby', 'feedback-' + key);
+          styleAnswer(input, key);
+          input.addEventListener('input', () => {
+            state.answers[key] = input.value;
+            changed();
+            host.querySelectorAll('.feedback').forEach((p) => {
+              p.textContent = '';
+              p.className = 'feedback';
+            });
+            host
+              .querySelectorAll('input.correct,input.wrong')
+              .forEach((e) => e.classList.remove('correct', 'wrong'));
+            updateProgress();
+          });
+          wrap.append(label, input, mark(key));
+          list.append(wrap);
+        });
+        host.append(list);
+      }
+      function choiceGroup(key, choices, label) {
+        const group = node('div', undefined, 'choice-group');
+        group.setAttribute('role', 'group');
+        group.setAttribute('aria-label', label);
+        for (const value of choices) {
+          const b = node('button', value, 'answer-choice');
+          b.type = 'button';
+          b.setAttribute('aria-pressed', String(state.answers[key] === value));
+          b.dataset.answer = value;
+          b.addEventListener('click', () => {
+            state.answers[key] = value;
+            changed();
+            render();
+            host
+              .querySelector(
+                '[data-question="' + key + '"] [data-answer="' + value + '"]'
+              )
+              .focus();
+          });
+          group.append(b);
+        }
+        return group;
+      }
+      function renderGates() {
+        const section = node('section');
+        section.append(node('h2', 'Name the six gates'));
+        const scroll = node('div', undefined, 'symbol-scroll'),
+          img = node('img');
+        img.src = ACTIVITY.image;
+        img.alt =
+          'Six logic-gate symbols labelled A, B, C, D, E and F. Identify their gate types using the choices below.';
+        img.width = 1170;
+        img.height = 145;
+        scroll.append(img);
+        section.append(scroll);
+        const cards = node('div', undefined, 'gate-cards');
+        ACTIVITY.symbol_answers.forEach((_, i) => {
+          const key = 'g' + i,
+            box = node('div', undefined, 'gate-card');
+          box.dataset.question = key;
+          box.append(
+            node('h3', 'Symbol ' + String.fromCharCode(65 + i)),
+            choiceGroup(
+              key,
+              state.gateChoices,
+              'Name of gate ' + String.fromCharCode(65 + i)
+            ),
+            mark(key)
+          );
+          styleAnswer(box, key);
+          cards.append(box);
+        });
+        section.append(cards);
+        host.append(section);
+        const gates = ['AND', 'OR', 'NAND', 'NOR', 'XOR'],
+          tableSection = node('section', undefined, 'truth-section');
+        tableSection.append(
+          node('h2', 'Complete the two-input truth table'),
+          node(
+            'p',
+            'Select 0 or 1 for every output. XOR is also called EOR.',
+            'muted'
+          )
+        );
+        const table = node('table'),
+          head = node('thead'),
+          tr = node('tr');
+        ['Input A', 'Input B', ...gates].forEach((t) => {
+          const th = node('th', t);
+          th.scope = 'col';
+          tr.append(th);
+        });
+        head.append(tr);
+        const body = node('tbody');
+        ACTIVITY.truth.forEach((row, r) => {
+          const tr = node('tr');
+          tr.append(node('th', row[0]), node('th', row[1]));
+          gates.forEach((name, c) => {
+            const key = 't' + r + '-' + c,
+              td = node('td');
+            td.dataset.question = key;
+            td.append(
+              choiceGroup(
+                key,
+                ['0', '1'],
+                name + ' output when A=' + row[0] + ' and B=' + row[1]
+              ),
+              mark(key)
+            );
+            styleAnswer(td, key);
+            tr.append(td);
+          });
+          body.append(tr);
+        });
+        table.append(head, body);
+        const scrollTable = node('div', undefined, 'table-scroll');
+        scrollTable.append(table);
+        tableSection.append(scrollTable);
+        host.append(tableSection);
+        const notSection = node('section', undefined, 'truth-section');
+        notSection.append(node('h2', 'Complete the NOT outputs'));
+        const nots = node('div', undefined, 'gate-cards');
+        ACTIVITY.not_answers.forEach((_, i) => {
+          const key = 'n' + i,
+            box = node('div', undefined, 'gate-card');
+          box.dataset.question = key;
+          box.append(
+            node('h3', 'Input A = ' + i),
+            choiceGroup(key, ['0', '1'], 'NOT output when A=' + i),
+            mark(key)
+          );
+          styleAnswer(box, key);
+          nots.append(box);
+        });
+        notSection.append(nots);
+        host.append(notSection);
+      }
+      function cleanText(text) {
+        const s = String(text ?? '').trim();
+        return s.length >= 2 &&
+          ((s[0] === '"' && s.at(-1) === '"') ||
+            (s[0] === "'" && s.at(-1) === "'"))
+          ? s.slice(1, -1)
+          : s;
+      }
+      function expressionCorrect(item, value) {
+        const text =
+          item.kind === 'string'
+            ? cleanText(value)
+            : String(value ?? '').trim();
+        if (item.kind === 'number')
+          return (
+            /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i.test(text) &&
+            Math.abs(Number(text) - Number(item.answer)) < 1e-9
+          );
+        if (item.kind === 'boolean') return text.toUpperCase() === item.answer;
+        if (item.kind === 'type') return /^REAL(?:\s+NUMBER)?$/i.test(text);
+        return text === item.answer;
+      }
+      function evaluate() {
+        const results = {};
+        const set = (key, correct, answered = true) =>
+          (results[key] = { correct: Boolean(correct), answered });
+        if (ACTIVITY.type === 'match')
+          for (const term of ACTIVITY.terms)
+            set(
+              'm' + term.id,
+              state.answers['m' + term.id] === term.answer,
+              state.answers['m' + term.id] !== undefined
+            );
+        if (ACTIVITY.type === 'fill')
+          ACTIVITY.answers.forEach((word, i) =>
+            set(
+              'f' + i,
+              ACTIVITY.words[state.answers['f' + i]] === word,
+              state.answers['f' + i] !== undefined
+            )
+          );
+        if (ACTIVITY.type === 'order')
+          ACTIVITY.answer.forEach((id, i) =>
+            set('o' + i, state.order[i] === id)
+          );
+        if (ACTIVITY.type === 'multi')
+          ACTIVITY.items.forEach((item) =>
+            set(
+              'c' + item.id,
+              Boolean(state.answers['c' + item.id]) === item.answer
+            )
+          );
+        if (ACTIVITY.type === 'expressions')
+          ACTIVITY.items.forEach((item, i) =>
+            set(
+              'e' + i,
+              expressionCorrect(item, state.answers['e' + i]),
+              String(state.answers['e' + i] ?? '').trim() !== ''
+            )
+          );
+        if (ACTIVITY.type === 'gates') {
+          ACTIVITY.symbol_answers.forEach((gate, i) =>
+            set(
+              'g' + i,
+              state.answers['g' + i] === gate,
+              state.answers['g' + i] !== undefined
+            )
+          );
+          ACTIVITY.truth.forEach((row, r) =>
+            row
+              .slice(2)
+              .forEach((bit, c) =>
+                set(
+                  't' + r + '-' + c,
+                  state.answers['t' + r + '-' + c] === String(bit),
+                  state.answers['t' + r + '-' + c] !== undefined
+                )
+              )
+          );
+          ACTIVITY.not_answers.forEach((bit, i) =>
+            set(
+              'n' + i,
+              state.answers['n' + i] === String(bit),
+              state.answers['n' + i] !== undefined
+            )
+          );
+        }
+        const entries = Object.values(results),
+          correct = entries.filter((r) => r.correct).length;
+        return {
+          results,
+          correct,
+          total: entries.length,
+          complete: correct === entries.length,
+        };
+      }
+      function check() {
+        const score = evaluate();
+        state.feedback = score.results;
+        state.checked = true;
+        render();
+        $('result').textContent = score.complete
+          ? 'All answers are correct. Activity complete. Well done!'
+          : ACTIVITY.type === 'multi'
+          ? 'Not correct yet. Review your selected statements and consider whether any correct statements are missing.'
+          : score.correct +
+            ' of ' +
+            score.total +
+            ' ' +
+            (ACTIVITY.type === 'order' ? 'positions' : 'answers') +
+            ' correct. Review the marked items and check again.';
+        return score;
+      }
+      function render() {
+        resizeObserver?.disconnect();
+        host.replaceChildren();
+        if (ACTIVITY.type === 'match') renderMatch();
+        else if (ACTIVITY.type === 'fill') renderFill();
+        else if (ACTIVITY.type === 'order') renderOrder();
+        else if (ACTIVITY.type === 'multi') renderMulti();
+        else if (ACTIVITY.type === 'expressions') renderExpressions();
+        else renderGates();
+        updateProgress();
+      }
+      $('check').addEventListener('click', check);
+      $('reset').addEventListener('click', () => {
+        fresh();
+        host.querySelector('button,input')?.focus();
+        $('move-message').textContent = 'Answers reset for a new attempt.';
+      });
+      window.addEventListener('resize', drawLines);
+      fresh();
+    </script>
+  </body>
+</html>
