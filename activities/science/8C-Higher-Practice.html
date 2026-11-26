@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8C Science | Higher practice</title>
+<style>
+:root {
+  color-scheme: light;
+  --paper: #f6f7f3;
+  --white: #fff;
+  --ink: #182724;
+  --muted: #4b5e57;
+  --line: #d5ded6;
+  --theme: #135f4f;
+  --light: #e4f3ed;
+  --hero: #0e332d;
+  --stripe: #b6e4cf;
+  --wrong: #932f21;
+  --wrong-bg: #fff0eb;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+body.higher {
+  --theme: #4b3a91;
+  --light: #eeeafa;
+  --hero: #292349;
+  --stripe: #d8cafa;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-padding-top: 5.5rem; }
+body { margin: 0; background: var(--paper); color: var(--ink); line-height: 1.55; }
+a { color: inherit; }
+.skip { position: absolute; top: -10rem; }
+.skip:focus { top: .5rem; left: .5rem; z-index: 3; background: white; color: var(--ink); padding: .6rem; }
+.wrap { width: min(68rem, calc(100% - 2.5rem)); margin: 0 auto; }
+.hero { color: white; background: var(--hero); border-bottom: .4rem solid var(--stripe); padding: clamp(2.3rem, 7vw, 5rem) 0; }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1.5rem; align-items: start; }
+.eyebrow { margin: 0 0 .65rem; color: var(--stripe); font-size: .83rem; font-weight: 750; letter-spacing: .105em; text-transform: uppercase; }
+h1, h2, h3, p { margin-top: 0; }
+h1 { margin-bottom: .75rem; font-size: clamp(2.25rem, 6vw, 4.65rem); letter-spacing: -.055em; line-height: 1.02; max-width: 16ch; }
+.hero p:last-child { margin: 0; color: #f4f7f5; max-width: 63ch; }
+.level { color: var(--hero); background: var(--stripe); border-radius: 999px; padding: .35rem .85rem; font-size: .86rem; font-weight: 750; white-space: nowrap; }
+.progress-bar { position: sticky; z-index: 2; top: 0; background: var(--paper); border-bottom: 1px solid var(--line); }
+.progress-bar .wrap { display: flex; align-items: center; gap: .7rem 1rem; padding-block: .7rem; }
+#progress-label { white-space: nowrap; color: var(--theme); font-size: .9rem; font-weight: 750; }
+progress { width: min(12rem, 100%); height: .65rem; accent-color: var(--theme); }
+#reset { margin-left: auto; border: 1px solid var(--line); background: white; color: var(--ink); }
+.layout { display: grid; grid-template-columns: 14rem minmax(0, 1fr); gap: 1.5rem 2rem; padding: 2rem 0 3rem; }
+nav { position: sticky; top: 5.2rem; align-self: start; background: var(--white); border: 1px solid var(--line); border-radius: 1rem; padding: 1rem; }
+nav h2 { margin-bottom: .5rem; font-size: 1rem; }
+nav ul { padding: 0; margin: 0; list-style: none; }
+nav a { display: block; border-radius: .45rem; padding: .45rem; color: var(--theme); font-size: .92rem; font-weight: 650; }
+nav a:hover { background: var(--light); }
+.unit + .unit { margin-top: 2rem; }
+.unit h2 { font-size: clamp(1.4rem, 2.7vw, 2rem); margin-bottom: .65rem; letter-spacing: -.025em; line-height: 1.2; }
+.card { background: var(--white); border: 1px solid var(--line); border-radius: 1rem; padding: clamp(1rem, 3vw, 1.5rem); margin: 0 0 1rem; }
+.card[data-state="correct"] { border-color: var(--theme); }
+.card h3 { display: flex; align-items: baseline; gap: .6rem; font-size: 1.18rem; line-height: 1.3; margin-bottom: .55rem; }
+.index { display: inline-grid; place-items: center; min-width: 1.8rem; min-height: 1.8rem; background: var(--light); color: var(--theme); border-radius: .4rem; font-size: .82rem; font-variant-numeric: tabular-nums; }
+.stem { color: var(--muted); margin-bottom: .8rem; }
+fieldset { border: 0; padding: 0; min-inline-size: 0; margin: .7rem 0 1rem; }
+legend { padding: 0; margin-bottom: .4rem; font-weight: 680; }
+.choice { display: flex; align-items: start; gap: .6rem; padding: .5rem .65rem; margin: .3rem 0; border: 1px solid var(--line); border-radius: .5rem; cursor: pointer; }
+.choice:hover, .choice:has(input:checked) { border-color: var(--theme); background: var(--light); }
+.choice input { width: 1rem; height: 1rem; flex: none; margin: .24rem 0 0; accent-color: var(--theme); }
+.field-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: .35rem .85rem; align-items: center; padding: .48rem 0; border-bottom: 1px solid var(--line); }
+.field-row label { font-size: .95rem; }
+select, input[type="number"] { width: 100%; min-height: 2.6rem; background: white; border: 1px solid #84978d; border-radius: .45rem; padding: .4rem .55rem; font: inherit; color: var(--ink); }
+[aria-invalid="true"] { border-color: var(--wrong); }
+button { border: 1px solid transparent; border-radius: .5rem; padding: .54rem .86rem; background: var(--theme); color: white; font: inherit; font-size: .9rem; font-weight: 750; cursor: pointer; }
+button:hover { filter: brightness(.91); }
+:focus-visible { outline: 3px solid #1264a3; outline-offset: 3px; }
+.item-note { color: var(--wrong); font-size: .88rem; font-weight: 630; }
+.item-note:empty { display: none; }
+.item-note[data-state="correct"] { color: var(--theme); }
+.field-row .item-note { grid-column: 2; }
+.feedback:empty { display: none; }
+.feedback { display: block; border-radius: .6rem; margin-top: .85rem; padding: .75rem .85rem; background: var(--wrong-bg); color: var(--wrong); }
+.feedback[data-state="correct"] { color: var(--theme); background: var(--light); }
+.feedback strong { display: block; }
+figure, table { margin: .75rem 0 1rem; }
+.figure { padding: .8rem; background: var(--light); border-radius: .7rem; }
+.figure figcaption, caption { color: var(--ink); font-weight: 700; text-align: left; padding-bottom: .4rem; }
+.bar-row { display: grid; grid-template-columns: 7.7rem 1fr; gap: .45rem; align-items: center; margin: .4rem 0; font-size: .88rem; }
+.track { position: relative; height: 1.7rem; background: #fff; }
+.bar { display: flex; align-items: center; justify-content: end; padding: 0 .4rem; width: var(--width); height: 100%; color: white; font-weight: 750; background: var(--theme); }
+.axis { display: flex; justify-content: space-between; margin-left: 8.15rem; color: var(--muted); font-size: .8rem; }
+table { width: min(100%, 28rem); border-collapse: collapse; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: .3rem .7rem; border-bottom: 1px solid var(--line); }
+thead { background: var(--light); }
+@media (max-width: 760px) {
+  .layout { grid-template-columns: minmax(0, 1fr); }
+  nav { position: static; }
+}
+@media (max-width: 490px) {
+  .wrap { width: calc(100% - 1.4rem); }
+  .hero .wrap { grid-template-columns: 1fr; gap: .75rem; }
+  .level { justify-self: start; grid-row: 1; }
+  .field-row { grid-template-columns: 1fr; }
+  .field-row .item-note { grid-column: 1; }
+  #progress-label { font-size: .82rem; }
+  #reset { padding: .4rem .5rem; white-space: nowrap; font-size: .8rem; }
+}
+</style>
+</head>
+<body class="higher">
+<a class="skip" href="#practice">Skip to activities</a>
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Year 8 Science · Unit 8C</p>
+      <h1>Breathing and respiration</h1>
+      <p>Complete the answers in each activity, then choose <strong>Check answer</strong>. Use the feedback to revise your answers and try again.</p>
+    </div>
+    <span class="level">Higher level</span>
+  </div>
+</header>
+<div class="progress-bar">
+  <div class="wrap">
+    <span id="progress-label" aria-live="polite">0 of 11 correct</span>
+    <progress id="progress" aria-label="Activities correct" value="0" max="11"></progress>
+    <button id="reset" type="button">Start over</button>
+  </div>
+</div>
+<div class="layout wrap">
+  <nav aria-labelledby="topics-title">
+    <h2 id="topics-title">Topics</h2>
+    <ul id="topics"></ul>
+  </nav>
+  <main id="practice" tabindex="-1"></main>
+</div>
+<noscript><div class="wrap"><p>Enable JavaScript in your browser to use the activities and check your answers.</p></div></noscript>
+<script>
+"use strict";
+const sections = [
+  {
+    "title": "Evidence for respiration",
+    "tasks": [
+      {
+        "title": "Predict the indicator changes",
+        "stem": "Six sealed tubes start with pink hydrogen carbonate indicator. A decrease in pH makes it yellow. Each sample is kept separate from the indicator but shares the air in its tube.",
+        "questions": [
+          {
+            "kind": "fields",
+            "prompt": "Predict the colour after each sample has had time to affect the air.",
+            "items": [
+              {
+                "kind": "select",
+                "label": "Empty tube",
+                "options": [
+                  "Pink",
+                  "Yellow"
+                ],
+                "answer": 0
+              },
+              {
+                "kind": "select",
+                "label": "Germinating pea seeds",
+                "options": [
+                  "Pink",
+                  "Yellow"
+                ],
+                "answer": 1
+              },
+              {
+                "kind": "select",
+                "label": "A small snail",
+                "options": [
+                  "Pink",
+                  "Yellow"
+                ],
+                "answer": 1
+              },
+              {
+                "kind": "select",
+                "label": "Yeast with sugar solution",
+                "options": [
+                  "Pink",
+                  "Yellow"
+                ],
+                "answer": 1
+              },
+              {
+                "kind": "select",
+                "label": "A piece of living mushroom",
+                "options": [
+                  "Pink",
+                  "Yellow"
+                ],
+                "answer": 1
+              },
+              {
+                "kind": "select",
+                "label": "Glass beads",
+                "options": [
+                  "Pink",
+                  "Yellow"
+                ],
+                "answer": 0
+              }
+            ]
+          }
+        ],
+        "hint": "Decide which samples contain living organisms that release carbon dioxide as they respire.",
+        "explain": "The seeds, snail, yeast and mushroom respire and release carbon dioxide, which lowers the pH and turns the indicator yellow. The empty tube and glass beads act as controls and stay pink.",
+        "visual": null
+      },
+      {
+        "title": "Identify the gas",
+        "stem": "A class wants to test whether exhaled air contains carbon dioxide.",
+        "questions": [
+          {
+            "kind": "fields",
+            "prompt": "Complete the test using limewater.",
+            "items": [
+              {
+                "kind": "select",
+                "label": "What should you do?",
+                "options": [
+                  "Bubble exhaled air through clear limewater",
+                  "Mix limewater with tap water",
+                  "Leave limewater in a closed empty bottle"
+                ],
+                "answer": 0
+              },
+              {
+                "kind": "select",
+                "label": "What is a positive result?",
+                "options": [
+                  "It turns blue",
+                  "It stays clear",
+                  "It turns cloudy or milky"
+                ],
+                "answer": 2
+              }
+            ]
+          }
+        ],
+        "hint": "Choose a method that brings exhaled air into contact with the limewater.",
+        "explain": "Carbon dioxide turns clear limewater cloudy or milky.",
+        "visual": null
+      },
+      {
+        "title": "Link smoke exposure to oxygen supply",
+        "stem": "Cigarette smoke contains carbon monoxide. A working muscle switches to using more anaerobic respiration.",
+        "questions": [
+          {
+            "kind": "fields",
+            "prompt": "Complete the explanation that links the two statements.",
+            "items": [
+              {
+                "kind": "select",
+                "label": "Effect on the blood",
+                "options": [
+                  "Red blood cells carry less oxygen",
+                  "Red blood cells carry more oxygen",
+                  "The blood stops carrying glucose"
+                ],
+                "answer": 0
+              },
+              {
+                "kind": "select",
+                "label": "Effect on active muscle cells",
+                "options": [
+                  "They use more oxygen in aerobic respiration",
+                  "They receive less oxygen for aerobic respiration",
+                  "They turn oxygen into glucose"
+                ],
+                "answer": 1
+              }
+            ]
+          }
+        ],
+        "hint": "Think about what red blood cells normally carry to working muscles.",
+        "explain": "Carbon monoxide reduces the amount of oxygen that red blood cells can carry. Less oxygen reaches the muscles for aerobic respiration, so active muscles may rely more on anaerobic respiration.",
+        "visual": null
+      }
+    ]
+  },
+  {
+    "title": "Moving gases through the body",
+    "tasks": [
+      {
+        "title": "Sequence the route of oxygen",
+        "stem": "A red blood cell passes through a capillary next to an active muscle.",
+        "questions": [
+          {
+            "kind": "fields",
+            "prompt": "Put the three events in order.",
+            "items": [
+              {
+                "kind": "select",
+                "label": "First",
+                "options": [
+                  "Oxygen diffuses from tissue fluid into muscle cells",
+                  "Oxygen leaves haemoglobin and dissolves in plasma",
+                  "Fluid leaves the capillary, forming tissue fluid"
+                ],
+                "answer": 1
+              },
+              {
+                "kind": "select",
+                "label": "Next",
+                "options": [
+                  "Oxygen diffuses from tissue fluid into muscle cells",
+                  "Oxygen leaves haemoglobin and dissolves in plasma",
+                  "Fluid leaves the capillary, forming tissue fluid"
+                ],
+                "answer": 2
+              },
+              {
+                "kind": "select",
+                "label": "Last",
+                "options": [
+                  "Oxygen diffuses from tissue fluid into muscle cells",
+                  "Oxygen leaves haemoglobin and dissolves in plasma",
+                  "Fluid leaves the capillary, forming tissue fluid"
+                ],
+                "answer": 0
+              }
+            ]
+          }
+        ],
+        "hint": "Start inside the blood vessel and end inside a muscle cell.",
+        "explain": "Oxygen leaves haemoglobin and dissolves in plasma. Fluid leaving the capillary forms tissue fluid. Oxygen then diffuses from the tissue fluid into the muscle cells.",
+        "visual": null
+      },
+      {
+        "title": "Explain adaptations of air sacs",
+        "stem": "Air sacs are also called alveoli. Each feature below helps gases diffuse efficiently.",
+        "questions": [
+          {
+            "kind": "fields",
+            "prompt": "Match each feature to its effect.",
+            "items": [
+              {
+                "kind": "select",
+                "label": "Walls one cell thick",
+                "options": [
+                  "Maintains a steep concentration gradient",
+                  "Provides more space for diffusion at once",
+                  "Gives gases a short distance to travel",
+                  "Allows gases to dissolve"
+                ],
+                "answer": 2
+              },
+              {
+                "kind": "select",
+                "label": "Many small air sacs with a large total surface area",
+                "options": [
+                  "Maintains a steep concentration gradient",
+                  "Provides more space for diffusion at once",
+                  "Gives gases a short distance to travel",
+                  "Allows gases to dissolve"
+                ],
+                "answer": 1
+              },
+              {
+                "kind": "select",
+                "label": "A rich blood supply",
+                "options": [
+                  "Maintains a steep concentration gradient",
+                  "Provides more space for diffusion at once",
+                  "Gives gases a short distance to travel",
+                  "Allows gases to dissolve"
+                ],
+                "answer": 0
+              },
+              {
+                "kind": "select",
+                "label": "A moist lining",
+                "options": [
+                  "Maintains a steep concentration gradient",
+                  "Provides more space for diffusion at once",
+                  "Gives gases a short distance to travel",
+                  "Allows gases to dissolve"
+                ],
+                "answer": 3
+              }
+            ]
+          }
+        ],
+        "hint": "Think about the distance gases travel, how much surface they can cross and what happens when blood keeps flowing.",
+        "explain": "Thin walls shorten the diffusion distance. A large surface area lets more molecules cross at once. Flowing blood maintains the concentration gradient and the moist lining allows gases to dissolve.",
+        "visual": null
+      },
+      {
+        "title": "Explain how airways stay clear",
+        "stem": "Dust and microbes can enter the airways when we breathe.",
+        "questions": [
+          {
+            "kind": "fields",
+            "prompt": "Match each structure to its role.",
+            "items": [
+              {
+                "kind": "select",
+                "label": "Goblet cells",
+                "options": [
+                  "Beat to sweep mucus towards the throat",
+                  "Make mucus that traps particles and microbes",
+                  "Carry oxygen around the body"
+                ],
+                "answer": 1
+              },
+              {
+                "kind": "select",
+                "label": "Cilia on airway cells",
+                "options": [
+                  "Beat to sweep mucus towards the throat",
+                  "Make mucus that traps particles and microbes",
+                  "Carry oxygen around the body"
+                ],
+                "answer": 0
+              }
+            ]
+          }
+        ],
+        "hint": "One cell type makes a sticky substance. The tiny hairs on the other type move it.",
+        "explain": "Goblet cells produce sticky mucus that traps dust and microbes. Cilia beat to move the mucus towards the throat.",
+        "visual": null
+      },
+      {
+        "title": "Model an iron lung",
+        "stem": "In a model of an iron lung, a person’s chest is inside a sealed chamber and their mouth and nose are outside. The bellows pull outwards, increasing the volume of the chamber.",
+        "questions": [
+          {
+            "kind": "fields",
+            "prompt": "Predict what happens next.",
+            "items": [
+              {
+                "kind": "select",
+                "label": "Air pressure inside the chamber",
+                "options": [
+                  "Rises",
+                  "Falls",
+                  "Stays the same"
+                ],
+                "answer": 1
+              },
+              {
+                "kind": "select",
+                "label": "The person's chest",
+                "options": [
+                  "Expands",
+                  "Gets smaller",
+                  "Stays the same size"
+                ],
+                "answer": 0
+              },
+              {
+                "kind": "select",
+                "label": "Direction of airflow at the mouth and nose",
+                "options": [
+                  "Out of the lungs",
+                  "No airflow",
+                  "Into the lungs"
+                ],
+                "answer": 2
+              }
+            ]
+          }
+        ],
+        "hint": "Think about what happens to the pressure of a trapped gas when it has more space.",
+        "explain": "As the bellows pull outwards, pressure around the chest falls. The chest expands, lowering pressure inside the lungs below atmospheric pressure, so air flows in.",
+        "visual": null
+      }
+    ]
+  },
+  {
+    "title": "Exercise and recovery",
+    "tasks": [
+      {
+        "title": "Explain the change in pulse rate",
+        "stem": "During a cross-country race, a runner’s heart beats faster than it did at rest.",
+        "questions": [
+          {
+            "kind": "fields",
+            "prompt": "Build an explanation linking muscle activity to blood flow.",
+            "items": [
+              {
+                "kind": "select",
+                "label": "What changes inside the active muscle cells?",
+                "options": [
+                  "The cells need less energy",
+                  "The cells need to release more energy by respiration",
+                  "The cells stop respiring"
+                ],
+                "answer": 1
+              },
+              {
+                "kind": "select",
+                "label": "How does a faster pulse help?",
+                "options": [
+                  "It delivers more oxygen to the muscles each minute",
+                  "It makes the muscles use less glucose",
+                  "It stops blood flowing to the working muscles"
+                ],
+                "answer": 0
+              }
+            ]
+          }
+        ],
+        "hint": "Link increased energy demand to the rate at which blood delivers oxygen.",
+        "explain": "Muscles need more energy for contraction, so their rate of respiration increases. A faster pulse helps deliver more oxygen per minute for aerobic respiration.",
+        "visual": null
+      },
+      {
+        "title": "Explain why breathing stays fast",
+        "stem": "A runner is still breathing quickly just after finishing a hard race.",
+        "questions": [
+          {
+            "kind": "multiple",
+            "prompt": "Choose two processes that require extra oxygen during recovery.",
+            "options": [
+              "Stopping all respiration in the muscles",
+              "Replenishing oxygen stores in the muscles",
+              "Supporting aerobic respiration that supplies energy for the liver to convert lactate back to glucose",
+              "Delivering carbon dioxide so the muscles can use it as a fuel"
+            ],
+            "answer": [
+              1,
+              2
+            ]
+          }
+        ],
+        "hint": "Think about oxygen stores and what happens to lactate after exercise.",
+        "explain": "Extra oxygen helps restore oxygen stores. Aerobic respiration also supplies energy for the liver to convert some of the lactate back into glucose.",
+        "visual": null
+      },
+      {
+        "title": "Build the anaerobic word equation",
+        "stem": "During a steep uphill sprint, the runner’s muscle cells release energy by anaerobic respiration.",
+        "questions": [
+          {
+            "kind": "fields",
+            "prompt": "Complete the word equation for anaerobic respiration in human muscles.",
+            "items": [
+              {
+                "kind": "select",
+                "label": "Reactant",
+                "options": [
+                  "Oxygen",
+                  "Glucose",
+                  "Water"
+                ],
+                "answer": 1
+              },
+              {
+                "kind": "select",
+                "label": "Product",
+                "options": [
+                  "Lactic acid",
+                  "Carbon dioxide",
+                  "Oxygen"
+                ],
+                "answer": 0
+              }
+            ]
+          },
+          {
+            "kind": "single",
+            "prompt": "Which organ can turn lactate back into glucose?",
+            "options": [
+              "Lungs",
+              "Stomach",
+              "Liver",
+              "Brain"
+            ],
+            "answer": 2,
+            "label": ""
+          }
+        ],
+        "hint": "Think of the fuel molecule that muscle cells break down, even when oxygen supply is limited.",
+        "explain": "The word equation is glucose → lactic acid. After exercise, the liver can convert some of the lactate back into glucose.",
+        "visual": null
+      },
+      {
+        "title": "Explain why aerobic exercise can last longer",
+        "stem": "A cyclist can maintain a steady pace far longer than an all-out sprint.",
+        "questions": [
+          {
+            "kind": "single",
+            "prompt": "When do muscles rely more on anaerobic respiration?",
+            "options": [
+              "When energy demand is greater than aerobic respiration alone can meet",
+              "When the muscles have stopped contracting",
+              "When muscles need no glucose"
+            ],
+            "answer": 0,
+            "label": ""
+          },
+          {
+            "kind": "fields",
+            "prompt": "Complete the explanation for why the steady pace can be maintained.",
+            "items": [
+              {
+                "kind": "select",
+                "label": "For the same amount of glucose, aerobic respiration releases",
+                "options": [
+                  "Less usable energy",
+                  "The same usable energy",
+                  "More usable energy"
+                ],
+                "answer": 2
+              },
+              {
+                "kind": "select",
+                "label": "This energy lets muscles",
+                "options": [
+                  "Contract repeatedly for longer",
+                  "Stop using energy",
+                  "Make oxygen for the lungs"
+                ],
+                "answer": 0
+              }
+            ]
+          }
+        ],
+        "hint": "Compare how much usable energy the two types of respiration release from the same amount of glucose.",
+        "explain": "Aerobic respiration releases more usable energy per glucose molecule. When oxygen supply can meet the demand, it can sustain repeated muscle contractions for longer. Anaerobic respiration helps meet demand during brief, intense exercise.",
+        "visual": null
+      }
+    ]
+  }
+];
+const practice = document.querySelector("#practice");
+const topics = document.querySelector("#topics");
+const progress = document.querySelector("#progress");
+const progressLabel = document.querySelector("#progress-label");
+const reset = document.querySelector("#reset");
+const correctCards = new Set();
+const resetCards = [];
+const chart = `
+  <figure class="figure" aria-label="Breathing rate was 16 breaths per minute at rest and 28 after exercise.">
+    <figcaption>Breaths per minute</figcaption>
+    <div class="bar-row" aria-hidden="true"><span>At rest</span><span class="track"><span class="bar" style="--width: 53.3333%">16</span></span></div>
+    <div class="bar-row" aria-hidden="true"><span>After exercise</span><span class="track"><span class="bar" style="--width: 93.3333%">28</span></span></div>
+    <div class="axis" aria-hidden="true"><span>0</span><span>10</span><span>20</span><span>30</span></div>
+  </figure>`;
+const table = `
+  <table>
+    <caption>Volume of a breath after exercise</caption>
+    <thead><tr><th scope="col">Trial</th><th scope="col">Volume</th></tr></thead>
+    <tbody><tr><th scope="row">1</th><td>790</td></tr><tr><th scope="row">2</th><td>720</td></tr>
+    <tr><th scope="row">3</th><td>845</td></tr><tr><th scope="row">4</th><td>870</td></tr>
+    <tr><th scope="row">5</th><td>815</td></tr></tbody>
+  </table>`;
+
+function add(parent, tag, value, className) {
+  const element = document.createElement(tag);
+  if (value) element.textContent = value;
+  if (className) element.className = className;
+  parent.append(element);
+  return element;
+}
+
+function updateProgress() {
+  progress.value = correctCards.size;
+  progressLabel.textContent = `${correctCards.size} of ${progress.max} correct`;
+}
+
+function addChoices(group, question, key) {
+  const multiple = question.kind === "multiple";
+  const inputs = question.options.map((option, index) => {
+    const label = add(group, "label", "", "choice");
+    const input = add(label, "input");
+    input.type = multiple ? "checkbox" : "radio";
+    input.name = key;
+    input.value = index;
+    add(label, "span", option);
+    return input;
+  });
+  const note = add(group, "div", "", "item-note");
+  note.id = key + "-note";
+  group.setAttribute("aria-describedby", note.id);
+  return [{
+    note,
+    check() {
+      const selected = inputs.filter(input => input.checked).map(input => Number(input.value));
+      const target = multiple ? question.answer : [question.answer];
+      if (!selected.length) return "Choose an answer.";
+      if (selected.length !== target.length) return `Choose exactly ${target.length} options.`;
+      return selected.every((value, index) => value === target[index]) ? "Correct." : "Try again.";
+    }
+  }];
+}
+
+function addFields(group, question, key) {
+  return question.items.map((item, index) => {
+    const row = add(group, "div", "", "field-row");
+    const id = key + "-" + index;
+    const label = add(row, "label", item.label);
+    label.htmlFor = id;
+    const numeric = item.kind === "number";
+    const input = add(row, numeric ? "input" : "select");
+    input.id = id;
+    if (numeric) {
+      input.type = "number";
+      input.inputMode = "numeric";
+      input.step = "any";
+    } else {
+      const placeholder = add(input, "option", "Choose an answer");
+      placeholder.value = "";
+      item.options.forEach((option, optionIndex) => {
+        add(input, "option", option).value = optionIndex;
+      });
+    }
+    const note = add(row, "div", "", "item-note");
+    note.id = id + "-note";
+    input.setAttribute("aria-describedby", note.id);
+    return {
+      note,
+      input,
+      check() {
+        if (input.validity.badInput) return "Enter a number.";
+        if (input.value === "") return numeric ? "Enter a number." : "Choose an answer.";
+        return Number(input.value) === item.answer ? "Correct." : "Try again.";
+      }
+    };
+  });
+}
+
+function addCard(section, activity, index) {
+  const form = add(section, "form", "", "card");
+  form.noValidate = true;
+  const title = add(form, "h3");
+  title.id = "activity-" + index;
+  form.setAttribute("aria-labelledby", title.id);
+  const count = add(title, "span", index, "index");
+  count.setAttribute("aria-hidden", "true");
+  add(title, "span", activity.title);
+  if (activity.stem) add(form, "p", activity.stem, "stem");
+  if (activity.visual) form.insertAdjacentHTML("beforeend", activity.visual === "chart" ? chart : table);
+  const checks = activity.questions.flatMap((question, questionIndex) => {
+    const group = add(form, "fieldset");
+    add(group, "legend", question.prompt);
+    const key = title.id + "-question-" + questionIndex;
+    return question.kind === "fields" ? addFields(group, question, key) : addChoices(group, question, key);
+  });
+  const button = add(form, "button", "Check answer");
+  button.type = "submit";
+  const feedback = add(form, "div", "", "feedback");
+  feedback.setAttribute("role", "status");
+  feedback.setAttribute("aria-atomic", "true");
+
+  function clearFeedback() {
+    delete form.dataset.state;
+    feedback.replaceChildren();
+    delete feedback.dataset.state;
+    for (const {note, input} of checks) {
+      note.textContent = "";
+      delete note.dataset.state;
+      input?.removeAttribute("aria-invalid");
+    }
+    if (correctCards.delete(index)) updateProgress();
+  }
+
+  form.addEventListener("input", () => {
+    if (form.dataset.state) clearFeedback();
+  });
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+    const results = checks.map(({check, note, input}) => {
+      const result = check();
+      const correct = result === "Correct.";
+      note.textContent = result;
+      note.dataset.state = correct ? "correct" : "retry";
+      input?.setAttribute("aria-invalid", String(!correct));
+      return correct;
+    });
+    const countCorrect = results.filter(Boolean).length;
+    const correct = countCorrect === results.length;
+    form.dataset.state = feedback.dataset.state = correct ? "correct" : "retry";
+    const heading = correct ? "Correct!" : `${countCorrect} of ${results.length} correct. Try again.`;
+    feedback.replaceChildren();
+    add(feedback, "strong", heading);
+    add(feedback, "span", correct ? activity.explain : activity.hint);
+    if (correct) correctCards.add(index);
+    else correctCards.delete(index);
+    updateProgress();
+  });
+  resetCards.push(() => {
+    form.reset();
+    clearFeedback();
+  });
+}
+
+let index = 0;
+sections.forEach((topic, topicIndex) => {
+  const section = add(practice, "section", "", "unit");
+  const title = add(section, "h2", topic.title);
+  title.id = "topic-" + (topicIndex + 1);
+  section.setAttribute("aria-labelledby", title.id);
+  const link = add(add(topics, "li"), "a", topic.title);
+  link.href = "#" + title.id;
+  topic.tasks.forEach(activity => addCard(section, activity, ++index));
+});
+
+reset.addEventListener("click", () => {
+  const attempted = practice.querySelector(".card[data-state], input:checked") ||
+    [...practice.querySelectorAll("select, input[type='number']")].some(input => input.value !== "");
+  if (attempted && !window.confirm("Clear all your answers and start over?")) return;
+  resetCards.forEach(resetCard => resetCard());
+  updateProgress();
+  practice.focus();
+});
+</script>
+</body>
+</html>
